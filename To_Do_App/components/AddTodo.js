@@ -13,7 +13,7 @@ const Wrapper = styled.div`
     position: relative;
     margin-top: 20px;
 `
-const PlustButton = styled(PlusCircleOutlined)`
+const PlusButton = styled(PlusCircleOutlined)`
     font-size: 40px;
     position: relative;
     margin-left: 40px;
@@ -32,6 +32,10 @@ const InputToDo = styled.input`
     border: none;
     border-radius: 5px;
     padding: 0 0 0 0 ;
+
+    :focus{
+        outline: none;
+    }
 `
 
 const FormWrapper = styled.form`
@@ -64,15 +68,14 @@ const AddTodo = () => {
     const onSubmit = (e) => {
         // 새로고침 방지
         e.preventDefault();
-        console.log(text, rate);
         dispatch(addTodo({
-            todo:text,
+            text,
             rate
         }));
     };
     return(
         <Wrapper>
-        <PlustButton onClick={onClickPlus}/>
+        <PlusButton onClick={onClickPlus}/>
         {buttonClicked && (
             <FormWrapper onSubmit={onSubmit} >
                 <InputToDo type="text" placeholder=" 할일과 중요도를 입력 후 Enter를 누르세요" onChange={onChangeInput} value={text}/>

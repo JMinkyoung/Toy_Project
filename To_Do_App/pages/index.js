@@ -1,17 +1,25 @@
 import React from 'react';
 import AppLayout from '../components/AppLayout';
 import AddTodo from '../components/AddTodo';
+import ToDoHead from '../components/ToDoHead';
+import ToDoLayout from '../components/ToDoLayout';
+import ToDoContent from '../components/ToDoContent';
+
 import rootReducer from '../reducers';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-
-const store = createStore(rootReducer);
+import {composeWithDevTools} from 'redux-devtools-extension';
+const store = createStore(rootReducer,composeWithDevTools());
 
 const Index = () => {
     return (
         <Provider store = {store}>
             <AppLayout>
                 <AddTodo/>
+                <ToDoHead/>
+                <ToDoLayout>
+                    <ToDoContent/>
+                </ToDoLayout>
             </AppLayout>
         </Provider>
     );
