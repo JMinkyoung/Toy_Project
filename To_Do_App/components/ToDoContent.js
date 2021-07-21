@@ -1,8 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Rate } from 'antd';
 import { CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { deleteTodo, toggleTodo } from '../reducers/todo';
 
 const ToDoWrapper = styled.div`
     position: relative;
@@ -31,20 +32,26 @@ const DeleteButton = styled(DeleteOutlined)`
     position: relative;
 `
 
+const ToDoContent = ({id, text, rate, done}) => {
+    
+    const dispatch = useDispatch();
+    const onClickDoneButton = useCallback(()=>{
+        dispatch(toggleTodo({
+            id
+        }));
+    });
 
-const ToDoContent = () => {
-    const todos = useSelector((state)=>state.todoReducer.todos);
-
-    const text = todos[0].text;
-    const rate = todos[0].rate;
-    const done = todos[0].done;
-
+    const onClickDeleteButton = useCallback(()=>{
+        dispatch(deleteTodo({
+            id
+        }));
+    });
     return (
         <ToDoWrapper>
-            <DoneButton />
+            <DoneButton onClick={onClickDoneButton} />
             <TextWrapper>{text}</TextWrapper>
             <Rate disabled value={rate} />
-            <DeleteButton />
+            <DeleteButton onClick={onClickDeleteButton} />
         </ToDoWrapper>
     );
 };

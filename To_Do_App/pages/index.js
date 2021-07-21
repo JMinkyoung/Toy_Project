@@ -4,6 +4,7 @@ import AddTodo from '../components/AddTodo';
 import ToDoHead from '../components/ToDoHead';
 import ToDoLayout from '../components/ToDoLayout';
 import ToDoContent from '../components/ToDoContent';
+import ToDoList from '../components/ToDoList';
 
 import rootReducer from '../reducers';
 import {Provider} from 'react-redux';
@@ -18,7 +19,7 @@ const Index = () => {
                 <AddTodo/>
                 <ToDoHead/>
                 <ToDoLayout>
-                    <ToDoContent/>
+                    <ToDoList/>
                 </ToDoLayout>
             </AppLayout>
         </Provider>
