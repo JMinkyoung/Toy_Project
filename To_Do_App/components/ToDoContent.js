@@ -1,36 +1,28 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Rate } from 'antd';
-import { CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
 import { deleteTodo, toggleTodo } from '../reducers/todo';
+import { ToDoWrapper,  DeleteButton } from '../styles';
+import styled from 'styled-components';
+import  { CheckCircleOutlined } from '@ant-design/icons';
 
-const ToDoWrapper = styled.div`
-    position: relative;
-    display: flex;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-top: 15px;
-`;
 
 const DoneButton = styled(CheckCircleOutlined)`
     font-size: 30px;
     cursor: pointer;
     margin-top: 2px;
+    color : ${props => props.done === "true" ? '#49BD4D' : 'black'};
+    :hover{
+        color:#49BD4D;
+    }
 `
 const TextWrapper = styled.p`
-    font-size: 20px;
+    font-size: 18px;
     margin-left: 20px;
     margin-right: 50px;
-`;
-
-const DeleteButton = styled(DeleteOutlined)`
-    font-size: 30px;
-    cursor: pointer;
     margin-top: 2px;
-    margin-left: 20px;
-    position: relative;
-`
+    text-decoration: ${props => props.done === "true" ? 'line-through' : 'none'};
+`;
 
 const ToDoContent = ({id, text, rate, done}) => {
     
@@ -46,10 +38,11 @@ const ToDoContent = ({id, text, rate, done}) => {
             id
         }));
     });
+
     return (
         <ToDoWrapper>
-            <DoneButton onClick={onClickDoneButton} />
-            <TextWrapper>{text}</TextWrapper>
+            <DoneButton done={done.toString()} onClick={onClickDoneButton} />
+            <TextWrapper done={done.toString()}>{text}</TextWrapper>
             <Rate disabled value={rate} />
             <DeleteButton onClick={onClickDeleteButton} />
         </ToDoWrapper>

@@ -1,4 +1,3 @@
-import React, {useReducer} from 'react';
 import shortId from 'shortid';
 
 const initialState = {
@@ -11,7 +10,7 @@ const initialState = {
         },
         { 
             id: shortId.generate(),
-            text: '김채원',
+            text: '햄버거 시켜먹기',
             rate: 3,
             done: false,
         }

@@ -1,54 +1,11 @@
 import React, { useCallback,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import 'antd/dist/antd.css';
-import {Rate } from 'antd';
-import  { PlusCircleOutlined } from '@ant-design/icons';
-
+import { Wrapper, Title, PlusButton, InputToDo, FormWrapper, RateWrapper } from '../styles';
 import {addTodo} from '../reducers/todo'
 
-
-const Wrapper = styled.div`
-    display: flex;
-    position: relative;
-    margin-top: 20px;
-`
-const PlusButton = styled(PlusCircleOutlined)`
-    font-size: 40px;
-    position: relative;
-    margin-left: 40px;
-    margin-top: 20px;
-    color: white;
-`
-
-const InputToDo = styled.input`
-    height: 40px;
-    width: 350px;
-    margin-top: 20px;
-    margin-left: 10px;
-    position: relative;
-    color: black;
-    font-size: 15px;
-    border: none;
-    border-radius: 5px;
-    padding: 0 0 0 0 ;
-
-    :focus{
-        outline: none;
-    }
-`
-
-const FormWrapper = styled.form`
-    display: flex;
-`;
-
-const RateWrapper = styled(Rate)`
-    font-size: 20px;
-    margin-top: 20px;
-    margin-left: 10px;
-`;
  
 const AddTodo = () => {
+
     const [buttonClicked, setButtonClicked] = useState(false);
     const [text, setText] = useState('');
     const [rate, setRate] = useState(3);
@@ -72,16 +29,18 @@ const AddTodo = () => {
             text,
             rate
         }));
+        setText('');
     };
     return(
         <Wrapper>
         <PlusButton onClick={onClickPlus}/>
-        {buttonClicked && (
-            <FormWrapper onSubmit={onSubmit} >
-                <InputToDo type="text" placeholder=" 할일과 중요도를 입력 후 Enter를 누르세요" onChange={onChangeInput} value={text}/>
+        {buttonClicked ? 
+            (<FormWrapper onSubmit={onSubmit} >
                 <RateWrapper onChange={onChange} value={rate} />
-            </FormWrapper>
-        )}
+                <InputToDo type="text" placeholder="중요도와 할일을 입력 후 Enter를 누르세요" onChange={onChangeInput} value={text}/>
+            </FormWrapper>) 
+            : 
+            (<Title>오늘의 To Do List</Title>)}
         </Wrapper>
     );
 };

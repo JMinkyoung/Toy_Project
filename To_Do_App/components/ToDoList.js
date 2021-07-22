@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import ToDoContent from './ToDoContent';
 
-const ToDoWrapper = styled.div`
-    flex : 1;
-    margin-bottom: 5px;
-    position: relative;
-`;
+import { ToDoListWrapper, SortButton } from '../styles';
 
 const ToDoList = () => {
     const todos = useSelector((state)=>state.todoReducer.todos);
+    const [sorted, setSorted] = useState(false);
 
+    const onClickSort = useCallback(()=>{
+        if(sorted){
+            setSorted(!sorted);
+            todos.sort((a,b)=>{
+                return b.rate - a.rate;
+            });
+        }else{
+            setSorted(!sorted);
+            todos.sort((a,b)=>{
+                return a.rate - b.rate;
+            });
+        }
+    });
+    
     return (
-        <ToDoWrapper>
+        <ToDoListWrapper>
+            <SortButton onClick={onClickSort} />
             {todos.map((todo)=>{
                 return <ToDoContent key={todo.id} id={todo.id} text={todo.text} rate={todo.rate} done={todo.done}/>
             })}
-        </ToDoWrapper>
+        </ToDoListWrapper>
     );
 };
 
