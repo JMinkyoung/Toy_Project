@@ -25,5 +25,6 @@ const DiaryLayout = ({children}) => {
         </DiaryWrapper>
     );
 };
- 
+
+   
 export default DiaryLayout;
