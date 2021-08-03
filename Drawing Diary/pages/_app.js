@@ -3,13 +3,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+
 const App = ({Component})=>{
 
     return(
     <>
         <Head>
             <meta charSet="utf-8" />
-            <title>Drawing Diary</title>
+            <title>오늘의 그림일기</title>
+            <link
+            rel="stylesheet"
+            type="text/css"
+            href="/styles/GlobalStyle.css"
+          />
         </Head>
         <Component />
     </>

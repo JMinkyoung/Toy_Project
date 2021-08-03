@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
 import {SmileOutlined, MehOutlined, FrownOutlined} from '@ant-design/icons';
 import DatePicker from "react-datepicker";
@@ -15,12 +15,23 @@ const HeadWrapper = styled.div`
 `;
 
 const DateWrapper = styled.div`
+    margin-top: 22px;
+    margin-left: 8px;
     position: relative;
     display: flex;
     float:left;
     height: 86px;
-    width: 200px;
 `;
+
+const DatePickerStyle = styled(DatePicker)`
+    width: 180px;
+    font-size: 25px;
+    border: none;
+    border-radius: 5px;
+    :focus{
+        outline: none;
+    }
+`
 
 const TitleWrapper = styled.div`
     position: relative;
@@ -32,14 +43,15 @@ const TitleWrapper = styled.div`
 `;
 
 const TitleInput = styled.input`
-    margin-top: 8px;
+    margin-top: 6px;
     height: 70px;
     width: 230px;
-    font-size: 30px;
+    font-size: 50px;
     border: none;
     border-radius: 5px;
+    text-align: center;
     ::placeholder{
-        color:blue;
+        color: black;
         text-align: center;
     }
     :focus{
@@ -56,6 +68,18 @@ const EmotionWrapper = styled.div`
     margin-left: 40px;
     margin-top: 12px;
 `;
+
+const GoodEmotion = styled(SmileOutlined)`
+    color : ${props => props.emotion === "good" ? '#49BD4D' : 'black'};
+`;
+
+const SosoEmotion = styled(MehOutlined)`
+    color : ${props => props.emotion === "soso" ? 'orange' : 'black'};
+`;
+const BadEmotion = styled(FrownOutlined)`
+    color : ${props => props.emotion === "bad" ? 'red' : 'black'};
+`;
+
 const DiaryHead = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [emotion, setEmotion] = useState('');
@@ -65,16 +89,15 @@ const DiaryHead = () => {
         setTitle(e.target.value);
     };
 
-    const onClickEmotion = (params, e) => {
+    const onClickEmotion = (params, e)=>{
         setEmotion(params);
         e.preventDefault();
     };
-
+    
     return (
         <HeadWrapper>
-
             <DateWrapper>
-                <DatePicker 
+                <DatePickerStyle 
                     dateFormat="yyyy년 MM월 dd일" 
                     locale={ko} 
                     selected={startDate} 
@@ -89,15 +112,18 @@ const DiaryHead = () => {
             </TitleWrapper>
 
             <EmotionWrapper>
-                <SmileOutlined 
+                <GoodEmotion 
                     style={{margin:"10px"}} 
-                    onClick={(e)=>{onClickEmotion("good", e)}}/>
-                <MehOutlined 
+                    onClick={(e)=>{onClickEmotion("good", e)}}
+                    emotion={emotion}/>
+                <SosoEmotion 
                     style={{margin:"10px"}} 
-                    onClick={(e)=>{onClickEmotion("soso", e)}}/>
-                <FrownOutlined 
+                    onClick={(e)=>{onClickEmotion("soso", e)}}
+                    emotion={emotion}/>
+                <BadEmotion 
                     style={{margin:"10px"}} 
-                    onClick={(e)=>{onClickEmotion("bad", e)}}/>
+                    onClick={(e)=>{onClickEmotion("bad", e)}}
+                    emotion={emotion}/>
             </EmotionWrapper>
 
         </HeadWrapper>
