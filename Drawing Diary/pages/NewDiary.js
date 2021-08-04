@@ -1,12 +1,15 @@
 import React from 'react';
 import DiaryLayout from '../components/DiaryLayout';
 import DiaryHead from '../components/DiaryHead';
-import DiaryCanvas from '../components/DiaryCanvas';
+// import DiaryCanvas from '../components/DiaryCanvas';
+// import DiaryText from '../components/DiaryText';
+
 const NewDiary = () => {
     return (
         <DiaryLayout>
             <DiaryHead/>
-            <DiaryCanvas/>
+            {/* <DiaryCanvas/> */}
+            {/* <DiaryText/> */}
         </DiaryLayout>
     );
 };

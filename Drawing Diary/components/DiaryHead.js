@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {ko} from 'date-fns/locale';
 
+import DiaryCanvas from './DiaryCanvas';
+
 const HeadWrapper = styled.div`
     display: inline-block;
     width:645px;
@@ -60,12 +62,12 @@ const TitleInput = styled.input`
 `;
 
 const EmotionWrapper = styled.div`
-    position: relative;
+    position: absolute;
     float: left;
     display: flex;
     height: 86px;
     font-size: 45px;
-    margin-left: 40px;
+    margin-left: 430px;
     margin-top: 12px;
 `;
 
@@ -95,6 +97,7 @@ const DiaryHead = () => {
     };
     
     return (
+        <>
         <HeadWrapper>
             <DateWrapper>
                 <DatePickerStyle 
@@ -125,9 +128,9 @@ const DiaryHead = () => {
                     onClick={(e)=>{onClickEmotion("bad", e)}}
                     emotion={emotion}/>
             </EmotionWrapper>
-
         </HeadWrapper>
-        
+        <DiaryCanvas date={startDate} title={title} emotion={emotion} />
+        </>
     );
 };
 
