@@ -1,5 +1,6 @@
-import React,{useState} from 'react';
+import React,{useState, useContext} from 'react';
 import styled from 'styled-components';
+import DiaryControl from './DiaryControl';
 
 const TextWrapper = styled.textarea`
     width: 600px;
@@ -15,16 +16,18 @@ const TextWrapper = styled.textarea`
         outline: none;
     }
 `;
-const DiaryText = (props) => {
+const DiaryText = ({date, title, emotion, imgurl}) => {
     const [diaryText, setDiaryText] = useState('');
 
     const onChangeText = (e) => {
         e.preventDefault();
         setDiaryText(e.target.value);
     }
-    
     return(
-        <TextWrapper onChange={onChangeText} placeholder="일기 내용을 입력하세요"/>
+        <>
+            <TextWrapper onChange={onChangeText} placeholder="일기 내용을 입력하세요"/>
+            <DiaryControl date={date} title={title} emotion={emotion} imgurl={imgurl} text={diaryText} />
+        </>
     );
 };
 

@@ -3,11 +3,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import rootReducer from '../reducers';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+
+const store = createStore(rootReducer,composeWithDevTools());
+
 
 const App = ({Component})=>{
 
     return(
-    <>
+    <Provider store={store}>
         <Head>
             <meta charSet="utf-8" />
             <title>오늘의 그림일기</title>
@@ -18,7 +25,7 @@ const App = ({Component})=>{
           />
         </Head>
         <Component />
-    </>
+    </Provider>
     );
 };
 

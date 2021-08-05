@@ -1,5 +1,6 @@
-import React from 'react';
+import React,{createContext} from 'react';
 import styled from 'styled-components';
+
 const DiaryWrapper = styled.div`
 
     /* display: flex; */
@@ -10,7 +11,7 @@ const DiaryWrapper = styled.div`
     height: 850px;
     width: 700px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 10px;
 
     background-image: url('/images/background.png');
     background-repeat: no-repeat;
@@ -21,9 +22,9 @@ const DiaryWrapper = styled.div`
 
 const DiaryLayout = ({children}) => {
     return (
-        <DiaryWrapper>
-            {children}
-        </DiaryWrapper>
+            <DiaryWrapper>
+                {children}
+            </DiaryWrapper>
     );
 };
 

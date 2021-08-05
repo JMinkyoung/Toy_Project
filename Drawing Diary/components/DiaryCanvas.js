@@ -59,7 +59,7 @@ const ColorPalette = styled.div`
 `;
 
 
-const DiaryCanvas = (props) => {
+const DiaryCanvas = ({date, title, emotion}) => {
     
     const [stroke, setStroke] = useState(1);
     const [color, setColor] = useState("#2c2c2c");
@@ -142,7 +142,7 @@ const DiaryCanvas = (props) => {
         <>
             <CanvasWrapper>
                 <canvas id="diarycanvas" style={{marginLeft:"34px", marginTop:"45px"}} ref={canvasRef} width="630" height="360"/>
-                <SaveButton onClick={onSave}>저장</SaveButton>
+                <SaveButton onClick={onSave}>그림저장</SaveButton>
                 <ColorWrapper>
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#2c2c2c"}}/>
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#FF3B30"}}/>
@@ -154,7 +154,7 @@ const DiaryCanvas = (props) => {
                 <SliderWrapper defaultValue={stroke} onChange={onChangeStroke} max={10}/>
                 <ClearButton onClick={onClear}/>
             </CanvasWrapper>
-            <DiaryText date={props.date} title={props.title} emotion={props.emotion} imgurl={imgurl}/>
+            <DiaryText date={date} title={title} emotion={emotion} imgurl={imgurl}/>
         </>
     );
 

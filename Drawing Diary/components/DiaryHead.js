@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useContext} from 'react';
 import styled from 'styled-components';
 import {SmileOutlined, MehOutlined, FrownOutlined} from '@ant-design/icons';
 import DatePicker from "react-datepicker";
@@ -86,14 +86,15 @@ const DiaryHead = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [emotion, setEmotion] = useState('');
     const [title, setTitle] = useState('');
-    
+
+
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
     };
 
     const onClickEmotion = (params, e)=>{
-        setEmotion(params);
         e.preventDefault();
+        setEmotion(params);
     };
     
     return (
@@ -129,7 +130,7 @@ const DiaryHead = () => {
                     emotion={emotion}/>
             </EmotionWrapper>
         </HeadWrapper>
-        <DiaryCanvas date={startDate} title={title} emotion={emotion} />
+        <DiaryCanvas date={startDate.toString().slice(4,16)} title={title} emotion={emotion} />
         </>
     );
 };

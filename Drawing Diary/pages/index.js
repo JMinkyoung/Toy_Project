@@ -1,10 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useRouter } from 'next/router';
+
 
 const Index = () => {
+
+    const Router = useRouter();
     return(
         <>
-        테스트
+            <button onClick={()=>Router.push('/NewDiary')}>일기 작성</button>
         </>
     );
 };
