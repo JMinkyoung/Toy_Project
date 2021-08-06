@@ -41,7 +41,6 @@ const TitleWrapper = styled.div`
     float:left;
     height: 86px;
     width: 200px;
-    font-size: 200px;
 `;
 
 const TitleInput = styled.input`

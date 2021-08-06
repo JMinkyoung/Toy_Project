@@ -1,7 +1,7 @@
 import React,{createRef, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {DeleteOutlined} from '@ant-design/icons';
-import { Slider } from 'antd';
+import {DeleteOutlined, SaveOutlined } from '@ant-design/icons';
+import { Slider} from 'antd';
 import 'antd/dist/antd.css';
 import DiaryText from './DiaryText';
 
@@ -9,13 +9,18 @@ const CanvasWrapper = styled.div`
     display: flex;
 `;
 
-const SaveButton = styled.button`
+const SaveButton = styled(SaveOutlined)`
     float: left;
     position: absolute;
     display: flex;
     height: 20px;
-    margin-top: 400px;
-    margin-left: 550px;
+    margin-top: 405px;
+    margin-left: 575px;
+    font-size: 30px;
+    cursor: pointer;
+    :hover{
+        color: greenyellow; 
+    }
 `;
 
 const ClearButton = styled(DeleteOutlined)`
@@ -24,7 +29,7 @@ const ClearButton = styled(DeleteOutlined)`
     display: flex;
     height: 20px;
     margin-top: 405px;
-    margin-left: 610px;
+    margin-left: 620px;
     font-size: 30px;
     cursor: pointer;
     :hover{
@@ -39,7 +44,7 @@ const SliderWrapper = styled(Slider)`
     display: flex;
     width: 150px;
     margin-top: 415px;
-    margin-left: 420px;
+    margin-left: 390px;
 `;
 
 const ColorWrapper = styled.div`
@@ -131,9 +136,12 @@ const DiaryCanvas = ({date, title, emotion}) => {
 
     const onSave = (e) => {
         setImgUrl(document.getElementById('diarycanvas').toDataURL());
+        alert("그림이 저장되었습니다!");
     };
 
     const onClear = () => {
+        canvas = canvasRef.current;
+        ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
     };
@@ -142,7 +150,7 @@ const DiaryCanvas = ({date, title, emotion}) => {
         <>
             <CanvasWrapper>
                 <canvas id="diarycanvas" style={{marginLeft:"34px", marginTop:"45px"}} ref={canvasRef} width="630" height="360"/>
-                <SaveButton onClick={onSave}>그림저장</SaveButton>
+                
                 <ColorWrapper>
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#2c2c2c"}}/>
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#FF3B30"}}/>
@@ -152,7 +160,10 @@ const DiaryCanvas = ({date, title, emotion}) => {
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#5AC8FA"}}/>
                 </ColorWrapper>
                 <SliderWrapper defaultValue={stroke} onChange={onChangeStroke} max={10}/>
+                
+                <SaveButton onClick={onSave}/>
                 <ClearButton onClick={onClear}/>
+
             </CanvasWrapper>
             <DiaryText date={date} title={title} emotion={emotion} imgurl={imgurl}/>
         </>

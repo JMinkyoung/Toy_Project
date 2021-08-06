@@ -48,14 +48,18 @@ const DiaryControl = ({date, title, emotion, imgurl,text}) => {
 
     const onClickSave = (e) => {
         e.preventDefault();
-        dispatch(addDiary({
-            date,
-            title,
-            emotion,
-            imgurl,
-            text,
-        }));
-        router.push('/');
+        if(title === "" || emotion === "" || imgurl === "" || text === ""){
+            alert("입력되지 않은 정보가 있습니다!");
+        }else{
+            dispatch(addDiary({
+                date,
+                title,
+                emotion,
+                imgurl,
+                text,
+            }));
+            router.push('/');
+        }
     };
     
     return (
