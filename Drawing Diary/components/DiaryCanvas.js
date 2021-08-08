@@ -66,7 +66,7 @@ const ColorPalette = styled.div`
 
 const DiaryCanvas = ({date, title, emotion}) => {
     
-    const [stroke, setStroke] = useState(1);
+    const [stroke, setStroke] = useState(5);
     const [color, setColor] = useState("#2c2c2c");
     const [imgurl, setImgUrl] = useState('');
 

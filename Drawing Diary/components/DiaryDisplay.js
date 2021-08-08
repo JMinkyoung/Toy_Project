@@ -29,7 +29,7 @@ const HeadContent = styled.div`
 
 const DateContent = styled.div`
     margin-top: 22px;
-    margin-left: 8px;
+    margin-left: 12px;
     position: relative;
     display: flex;
     float:left;
@@ -42,10 +42,10 @@ const TitleContent = styled.textarea`
     display: flex;
     float:left;
     margin-top: 5px;
-    margin-left: 50px;
+    margin-left: 42px;
     height: 73px;
     width: 230px;
-    font-size: 44px;
+    font-size: 45px;
     border: none;
     border-radius: 5px;
     text-align: center;
@@ -58,11 +58,19 @@ const TitleContent = styled.textarea`
     }
 `;
 
+const EmotionContent = styled.div`
+    margin-top: 16px;
+    margin-left: 19px;
+    position: relative;
+    display: flex;
+    float:left;
+`;
+
 const CanvasContent = styled.img`
     position: relative;
     display: flex;
     margin-left:34px; 
-    margin-top:45px;
+    margin-top:39px;
     width: 630px;
     height: 360px;
     background-image: url();
@@ -85,12 +93,18 @@ const TextContent = styled.textarea`
         outline: none;
     }
 `;
+
 const DiaryDisplay = ({data}) => {
     return (
         <ContentWrapper>
             <HeadContent>
                 <DateContent>{data.date}</DateContent>
                 <TitleContent defaultValue={data.title} readonly disabled/>
+                <EmotionContent>
+                    {data.emotion === "good" && <img src="/images/good.png"/>}
+                    {data.emotion === "soso" && <img src="/images/soso.png"/>}
+                    {data.emotion === "bad" && <img src="/images/bad.png"/>}
+                </EmotionContent>
             </HeadContent>
             <CanvasContent id="myDraw" src={data.imgurl}/>
             <TextContent defaultValue={data.text} readonly disabled/>
