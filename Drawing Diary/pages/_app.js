@@ -3,28 +3,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import rootReducer from '../reducers';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import { PersistGate } from 'redux-persist/integration/react';
 
-const store = createStore(rootReducer,composeWithDevTools());
+import factory from '../reducers/store';
 
+const {store, persistor} = factory();
 
 const App = ({Component})=>{
 
     return(
     <Provider store={store}>
-        <Head>
-            <meta charSet="utf-8" />
-            <title>오늘의 그림일기</title>
-            <link
-            rel="stylesheet"
-            type="text/css"
-            href="/styles/GlobalStyle.css"
-          />
-        </Head>
-        <Component />
+        <PersistGate loading={null} persistor={persistor}>
+            <Head>
+                <meta charSet="utf-8" />
+                <title>오늘의 그림일기</title>
+                <link
+                rel="stylesheet"
+                type="text/css"
+                href="/styles/GlobalStyle.css"
+            />
+            </Head>
+            <Component />
+        </PersistGate>
     </Provider>
     );
 };
