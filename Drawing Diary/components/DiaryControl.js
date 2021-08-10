@@ -46,13 +46,18 @@ const DiaryControl = ({date, title, emotion, imgurl,text}) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
+    let year = date.getFullYear();
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+
+    const finaldate = [year, month, day];
     const onClickSave = (e) => {
         e.preventDefault();
         if(title === "" || emotion === "" || imgurl === "" || text === ""){
             alert("입력되지 않은 정보가 있습니다!");
         }else{
             dispatch(addDiary({
-                date,
+                date: finaldate,
                 title,
                 emotion,
                 imgurl,
@@ -61,7 +66,8 @@ const DiaryControl = ({date, title, emotion, imgurl,text}) => {
             router.push('/');
         }
     };
-    
+
+    console.log(date.getFullYear());
     return (
         <ControlWrapper>
             <BackButton onClick={() => router.push('/')}>뒤로가기</BackButton>

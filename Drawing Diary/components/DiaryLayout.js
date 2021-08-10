@@ -2,8 +2,6 @@ import React,{createContext} from 'react';
 import styled from 'styled-components';
 
 const DiaryWrapper = styled.div`
-
-    /* display: flex; */
     flex-direction: column;
     position: relative;
     justify-content: center;

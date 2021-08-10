@@ -14,6 +14,10 @@ const HeadWrapper = styled.div`
     position: relative;
     padding-top: 31px;
     padding-left: 31px;
+
+    @media screen and (max-width: 400px) {
+        width: 80%;
+    }
 `;
 
 const DateWrapper = styled.div`
@@ -129,7 +133,7 @@ const DiaryHead = () => {
                     emotion={emotion}/>
             </EmotionWrapper>
         </HeadWrapper>
-        <DiaryCanvas date={startDate.toString().slice(4,16)} title={title} emotion={emotion} />
+        <DiaryCanvas date={startDate} title={title} emotion={emotion} />
         </>
     );
 };
