@@ -34,12 +34,22 @@ export const addDiary = (data) => ({
     }
 });
 
+export const deleteDiary = (data) => ({
+    type:DELETE,
+    date: data.date,
+});
+
 const diaryReducer = (state = initialState, action) => {
     switch(action.type) {
         case CREATE:
             return{
                 ...state,
                 diarys:[action.diarys, ...state.diarys]
+            };
+        case DELETE:
+            return{
+                ...state,
+                diarys: state.diarys.filter((diary)=>diary.date !== action.date)
             };
         default:
             return state;

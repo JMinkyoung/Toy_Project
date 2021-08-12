@@ -12,7 +12,6 @@ const CanvasWrapper = styled.div`
 const SaveButton = styled(SaveOutlined)`
     float: left;
     position: absolute;
-    display: flex;
     height: 20px;
     margin-top: 405px;
     margin-left: 575px;
@@ -26,7 +25,6 @@ const SaveButton = styled(SaveOutlined)`
 const ClearButton = styled(DeleteOutlined)`
     float: left;
     position: absolute;
-    display: flex;
     height: 20px;
     margin-top: 405px;
     margin-left: 620px;

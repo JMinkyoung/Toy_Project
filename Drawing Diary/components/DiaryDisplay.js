@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { deleteDiary } from '../reducers/diary';
 
 const ContentWrapper = styled.div`
     flex-direction: column;
@@ -83,14 +85,13 @@ const CanvasContent = styled.img`
     height: 360px;
     background-image: url();
 `;
-
 const TextContent = styled.textarea`
     position: relative;
     width: 610px;
-    height: 240px;
+    height: 200px;
     font-size: 40px;
-    margin-top: 48px;
-    margin-left: 40px;
+    /* margin-top: 48px;
+    margin-left: 40px; */
     color: black;
 
     background-color: white;
@@ -104,8 +105,45 @@ const TextContent = styled.textarea`
 
     }
 `;
+const BottonContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding-top: 48px;
+    padding-left: 40px;
+    width: 610px;
+
+`;
+
+const ButtonContent  = styled.div`
+    position: absolute;
+    margin-left: 490px;
+    margin-top: 200px;
+`;
+const EditButton = styled.button`
+    position: relative;
+    width: 60px;
+    height: 40px;
+    font-size: 20px;
+    float: right;
+
+`;
+const DeleteButton = styled.button`
+    position: relative;
+    width: 60px;
+    height: 40px;
+    font-size: 20px;
+    float: right;
+
+` ;
 
 const DiaryDisplay = ({data}) => {
+
+    const dispatch = useDispatch();
+    const onClickDelete = () => {
+        dispatch(deleteDiary({
+            date: data.date,
+        }));
+    };
     return (
         <ContentWrapper>
             <HeadContent>
@@ -118,7 +156,13 @@ const DiaryDisplay = ({data}) => {
                 </EmotionContent>
             </HeadContent>
             <CanvasContent id="myDraw" src={data.imgurl}/>
-            <TextContent defaultValue={data.text} readonly disabled/>
+            <BottonContent>
+                <TextContent defaultValue={data.text} readonly disabled/>
+                <ButtonContent>
+                    <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                    <EditButton>수정</EditButton>
+                </ButtonContent>
+            </BottonContent>
         </ContentWrapper>
     );
 };
