@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React,{useEffect, useState} from 'react'
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { deleteDiary } from '../reducers/diary';
@@ -90,8 +90,6 @@ const TextContent = styled.textarea`
     width: 610px;
     height: 200px;
     font-size: 40px;
-    /* margin-top: 48px;
-    margin-left: 40px; */
     color: black;
 
     background-color: white;
@@ -136,16 +134,42 @@ const DeleteButton = styled.button`
 
 ` ;
 
+const DeleteModal = styled.div`
+    display: table-cell;
+    position: absolute;
+    z-index: 99;
+    width: 300px;
+    height: 150px;
+    background-color: ivory;
+    margin-left: 30%;
+    margin-top: 40%;
+    border-radius: 20px;
+`;
+
 const DiaryDisplay = ({data}) => {
 
     const dispatch = useDispatch();
+
+    const [isOpend, setIsOpend] = useState(false);
+    const handleModal = () => {
+        setIsOpend(!isOpend);
+    };
+
     const onClickDelete = () => {
+        handleModal();
         dispatch(deleteDiary({
             date: data.date,
         }));
     };
     return (
         <ContentWrapper>
+            {isOpend === false ? null :
+                    <DeleteModal>
+                        <h1 style={{textAlign:"center", verticalAlign:"middle"}}>정말 삭제하실건가요?</h1>
+                        <button style={{width:"70px",fontSize:"20px", marginLeft:"70px"}} onClick={onClickDelete}>네</button>
+                        <button style={{width:"70px",fontSize:"20px", marginLeft:"10px"}} onClick={handleModal}>아니오</button>
+                    </DeleteModal>
+            }
             <HeadContent>
                 <DateContent>{`${data.date[0]}년 ${data.date[1]}월 ${data.date[2]}일`}</DateContent>
                 <TitleContent defaultValue={data.title} readonly disabled/>
@@ -159,7 +183,7 @@ const DiaryDisplay = ({data}) => {
             <BottonContent>
                 <TextContent defaultValue={data.text} readonly disabled/>
                 <ButtonContent>
-                    <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                    <DeleteButton onClick={handleModal}>삭제</DeleteButton>
                     <EditButton>수정</EditButton>
                 </ButtonContent>
             </BottonContent>

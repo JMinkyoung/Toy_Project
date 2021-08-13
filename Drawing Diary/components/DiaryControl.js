@@ -66,11 +66,9 @@ const DiaryControl = ({date, title, emotion, imgurl,text}) => {
             router.push('/');
         }
     };
-
-    console.log(date.getFullYear());
     return (
         <ControlWrapper>
-            <BackButton onClick={() => router.push('/')}>뒤로가기</BackButton>
+            <BackButton onClick={() => {router.push('/')} }>뒤로가기</BackButton>
             <SaveButton onClick={onClickSave}>저장</SaveButton>
         </ControlWrapper>
     );
