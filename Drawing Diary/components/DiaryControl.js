@@ -46,7 +46,7 @@ const DiaryControl = ({date, title, emotion, imgurl,text}) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    let year = date.getFullYear();
+    let year = ''+date.getFullYear();
     let month = ('0' + (date.getMonth() + 1)).slice(-2);
     let day = ('0' + date.getDate()).slice(-2);
 

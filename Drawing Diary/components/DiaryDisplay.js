@@ -1,7 +1,8 @@
-import React,{useEffect, useState} from 'react'
+import React,{useState} from 'react'
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { deleteDiary } from '../reducers/diary';
+import Router from 'next/router';
 
 const ContentWrapper = styled.div`
     flex-direction: column;
@@ -161,6 +162,15 @@ const DiaryDisplay = ({data}) => {
             date: data.date,
         }));
     };
+    
+    const SendData = () => {
+        Router.push({
+            pathname:'/EditDiary',
+            query: {
+                date:data.date,
+            },
+        });
+    };
     return (
         <ContentWrapper>
             {isOpend === false ? null :
@@ -184,7 +194,7 @@ const DiaryDisplay = ({data}) => {
                 <TextContent defaultValue={data.text} readonly disabled/>
                 <ButtonContent>
                     <DeleteButton onClick={handleModal}>삭제</DeleteButton>
-                    <EditButton>수정</EditButton>
+                    <EditButton onClick={SendData}>수정</EditButton>
                 </ButtonContent>
             </BottonContent>
         </ContentWrapper>
