@@ -27,6 +27,7 @@ const initialState = {
 
 export const CREATE = 'CREATE';
 export const DELETE = 'DELETE';
+export const EDIT = 'EDIT';
 export const LOAD = 'LOAD';
 
 
@@ -46,6 +47,17 @@ export const deleteDiary = (data) => ({
     date: data.date,
 });
 
+export const editDiary = (data) => ({
+    type:EDIT,
+    diarys:{
+        date: data.date,
+        title: data.title,
+        emotion: data.emotion,
+        imgurl: data.imgurl,
+        text: data.text,
+    }
+});
+
 const diaryReducer = (state = initialState, action) => {
     switch(action.type) {
         case CREATE:
@@ -53,6 +65,17 @@ const diaryReducer = (state = initialState, action) => {
                 ...state,
                 diarys:[action.diarys, ...state.diarys]
             };
+        case EDIT:
+            return{
+                ...state,
+                diarys: state.diarys.map((diary)=>{
+                    if(diary.date[0] === action.diarys.date[0] && diary.date[1] === action.diarys.date[1] && diary.date[2] === action.diarys.date[2]){
+                        return action.diarys;
+                    }else{
+                        return diary;
+                    }
+                }),
+            };          
         case DELETE:
             return{
                 ...state,

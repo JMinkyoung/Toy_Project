@@ -9,6 +9,18 @@ const CanvasWrapper = styled.div`
     display: flex;
 `;
 
+const EraserButton = styled.img`
+    position: absolute;
+    float: left;
+    margin-top: 402px;
+    margin-left: 528px;
+    height: 36px;
+
+    cursor: pointer;
+    :hover{
+        color: #cee5d5; 
+    }
+`;
 const SaveButton = styled(SaveOutlined)`
     float: left;
     position: absolute;
@@ -42,7 +54,7 @@ const SliderWrapper = styled(Slider)`
     display: flex;
     width: 150px;
     margin-top: 415px;
-    margin-left: 390px;
+    margin-left: 360px;
 `;
 
 const ColorWrapper = styled.div`
@@ -50,7 +62,7 @@ const ColorWrapper = styled.div`
     position: absolute;
     display: flex;
     margin-top: 405px;
-    margin-left: 80px;
+    margin-left: 45px;
 `;
 
 const ColorPalette = styled.div`
@@ -62,7 +74,7 @@ const ColorPalette = styled.div`
 `;
 
 
-const DiaryCanvas = ({date, title, emotion}) => {
+const DiaryCanvas = ({date, title, emotion, imgurlDone, text}) => {
     
     const [stroke, setStroke] = useState(5);
     const [color, setColor] = useState("#2c2c2c");
@@ -85,20 +97,32 @@ const DiaryCanvas = ({date, title, emotion}) => {
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", finishDraw);
         canvas.addEventListener("mouseout", finishDraw);
-    },[]);
 
+        if(imgurlDone !== undefined){
+            setImgUrl(imgurlDone);
+            let img = new Image();
+            img.src = imgurlDone;
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            };
+        }
+    },[]);
+    
     useEffect(()=>{
         canvas = canvasRef.current;
         ctx = canvas.getContext("2d");
         ctx.lineWidth  = stroke;
     },[stroke]);
-
+    
     useEffect(()=>{
         canvas = canvasRef.current;
         ctx = canvas.getContext("2d");
         ctx.strokeStyle=color;
         ctx.fillStyle=color;
     },[color]);
+
 
     const initDraw = (e) =>{
         ctx.beginPath();
@@ -137,13 +161,17 @@ const DiaryCanvas = ({date, title, emotion}) => {
         alert("그림이 저장되었습니다!");
     };
 
+    const onErase = (e) => {
+        setColor("white");
+    };
+
     const onClear = () => {
         canvas = canvasRef.current;
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
     };
-
+    
     return(
         <>
             <CanvasWrapper>
@@ -157,13 +185,17 @@ const DiaryCanvas = ({date, title, emotion}) => {
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#cee5d5"}}/>
                     <ColorPalette onClick={onClickColor} style={{backgroundColor:"#5AC8FA"}}/>
                 </ColorWrapper>
+
                 <SliderWrapper defaultValue={stroke} onChange={onChangeStroke} max={10}/>
-                
+                <EraserButton onClick={onErase} src={'/images/eraser.png'}/>
                 <SaveButton onClick={onSave}/>
                 <ClearButton onClick={onClear}/>
 
             </CanvasWrapper>
-            <DiaryText date={date} title={title} emotion={emotion} imgurl={imgurl}/>
+            {text === undefined ?
+                <DiaryText date={date} title={title} emotion={emotion} imgurl={imgurl}/> :
+                <DiaryText date={date} title={title} emotion={emotion} imgurl={imgurl} textDone={text}/>
+            }
         </>
     );
 

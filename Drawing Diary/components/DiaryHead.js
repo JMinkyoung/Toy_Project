@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext, useEffect} from 'react';
 import styled from 'styled-components';
 import {SmileOutlined, MehOutlined, FrownOutlined} from '@ant-design/icons';
 import DatePicker from "react-datepicker";
@@ -7,6 +7,17 @@ import {ko} from 'date-fns/locale';
 
 import DiaryCanvas from './DiaryCanvas';
 
+const DateContent = styled.div`
+    margin-left: 10px;
+    position: relative;
+    height: 40px;
+    width: 180px;
+    font-size: 25px;
+
+    @media screen and (max-width: 400px) {
+        width: 30%;
+    }
+`;
 const HeadWrapper = styled.div`
     display: inline-block;
     width:645px;
@@ -85,12 +96,18 @@ const BadEmotion = styled(FrownOutlined)`
     color : ${props => props.emotion === "bad" ? 'red' : 'black'};
 `;
 
-const DiaryHead = () => {
+const DiaryHead = ({data}) => {
     const [startDate, setStartDate] = useState(new Date());
     const [emotion, setEmotion] = useState('');
     const [title, setTitle] = useState('');
 
-
+    if(data !== undefined){
+        useEffect(()=>{
+            setStartDate(new Date(Number(data.date[0]),Number(data.date[1])-1,Number(data.date[2])));
+            setTitle(data.title);
+            setEmotion(data.emotion);
+        },[]);
+    }
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
     };
@@ -104,18 +121,28 @@ const DiaryHead = () => {
         <>
         <HeadWrapper>
             <DateWrapper>
-                <DatePickerStyle 
-                    dateFormat="yyyy년 MM월 dd일" 
-                    locale={ko} 
-                    selected={startDate} 
-                    onChange={(date) => setStartDate(date)} 
-                />
+ 
+                    {data === undefined ?
+                        <DatePickerStyle 
+                        dateFormat="yyyy년 MM월 dd일" 
+                        locale={ko} 
+                        selected={startDate} 
+                        onChange={(date) => setStartDate(date)}/> 
+                        :
+                        <DateContent>{`${data.date[0]}년 ${data.date[1]}월 ${data.date[2]}일`}</DateContent>
+                    }
             </DateWrapper>
 
             <TitleWrapper>
-                <TitleInput 
-                    placeholder="제목" 
-                    onChange={onChangeTitle} />
+                {data === undefined ?
+                    <TitleInput 
+                        placeholder="제목" 
+                        onChange={onChangeTitle} 
+                    /> : 
+                    <TitleInput 
+                        value={title}
+                        onChange={onChangeTitle} 
+                    />}
             </TitleWrapper>
 
             <EmotionWrapper>
@@ -133,7 +160,10 @@ const DiaryHead = () => {
                     emotion={emotion}/>
             </EmotionWrapper>
         </HeadWrapper>
-        <DiaryCanvas date={startDate} title={title} emotion={emotion} />
+            {data === undefined ?
+                <DiaryCanvas date={startDate} title={title} emotion={emotion} /> :
+                <DiaryCanvas date={startDate} title={title} emotion={emotion} imgurlDone={data.imgurl} text={data.text}/>
+            }
         </>
     );
 };

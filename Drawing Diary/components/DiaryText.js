@@ -1,4 +1,4 @@
-import React,{useState, useContext} from 'react';
+import React,{useState, useContext, useEffect} from 'react';
 import styled from 'styled-components';
 import DiaryControl from './DiaryControl';
 
@@ -16,17 +16,28 @@ const TextWrapper = styled.textarea`
         outline: none;
     }
 `;
-const DiaryText = ({date, title, emotion, imgurl}) => {
+const DiaryText = ({date, title, emotion, imgurl, textDone}) => {
     const [diaryText, setDiaryText] = useState('');
+    const [edited, setEdited] = useState(false);
 
     const onChangeText = (e) => {
         e.preventDefault();
         setDiaryText(e.target.value);
     }
+    if(textDone !== undefined){
+        useEffect(()=>{
+            setDiaryText(textDone);
+            setEdited(true);
+        },[]);
+    };
+
     return(
         <>
-            <TextWrapper onChange={onChangeText} placeholder="일기 내용을 입력하세요"/>
-            <DiaryControl date={date} title={title} emotion={emotion} imgurl={imgurl} text={diaryText} />
+            {textDone === undefined ? 
+                <TextWrapper onChange={onChangeText} placeholder="일기 내용을 입력하세요"/> :
+                <TextWrapper onChange={onChangeText} value={diaryText}/>
+            }
+            {<DiaryControl date={date} title={title} emotion={emotion} imgurl={imgurl} text={diaryText} edited={edited}/>}
         </>
     );
 };

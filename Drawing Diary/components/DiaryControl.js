@@ -2,7 +2,7 @@ import React  from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import { addDiary } from '../reducers/diary';
+import { addDiary, editDiary } from '../reducers/diary';
 
 const ControlWrapper = styled.div`
     width: 220px;
@@ -42,7 +42,7 @@ const SaveButton = styled.button`
     }
 `;
 
-const DiaryControl = ({date, title, emotion, imgurl,text}) => {
+const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -66,10 +66,30 @@ const DiaryControl = ({date, title, emotion, imgurl,text}) => {
             router.push('/');
         }
     };
+
+    const onClickEdit = (e) => {
+        e.preventDefault();
+        if(title === "" || emotion === "" || imgurl === "" || text === ""){
+            alert("입력되지 않은 정보가 있습니다!");
+        }else{
+            dispatch(editDiary({
+                date: finaldate,
+                title,
+                emotion,
+                imgurl,
+                text,
+            }));
+            router.push('/');
+        }
+    };
     return (
         <ControlWrapper>
             <BackButton onClick={() => {router.push('/')} }>뒤로가기</BackButton>
-            <SaveButton onClick={onClickSave}>저장</SaveButton>
+            {edited === false ? 
+                <SaveButton onClick={onClickSave}>저장</SaveButton> :
+                <SaveButton onClick={onClickEdit}>수정</SaveButton>
+            }
+
         </ControlWrapper>
     );
 };
