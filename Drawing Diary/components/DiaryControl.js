@@ -63,7 +63,7 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
                 imgurl,
                 text,
             }));
-            router.push('/');
+            router.push('/', null,  { shallow: true });
         }
     };
 
@@ -79,12 +79,13 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
                 imgurl,
                 text,
             }));
-            router.push('/');
+            window.location.assign(window.location.origin);
         }
     };
+
     return (
         <ControlWrapper>
-            <BackButton onClick={() => {router.push('/')} }>뒤로가기</BackButton>
+            <BackButton onClick={() => {window.location.assign(window.location.origin)} }>뒤로가기</BackButton>
             {edited === false ? 
                 <SaveButton onClick={onClickSave}>저장</SaveButton> :
                 <SaveButton onClick={onClickEdit}>수정</SaveButton>
