@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
@@ -56,19 +56,32 @@ const HamburgerButton = styled(MenuOutlined)`
 `;
 
 const MonthNavi = (props) => {
+    const naviRef = useRef();
+
     const [isOpend, setIsOpend] = useState(false);
     const months = ["1","2","3","4","5","6","7","8","9","10","11","12"];
     const naviClick = () => {
         setIsOpend(!isOpend);
     };
+
     const naviClose = () => {
         setIsOpend(false);
     };
 
+    const handleClickOutside = ({target}) => {
+        console.log(target);
+        if(isOpend && !naviRef.current.contains(target)) setIsOpend(false);
+    };
+
+    useEffect(()=>{
+        window.addEventListener("click", handleClickOutside);
+        return () => {
+            window.removeEventListener("click", handleClickOutside);
+        };
+    },[]);
+
     useEffect(()=>{
         isOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
-
-
     },[isOpend])
     return (
         <>
@@ -76,7 +89,7 @@ const MonthNavi = (props) => {
                 <HamburgerButton />
                 <span style={{marginLeft:"10px", fontSize:"20px", position:"relative"}}>필터</span>
             </NaviWrapper>
-            <NaviLayer open={isOpend}>
+            <NaviLayer open={isOpend} ref={naviRef}>
                 <NaviCloseButton onClick={naviClose} />
                 <li>
                     2021년
