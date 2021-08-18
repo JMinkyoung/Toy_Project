@@ -5,8 +5,6 @@ import DiaryHead from './DiaryHead';
 const DiaryEdit = ({data}) => {
     return (
         <>
-            {/* {data.date}
-            {data.title} */}
         <DiaryLayout>
             <DiaryHead data={data}/>
         </DiaryLayout>

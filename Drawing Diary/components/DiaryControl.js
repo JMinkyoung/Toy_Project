@@ -51,6 +51,7 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
     let day = ('0' + date.getDate()).slice(-2);
 
     const finaldate = [year, month, day];
+
     const onClickSave = (e) => {
         e.preventDefault();
         if(title === "" || emotion === "" || imgurl === "" || text === ""){
@@ -63,7 +64,7 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
                 imgurl,
                 text,
             }));
-            router.push('/', null,  { shallow: true });
+            window.location.assign(window.location.origin);
         }
     };
 

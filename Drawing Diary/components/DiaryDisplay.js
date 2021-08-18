@@ -12,7 +12,7 @@ const ContentWrapper = styled.div`
     height: 850px;
     width: 700px;
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 80px;
     margin-bottom: 76px;
 
     background-image: url('/images/background.png');
@@ -124,7 +124,13 @@ const EditButton = styled.button`
     height: 40px;
     font-size: 20px;
     float: right;
-
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: white;
+    :hover,:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+    }
 `;
 const DeleteButton = styled.button`
     position: relative;
@@ -132,7 +138,14 @@ const DeleteButton = styled.button`
     height: 40px;
     font-size: 20px;
     float: right;
-
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+    background-color: white;
+    :hover,:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+    }
 ` ;
 
 const DeleteModal = styled.div`
@@ -141,10 +154,22 @@ const DeleteModal = styled.div`
     z-index: 99;
     width: 300px;
     height: 150px;
-    background-color: ivory;
+    background-color: #8FBC94;
     margin-left: 30%;
     margin-top: 40%;
-    border-radius: 20px;
+    border-radius: 10px;
+`;
+
+const ModalButton = styled.button`
+    width:70px;
+    font-size:20px;
+    margin-top: 5px;
+    border-radius: 15px;
+    background-color: #cee5d5;
+    :hover,:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+    };
 `;
 
 const DiaryDisplay = ({data}) => {
@@ -176,8 +201,8 @@ const DiaryDisplay = ({data}) => {
             {isOpend === false ? null :
                     <DeleteModal>
                         <h1 style={{textAlign:"center", verticalAlign:"middle"}}>정말 삭제하실건가요?</h1>
-                        <button style={{width:"70px",fontSize:"20px", marginLeft:"70px"}} onClick={onClickDelete}>네</button>
-                        <button style={{width:"70px",fontSize:"20px", marginLeft:"10px"}} onClick={handleModal}>아니오</button>
+                        <ModalButton style={{marginLeft:"70px"}} onClick={onClickDelete}>네</ModalButton>
+                        <ModalButton style={{marginLeft:"10px"}} onClick={handleModal}>아니오</ModalButton>
                     </DeleteModal>
             }
             <HeadContent>
