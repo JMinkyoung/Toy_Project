@@ -7,9 +7,7 @@ const DiaryList = () => {
     const diarys = useSelector((state)=>state.diaryReducer.diarys);
     // 현재 날짜를 기준으로 보여준다.
     const today = new Date();
-    const [month, setMonth] = useState("0"+ (today.getMonth() + 1));
-    let year = today.getFullYear();
-    
+    const [month, setMonth] = useState("0"+ (today.getMonth() + 1));    
     return(
         <>  
             <MonthNavi setMonth={setMonth} />

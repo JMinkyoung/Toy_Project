@@ -1,100 +1,11 @@
-import React,{useState,useContext, useEffect} from 'react';
-import styled from 'styled-components';
-import {SmileOutlined, MehOutlined, FrownOutlined} from '@ant-design/icons';
+import React,{useState, useEffect} from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {ko} from 'date-fns/locale';
 
 import DiaryCanvas from './DiaryCanvas';
+import { DateContent2, HeadWrapper, DateWrapper, DatePickerStyle, TitleWrapper,TitleInput,EmotionWrapper, GoodEmotion, SosoEmotion, BadEmotion } from '../styles';
 
-const DateContent = styled.div`
-    margin-left: 10px;
-    position: relative;
-    height: 40px;
-    width: 180px;
-    font-size: 25px;
-
-    @media screen and (max-width: 400px) {
-        width: 30%;
-    }
-`;
-const HeadWrapper = styled.div`
-    display: inline-block;
-    width:645px;
-    height: 86px;
-    position: relative;
-    padding-top: 31px;
-    padding-left: 31px;
-
-    @media screen and (max-width: 400px) {
-        width: 80%;
-    }
-`;
-
-const DateWrapper = styled.div`
-    margin-top: 22px;
-    margin-left: 8px;
-    position: relative;
-    display: flex;
-    float:left;
-    height: 86px;
-`;
-
-const DatePickerStyle = styled(DatePicker)`
-    width: 180px;
-    font-size: 25px;
-    border: none;
-    border-radius: 5px;
-    :focus{
-        outline: none;
-    }
-`
-
-const TitleWrapper = styled.div`
-    position: relative;
-    display: flex;
-    float:left;
-    height: 86px;
-    width: 200px;
-`;
-
-const TitleInput = styled.input`
-    margin-top: 6px;
-    height: 70px;
-    width: 230px;
-    font-size: 50px;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    ::placeholder{
-        color: black;
-        text-align: center;
-    }
-    :focus{
-        outline: none;
-    }
-`;
-
-const EmotionWrapper = styled.div`
-    position: absolute;
-    float: left;
-    display: flex;
-    height: 86px;
-    font-size: 45px;
-    margin-left: 430px;
-    margin-top: 12px;
-`;
-
-const GoodEmotion = styled(SmileOutlined)`
-    color : ${props => props.emotion === "good" ? '#49BD4D' : 'black'};
-`;
-
-const SosoEmotion = styled(MehOutlined)`
-    color : ${props => props.emotion === "soso" ? 'orange' : 'black'};
-`;
-const BadEmotion = styled(FrownOutlined)`
-    color : ${props => props.emotion === "bad" ? 'red' : 'black'};
-`;
 
 const DiaryHead = ({data}) => {
     const [startDate, setStartDate] = useState(new Date());
@@ -129,7 +40,7 @@ const DiaryHead = ({data}) => {
                         selected={startDate} 
                         onChange={(date) => setStartDate(date)}/> 
                         :
-                        <DateContent>{`${data.date[0]}년 ${data.date[1]}월 ${data.date[2]}일`}</DateContent>
+                        <DateContent2>{`${data.date[0]}년 ${data.date[1]}월 ${data.date[2]}일`}</DateContent2>
                     }
             </DateWrapper>
 

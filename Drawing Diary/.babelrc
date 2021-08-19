@@ -3,7 +3,12 @@
     "plugins": [
       [
         "babel-plugin-styled-components",
-        { "fileName": true, "displayName": true, "pure": true }
+          { "fileName": true, 
+            "ssr": true, 
+            "displayName": true, 
+            "pure": true,
+            "preprocess": false
+          }
       ]
     ]
   }

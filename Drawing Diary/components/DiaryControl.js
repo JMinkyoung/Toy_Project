@@ -1,46 +1,8 @@
 import React  from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { addDiary, editDiary } from '../reducers/diary';
-
-const ControlWrapper = styled.div`
-    width: 220px;
-    height: 50px;
-    flex-direction: column;
-    position: relative;
-    margin: 0 auto;
-    justify-content: center;
-    margin-top: 40px;
-`;
-
-const BackButton = styled.button`
-    width: 100px;
-    height: 50px;
-    background-color:white;
-    font-size: 25px;
-    border-radius: 20px;
-    cursor: pointer;
-    
-    :hover,:focus {
-    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-    transform: translateY(-0.25em);
-    }
-`;
-
-const SaveButton = styled.button`
-    width: 100px;
-    height: 50px;
-    background-color:white;
-    font-size: 25px;
-    margin-left: 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    :hover,:focus {
-    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-    transform: translateY(-0.25em);
-    }
-`;
+import { ControlWrapper, BackButton, FinalSaveButton } from '../styles';
 
 const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
     const router = useRouter();
@@ -64,7 +26,8 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
                 imgurl,
                 text,
             }));
-            window.location.assign(window.location.origin);
+            // window.location.assign(window.location.origin);
+            router.push('/DiaryList');
         }
     };
 
@@ -80,16 +43,17 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
                 imgurl,
                 text,
             }));
-            window.location.assign(window.location.origin);
+            // window.location.assign(window.location.origin);
+            router.push('/DiaryList');
         }
     };
 
     return (
         <ControlWrapper>
-            <BackButton onClick={() => {window.location.assign(window.location.origin)} }>뒤로가기</BackButton>
+            <BackButton onClick={() => {router.push('/DiaryList');} }>뒤로가기</BackButton>
             {edited === false ? 
-                <SaveButton onClick={onClickSave}>저장</SaveButton> :
-                <SaveButton onClick={onClickEdit}>수정</SaveButton>
+                <FinalSaveButton onClick={onClickSave}>저장</FinalSaveButton> :
+                <FinalSaveButton onClick={onClickEdit}>수정</FinalSaveButton>
             }
 
         </ControlWrapper>
