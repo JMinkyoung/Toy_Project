@@ -54,7 +54,7 @@ const Index = () => {
     const router = useRouter();
     const settings = {
         infinite: true,
-        speed: 450,
+        speed: 600,
         autoplay: true,
         autoplaySpeed: 3000,
         slidesToShow: 1,

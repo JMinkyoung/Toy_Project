@@ -17,7 +17,7 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
     const onClickSave = (e) => {
         e.preventDefault();
         if(title === "" || emotion === "" || imgurl === "" || text === ""){
-            alert("입력되지 않은 정보가 있습니다!");
+            alert("입력되지 않은 정보가 있습니다! \n그림을 꼭 저장해주세요!");
         }else{
             dispatch(addDiary({
                 date: finaldate,
@@ -34,7 +34,7 @@ const DiaryControl = ({date, title, emotion, imgurl,text, edited}) => {
     const onClickEdit = (e) => {
         e.preventDefault();
         if(title === "" || emotion === "" || imgurl === "" || text === ""){
-            alert("입력되지 않은 정보가 있습니다!");
+            alert("입력되지 않은 정보가 있습니다! \n그림을 꼭 저장해주세요!");
         }else{
             dispatch(editDiary({
                 date: finaldate,

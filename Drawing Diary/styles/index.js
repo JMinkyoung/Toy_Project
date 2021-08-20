@@ -299,7 +299,7 @@ export const DateWrapper = styled.div`
 `;
 
 export const DatePickerStyle = styled(DatePicker)`
-    width: 180px;
+    width: 190px;
     font-size: 25px;
     border: none;
     border-radius: 5px;
