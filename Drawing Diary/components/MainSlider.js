@@ -31,13 +31,13 @@ const MainSlider = () => {
     <SliderLayout>
             <Slider {...settings}>
                 <div>
-                    <SliderImage src={'/images/1.png'}/>
+                    <SliderImage src={'/images/1.PNG'}/>
                 </div>
                 <div>
-                    <SliderImage src={'/images/2.png'}/>
+                    <SliderImage src={'/images/2.PNG'}/>
                 </div>
                 <div>
-                    <SliderImage src={'/images/4.png'}/>
+                    <SliderImage src={'/images/4.PNG'}/>
                 </div>
             </Slider>
       </SliderLayout>

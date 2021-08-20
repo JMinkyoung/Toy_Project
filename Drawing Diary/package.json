@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next"
+    "dev": "next",
+    "vercel-deploy": "next build && next export" 
   },
   "author": "JMinkyoung",
   "license": "ISC",
