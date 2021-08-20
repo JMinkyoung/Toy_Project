@@ -1,22 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import styled from 'styled-components';
-
-
-const SliderLayout = styled.div`
-    width: 450px;
-    height: 550px;
-    margin: 0 auto;
-    margin-top: 50px;
-`;
-
-const SliderImage = styled.img`
-    width: 100%;
-    height: 100%;
-`;
+import MainSlider from '../components/MainSlider';
 
 const MainTitle = styled.h1`
     font-size: 50px;
@@ -52,33 +37,14 @@ const MainButton = styled.button`
 
 const Index = () => {
     const router = useRouter();
-    const settings = {
-        infinite: true,
-        speed: 600,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      };
+
     return(
     <>
     <MainSection>
         <MainTitle>🎨오늘의 그림 일기📝</MainTitle>
         <p style={{fontSize:"30px"}}>직접 그린 그림과 함께 오늘을 기록하자!</p>
     </MainSection>
-        <SliderLayout>
-            <Slider {...settings}>
-                <div>
-                    <SliderImage src={'/images/1.png'}/>
-                </div>
-                <div>
-                    <SliderImage src={'/images/2.png'}/>
-                </div>
-                <div>
-                    <SliderImage src={'/images/4.png'}/>
-                </div>
-            </Slider>
-      </SliderLayout>
+    <MainSlider />
     <ButtonSection>
         <MainButton onClick={()=>router.push('/NewDiary')}>일기 작성</MainButton>
         <MainButton onClick={()=>router.push('/DiaryList')}>일기 보기</MainButton>
