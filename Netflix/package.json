@@ -9,6 +9,7 @@
   "author": "JMinkyoung",
   "license": "ISC",
   "dependencies": {
+    "antd": "^4.16.13",
     "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.13.2",
     "immer": "^9.0.5",

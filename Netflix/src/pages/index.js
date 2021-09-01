@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Qna from '../components/Qna';
 const OurStoryCard = styled.div`
     position: absolute;
     top: 0;
@@ -272,6 +272,7 @@ const TVwrapper = styled.div`
     margin: 0 auto;
     top: 0;
     margin-bottom: 50px;
+
     @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
         flex-direction: column;
         text-align: center;
@@ -294,9 +295,10 @@ const TVContext = styled.div`
 `;
 
 const TVrightWrapper = styled.div`
-    width: 50%;
+    width: 40%;
     height: 100%;
     display: flex;
+    margin-left: 80px;
     top: -10px;
     @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
         margin: 0 auto;
@@ -306,7 +308,7 @@ const TVrightWrapper = styled.div`
 
 const TVvideoWrapper = styled.div`
     position: relative;
-
+    
     @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
         /* width: ; */
     }
@@ -321,11 +323,13 @@ const TVImg = styled.img`
 `;
 
 const TVVideo = styled.div`
-    width: 100%;
-    height: 100%;
+
     position: absolute;
     top: 5%;
-    left: 7%;
+    left: 12%;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        left: 0;
+    }
 `;
 
 const CardTitle = styled.h1`
@@ -361,11 +365,14 @@ const OfflineWrapper = styled.div`
     z-index: 0;
     max-width: 1100px;
     margin: 0 auto;
-    top: 0;
     margin-bottom: 50px;
     @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
-        flex-direction: column;
+        flex-direction: column-reverse;
         text-align: center;
+        padding-top: 50px;
+        margin: 0 auto;
+        width: 90%;
+        margin-bottom: 50px;
     }
 `;
 
@@ -373,43 +380,191 @@ const OfflineLeft = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+    min-height: 100px;
     width: 50%;
-    height: 100%;
+    margin-top: 40px;
+    margin-right: 150px;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 45%;
+    }
 `;
 
 const OfflineRight = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 45%;
+    width: 55%;
     height: 100%;
-    margin-top: 45px;
+    margin-top: 50px;
+
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 100%;
+    }
+`;
+
+const PhoneImgWrapper = styled.div`
+    width: 60%;
+    margin: 0 auto;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 100%;
+    }
+    
 `;
 
 const PhoneImg = styled.img`
     position: relative;
     z-index: 0;
-    max-width: 90%;
+    max-width: 100%;
+    height: auto;
+    border: 0;
 `;
+
 
 const OfflineDownload = styled.div`
     position: absolute;
-    left: 45%;
-    bottom: 6%;
+    left: 50%;
+    bottom: 8%;
     transform: translateX(-50%);
     margin: 0 auto;
     background: #000;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    width: 60%;
+    width: 70%;
+    height: 23%;
     min-width: 15em;
-    padding: .25em .65em;
+    padding: .3em .7em;
     border: 2px solid rgba(255,255,255,.25);
     box-shadow: 0 0 2em 0 #000;
     border-radius: .75em;
     z-index: 3;
+    ::after{
+        width: 3em;
+        height: 3em;
+        outline: 2px solid #000;
+        outline-offset: -2px;
+        display: block;
+        background: url("https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/download-icon.gif")center center;
+        background-size: 100%;
+        content: '';
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        left: 50%;
+        bottom: 9%;     
+    }
 `;
 
+const OfflineText = styled.div`
+    position: relative;
+    left: 0;
+    flex-grow: 1;
+    width:60%;
+    height:50%;
+    margin:.3em 0;
+
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin-bottom: 10px;
+        text-align: left;
+    }
+`;
+
+const OurStoryDevice = styled.div`
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    border-bottom: 8px solid #222;
+    background-color: black;
+`;
+
+const DeviceContext = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    flex: 0 1 auto;
+    /* padding: 0 3rem 0 0; */
+    z-index: 3;
+    padding-top: 100px;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 80%;
+        padding-top: 50px;
+    }
+`;
+
+const DevicerightWrapper = styled.div`
+    width: 55%;
+    height: 100%;
+    display: flex;
+    margin-left: 80px;
+    top: -10px;
+    padding-top: 70px;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 80%;
+        padding-top: 0px
+    }
+`;
+const DevicevideoWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        /* width: ; */
+    }
+`;
+
+const DeviceVideo = styled.div`
+
+    position: absolute;
+    top: 10%;
+    left: 20%;
+
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        width: 80%;
+        left: 10%;
+    }
+`;
+
+const DeviceImg = styled.img`
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+    height: auto;
+    border: 0;
+`;
+
+const KidLeft = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100px;
+    width: 50%;
+    margin-top: 80px;
+    margin-right: 150px;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 100%;
+    }
+`;
+
+
+const KidImgWrapper = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+`;
 
 const index = () => {
     return(
@@ -447,7 +602,7 @@ const index = () => {
                         <TVvideoWrapper>
                             <TVImg src="/images/tv.png"/>
                             <TVVideo>
-                                <video width="80%" autoplay="" playsinline="" muted="" loop="true">
+                                <video width="90%" autoPlay playsInline muted loop>
                                     <source src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-tv-0819.m4v" type="video/mp4"/>
                                 </video>
                             </TVVideo>
@@ -458,17 +613,58 @@ const index = () => {
             <OurStoryOffline>
                 <OfflineWrapper>
                     <OfflineLeft>
-                        <PhoneImg src="/images/mobile-0819.jpg"/>
+                        <PhoneImgWrapper>
+                            <PhoneImg src="/images/mobile-08192.jpg"/>
+                        </PhoneImgWrapper>
                         <OfflineDownload>
-                            <img style={{width:"20%"}}src="/images/boxshot.png"/>
+                            <div style={{width:"17%", margin:"0 1em 0 0"}}>
+                                <img style={{maxWidth:"100%", wheight:"3em"}}src="/images/boxshot.png"/>
+                            </div>
+                            <OfflineText>
+                                <div style={{fontWeight:"600", fontSize:".9em"}}>기묘한 이야기</div>
+                                <div style={{fontWeight:"400", fontSize:".75em", color:"#0071eb"}}>저장 중...</div>
+                            </OfflineText>
                         </OfflineDownload>
-                        
                     </OfflineLeft>
                     <OfflineRight>
                         <CardTitle>즐겨 보는 콘텐츠를 저장해 오프라인으로 시청하세요.</CardTitle>
                         <CardSubTitle>간편하게 저장하고 빈틈없이 즐겨보세요.</CardSubTitle>
                     </OfflineRight>
                 </OfflineWrapper>
+            </OurStoryOffline>
+            <OurStoryDevice>
+                <TVwrapper>
+                        <DeviceContext>
+                            <CardTitle>다양한 디바이스에서</CardTitle>
+                            <CardSubTitle>각종 영화와 TV 프로그램을 스마트폰, 태블릿, 노트북, TV에서 무제한으로 스트리밍하세요. 추가 요금이 전혀 없습니다.</CardSubTitle>
+                        </DeviceContext>
+                        <DevicerightWrapper>
+                            <DevicevideoWrapper>
+                                <DeviceImg src="/images/device-pile.png"/>
+                                <DeviceVideo>
+                                    <video width="78%" autoPlay playsInline muted loop>
+                                        <source src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/video-devices.m4v" type="video/mp4"/>
+                                    </video>
+                                </DeviceVideo>
+                            </DevicevideoWrapper>
+                        </DevicerightWrapper>
+                </TVwrapper>
+            </OurStoryDevice>
+            <OurStoryOffline>
+                <OfflineWrapper>
+                    <KidLeft>
+                        <KidImgWrapper>
+                            <PhoneImg src="/images/kid.png"/>
+                        </KidImgWrapper>
+                    </KidLeft>
+                    <OfflineRight>
+                        <CardTitle>어린이 전용 프로필을 만들어 보세요.</CardTitle>
+                        <CardSubTitle>자기만의 공간에서 좋아하는 캐릭터와 즐기는 신나는 모험. 자녀에게 이 특별한 경험을 선물하세요. 넷플릭스 회원이라면 무료입니다.</CardSubTitle>
+                    </OfflineRight>
+                </OfflineWrapper>
+            </OurStoryOffline>
+            <OurStoryOffline>
+                <Qna />
             </OurStoryOffline>
         </OurStoryCard>
     );
