@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import Qna from '../components/Qna';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+
 const OurStoryCard = styled.div`
     position: absolute;
     top: 0;
@@ -68,7 +71,7 @@ const LoginButton = styled.a`
     padding: 7px 17px;
     font-weight: 400;
     font-size: 1rem;
-
+    cursor: pointer;
     @media only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 350px) and (max-width: 399px), only screen and (max-width: 349px){
         font-size: .9rem;
         padding: .25rem, .5rem;
@@ -171,7 +174,6 @@ const OurStoryHeroSubTitle = styled.h2`
 const EmailForm = styled.form`
     display: flex;
     flex-direction: column;
-
     @media only screen and (min-width: 950px) and (max-width: 1449px), only screen and (min-width: 1450px) {
         max-width: 950px;
         padding-top: .85rem;
@@ -184,6 +186,7 @@ const EmailTitle = styled.h3`
 
     @media screen and (min-width: 740px) {
         font-size: 23px;
+        max-width: 450px;
     }
 
     @media only screen and (min-width: 950px) and (max-width: 1449px), only screen and (min-width: 1450px) {
@@ -357,6 +360,8 @@ const OurStoryOffline = styled.div`
     width: 100%;
     border-bottom: 8px solid #222;
     background-color: black;
+
+    
 `;
 
 const OfflineWrapper = styled.div`
@@ -489,7 +494,6 @@ const DeviceContext = styled.div`
     width: 60%;
     height: 100%;
     flex: 0 1 auto;
-    /* padding: 0 3rem 0 0; */
     z-index: 3;
     padding-top: 100px;
     @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
@@ -515,9 +519,6 @@ const DevicerightWrapper = styled.div`
 const DevicevideoWrapper = styled.div`
     position: relative;
     width: 100%;
-    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
-        /* width: ; */
-    }
 `;
 
 const DeviceVideo = styled.div`
@@ -562,17 +563,49 @@ const KidImgWrapper = styled.div`
     @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
         margin: 0 auto;
         width: 100%;
-    }
-    
+    }  
 `;
 
+const QnaWrapper = styled.div`
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    z-index: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        text-align: center;
+        margin: 0 auto;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+`;
+
+const QnaList = styled.ul`
+    width: 75%;
+    margin: 0 auto;
+    
+    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px), only screen and (min-width: 550px) and (max-width: 949px)  {
+        text-align: center;
+        margin-left: 10px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+`;
+
+
 const index = () => {
+    const qnas = useSelector((state) => state.qna.qnas);
+    const router = useRouter();
+
     return(
         <OurStoryCard>
             <OurStoryHeaderWrapper>
                 <OurStoryHeader>
                     <Mainlogo src="/images/netflix-logo-png-2562.png"/>
-                    <LoginButton>로그인</LoginButton>
+                    <LoginButton onClick={()=>router.push('/browse')}>로그인</LoginButton>
                 </OurStoryHeader>
             </OurStoryHeaderWrapper>
             <OurStoryHero>
@@ -664,7 +697,21 @@ const index = () => {
                 </OfflineWrapper>
             </OurStoryOffline>
             <OurStoryOffline>
-                <Qna />
+                <QnaWrapper>
+                    <CardTitle style={{textAlign:"center", margin:"80px 0 50px 0"}}>자주 묻는 질문</CardTitle>
+                    <QnaList>
+                        {qnas.map((qna)=>{
+                            return <Qna key={qna.id} id={qna.id} question={qna.question} answer={qna.answer} />
+                        })}
+                    </QnaList>
+                    <EmailForm style={{margin:"0 auto"}}>
+                        <EmailTitle style={{width:"100%", marginRight:"50px"}}>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</EmailTitle>
+                        <EmailWrapper>
+                            <EmailInput placeholder="이메일 주소"></EmailInput>
+                            <EmailButton>시작하기</EmailButton>
+                        </EmailWrapper>
+                    </EmailForm>
+                </QnaWrapper>
             </OurStoryOffline>
         </OurStoryCard>
     );

@@ -3,18 +3,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import {Provider} from 'react-redux';
+import {store} from '../reducers/store';
+
 // import wrapper from '../store/configureStore';
 
 const App = ({Component})=>{
 
     return(
-    <>
+    <Provider store={store}>
         <Head>
             <meta charSet="utf-8" />
             <title>넷플릭스</title>
         </Head>
         <Component />
-    </>
+    </Provider>
     );
 };
 
