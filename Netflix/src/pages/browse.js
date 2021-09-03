@@ -1,8 +1,28 @@
-import React from 'react';
+import React,{useEffect}from 'react';
+import { useDispatch } from 'react-redux';
+import { getPopularMovies } from '../reducers/popularMovie';
+import { useSelector } from 'react-redux';
 
 const browse = () => {
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getPopularMovies());
+    },[]);
+
+    const movies = useSelector((state)=>state.popularMovie.movies);
+
     return (
-        <h1>초기화면</h1>
+        <>
+        {movies && movies.results.map((v)=>{
+            return (
+            <>
+            <h1>{v.title}</h1>
+            <img src={`https://image.tmdb.org/t/p/w500${v.poster_path}`}></img>
+            </>
+            )
+        })}
+        </>
     );
 };
 

@@ -29,14 +29,17 @@ const QnaQuestion = styled.button`
     }
 `;
 
-const PlustIcon = styled(PlusOutlined)`
+const PlusIcon = styled(PlusOutlined)`
     position: absolute;
     right: 1em;
     top: 30%;
     height: 1em;
     width: 1em;
 
+    transform: rotate( ${props => props.open ? "45deg" : "none"});
+
 `;
+
 
 const QnaAnswer = styled.div`
     font-size: 1.625rem;
@@ -67,7 +70,7 @@ const Qna = ({id, question, answer}) => {
             <QnaListItem>
                 <QnaQuestion id={id} onClick={onClickButton}>
                     {question}
-                    <PlustIcon/>
+                    <PlusIcon open={open}/>
                 </QnaQuestion>
                 {open ? 
                 (<QnaAnswer close={open}>
