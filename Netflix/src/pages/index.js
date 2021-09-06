@@ -53,7 +53,7 @@ const OurStoryHeader = styled.div`
 
 `;
 
-const Mainlogo = styled.img`
+export const Mainlogo = styled.img`
     width: 180px;
     margin-right: auto;
     @media only screen and (min-width: 550px) and (max-width: 949px){
