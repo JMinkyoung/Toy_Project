@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {SearchOutlined, BellFilled} from '@ant-design/icons';
+import {SearchOutlined, BellFilled,CaretDownOutlined} from '@ant-design/icons';
 
 const HeaderWrapper = styled.div`
     position: fixed;
@@ -9,6 +9,8 @@ const HeaderWrapper = styled.div`
     left: 0;
     top: 0;
     right: 0;
+    background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+    z-index: 1000;
 `;
 
 const HeaderContainer = styled.div`
@@ -30,6 +32,7 @@ const LeftNavigation = styled.div`
     height: 100%;
     display: flex;
     margin-left: 55px;
+    
 `;
 
 const RightNavigation = styled.div`
@@ -43,7 +46,10 @@ const RightNavigation = styled.div`
 `;
 
 const NaviElement = styled.div`
+    display: flex;
     margin-left: 22px;
+    align-items: center;
+    font-size: 0.9rem;
 `;
 
 const Navilist = styled.div`
@@ -62,6 +68,14 @@ const Navilist = styled.div`
     :hover{
         color: #e5e5e5;
     }
+`;
+
+const AvatarArrow = styled(CaretDownOutlined)`
+    position: absolute;
+    align-items: center;
+    font-size: 13px;
+    color: white;
+    margin-left: 40px;
 `;
 
 const MainHeader = () => {
@@ -86,7 +100,7 @@ const MainHeader = () => {
                             <Navilist>홈</Navilist>
                             <Navilist>TV 프로그램</Navilist>
                             <Navilist>영화</Navilist>
-                            <Navilist>New! 요즘 대세 콘텐츠</Navilist>
+                            <Navilist>NEW! 요즘 대세 콘텐츠</Navilist>
                             <Navilist>내가 찜한 콘텐츠</Navilist>
                         </ul>
                 </LeftNavigation>
@@ -94,7 +108,10 @@ const MainHeader = () => {
                     <NaviElement><SearchOutlined style={{color:"white", fontSize:"20px"}}/></NaviElement>
                     <NaviElement style={{color:"white"}}>키즈</NaviElement>
                     <NaviElement><BellFilled style={{color:"white", fontSize:"25px"}} /></NaviElement>
-                    <NaviElement><img style={{width:"32px", borderRadius:"5px"}} src="/images/avatar.png"/></NaviElement>
+                    <NaviElement>
+                        <img style={{width:"32px", borderRadius:"5px"}} src="/images/avatar.png"/>
+                        <AvatarArrow/>
+                    </NaviElement>
                 </RightNavigation>
             </HeaderContainer>
         </HeaderWrapper>
