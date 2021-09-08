@@ -4,6 +4,7 @@ import { getPopularMovies } from '../reducers/popularMovie';
 import { useSelector } from 'react-redux';
 import MainHeader from '../components/MainHeader';
 import MainTopContent from '../components/MainTopContent';
+import Head from 'next/head';
 
 const browse = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,9 @@ const browse = () => {
 
     return (
         <>
+        <Head>
+            <title>홈 - 넷플릭스</title>
+        </Head>
         {/* 헤더에 현재 선택된거 전달해줘야함 */}
         <MainHeader/>
         <MainTopContent/>

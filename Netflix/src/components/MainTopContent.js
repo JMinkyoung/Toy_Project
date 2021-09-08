@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
-import {CaretRightOutlined ,InfoCircleOutlined} from '@ant-design/icons';
+import {CaretRightOutlined ,InfoCircleOutlined ,SoundOutlined} from '@ant-design/icons';
 
 const MainTopWrapper = styled.div`
     width: 100%;
@@ -27,7 +27,7 @@ const MainTopLeft = styled.div`
     width: 50%;
     height: 50%;
     z-index: 2;
-    top: 10%;
+    top: 20%;
     left: 3%;
     color: white;
 `;
@@ -51,8 +51,8 @@ const MainContentDesc = styled.div`
     width: auto;
     display: ${props=> props.change === true ? "none" : "block"};
 
-    transition: display 2s;
-    transition-property: display;
+    transition: height 2s;
+    transition-property: height;
     transition-duration: 2s;
     transition-timing-function: ease;
     transition-delay: 0s;
@@ -60,21 +60,22 @@ const MainContentDesc = styled.div`
     font-size: 1.4vw;
     text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
 
-    margin-top: 20px;
+    margin-top: 10px;
 `;
 
 const ButtonWrapper = styled.div`
     width: 70%;
+    height: 11%;
     display: flex;
     position: relative;
     margin-top: 25px;
 `;
 
 const MainButton = styled.button`
-    font-size: 1.5rem;
+    font-size: 1.5em;
     font-weight: 600;
-    padding: 1% 5% 1% 5%;
-    border-radius: 5px;
+    padding: 4% 6% 4% 4%;
+    border-radius: 4px;
     border: 0;
     outline: 0;
     cursor: pointer;
@@ -83,15 +84,48 @@ const MainButton = styled.button`
     align-items: center;
 
     margin-right: 15px;
+
+    :hover{
+        background-color: grey;
+    }
 `;
 
 const MainTopRight = styled.div`
     position: absolute;
     right: 0;
+    bottom: 28%;
     display: flex;
-    z-index: 2;
-    top: 500px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+`;
+
+const ExtraContent = styled.div`
+    border: solid 3px #dcdcdc;
+    border-style: none none none solid;
+    background-color: rgba(51,51,51,.6);
+    padding: 0.2vw 4vw 0vw 1vw;
+
+    height: auto;
+`;
+
+const MuteButton = styled.button`
+
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.7);
     color: white;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem;
+    
+    margin-right: 15px;
+
+    cursor: pointer;
+
+    :hover{
+        background-color: rgba(109,109,110,0.7);
+    }
 `;
 
 
@@ -100,7 +134,6 @@ const MainTopRight = styled.div`
 const MainTopContent = () => {
     const [muted, setMuted] = useState(false);
     const [change, setChange] = useState(false);
-
     const onClickMute = () => {
         setMuted(!muted);
     };
@@ -119,15 +152,16 @@ const MainTopContent = () => {
                     width="100%"
                     height="100%"
                     muted={muted}
+                    onEnded={(()=> console.log("재생끝남"))}
                 />
             </TrailerWrapper>
             <MainTopLeft>
                 <LogoWrapper change={change} ><MainContentLogo alt="기묘한이야기" src="/images/strangelogo.png"/></LogoWrapper>
-                <MainContentDesc change={change}>
-                    <span>사랑이 싹트는 계절, 새로 문을 여는 쇼핑몰.<br></br>
-                            생기 넘치는 1985년 호킨스.<br></br>
-                            하지만 광란의 쥐 떼가 질주하면서 어둠이 입을 벌린다.<br></br>
-                            이번 여름, 모든 것이 기묘해진다.</span>
+                <MainContentDesc change={change} >
+                    사랑이 싹트는 계절, 새로 문을 여는 쇼핑몰.<br></br>
+                    생기 넘치는 1985년 호킨스.<br></br>
+                    하지만 광란의 쥐 떼가 질주하면서 어둠이 입을 벌린다.<br></br>
+                    이번 여름, 모든 것이 기묘해진다.
                 </MainContentDesc>
                 <ButtonWrapper>
                     <MainButton>
@@ -136,12 +170,15 @@ const MainTopContent = () => {
                     </MainButton>
                     <MainButton style={{color:"white", backgroundColor:"rgba(109,109,110,0.7)"}}>
                         <InfoCircleOutlined style={{fontSize:"1.7rem"}} /> 
-                        <div style={{marginLeft:"10px"}}>상세정보</div>
+                        <div style={{ width:"100%", marginLeft:"10px"}}>상세정보</div>
                     </MainButton>
                 </ButtonWrapper>
             </MainTopLeft>
             <MainTopRight>
-                <button onClick={onClickMute}>뮤트버튼</button>
+                <MuteButton onClick={onClickMute}><SoundOutlined style={{fontSize:"1.5rem"}}/></MuteButton>
+                <ExtraContent>
+                    <img style={{width:"100%"}}src={"/images/rating.png"}/>
+                </ExtraContent>
             </MainTopRight>
         </MainTopWrapper>
     );  
