@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 import {CaretRightOutlined ,InfoCircleOutlined ,SoundOutlined} from '@ant-design/icons';
+
+import ContentModal from './ContentModal';
 
 const MainTopWrapper = styled.div`
     width: 100%;
@@ -17,7 +19,7 @@ const TrailerWrapper = styled.div`
     top: 0;
     right: 0;
     background-color: black;
-    
+
 `;
 
 const MainTopLeft = styled.div`
@@ -128,32 +130,56 @@ const MuteButton = styled.button`
     }
 `;
 
+const TrailerVideo = styled(ReactPlayer)`
+    visibility: ${props=> props.ended === true ? "hidden" : "visible"};
+`;
 
-// 기묘한 이야기 트레일러
-// https://api.themoviedb.org/3/tv/66732/videos?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR
+const BackgroundImage = styled.img`
+    position: absolute;
+    top:0;
+    width: 100%;
+    display: ${props=> props.ended === true ? "block" : "none"};
+`;
+
 const MainTopContent = () => {
     const [muted, setMuted] = useState(false);
     const [change, setChange] = useState(false);
+    const [ended, setEnded] = useState(false);
+    const [isModalOpend, setModalOpend] = useState(false);
+
+
     const onClickMute = () => {
         setMuted(!muted);
     };
 
+    const videoEnded = () => {
+        setEnded(true);
+    };
+
+    const modalOpen = () => {
+        setModalOpend(!isModalOpend);
+    };
+
+
+
     setTimeout(()=>{
         setChange(true);
-    },2000);
+    },3000);
 
     return(
         <MainTopWrapper>
             <TrailerWrapper>
-                <ReactPlayer 
+                <TrailerVideo 
                     url={"/test.mp4"}
                     playing={true}
                     controls={false}
                     width="100%"
                     height="100%"
                     muted={muted}
-                    onEnded={(()=> console.log("재생끝남"))}
+                    onEnded={(()=> videoEnded())}
+                    ended={ended}
                 />
+                <BackgroundImage ended={ended} src="/images/strangeBack.jpg"/>
             </TrailerWrapper>
             <MainTopLeft>
                 <LogoWrapper change={change} ><MainContentLogo alt="기묘한이야기" src="/images/strangelogo.png"/></LogoWrapper>
@@ -168,7 +194,7 @@ const MainTopContent = () => {
                         <CaretRightOutlined style={{fontSize:"2.5rem"}} /> 
                         <div>재생</div>
                     </MainButton>
-                    <MainButton style={{color:"white", backgroundColor:"rgba(109,109,110,0.7)"}}>
+                    <MainButton onClick={modalOpen} style={{color:"white", backgroundColor:"rgba(109,109,110,0.7)"}}>
                         <InfoCircleOutlined style={{fontSize:"1.7rem"}} /> 
                         <div style={{ width:"100%", marginLeft:"10px"}}>상세정보</div>
                     </MainButton>
@@ -180,6 +206,7 @@ const MainTopContent = () => {
                     <img style={{width:"100%"}}src={"/images/rating.png"}/>
                 </ExtraContent>
             </MainTopRight>
+            <ContentModal isOpen={isModalOpend} contentId={66732}/>
         </MainTopWrapper>
     );  
 };
