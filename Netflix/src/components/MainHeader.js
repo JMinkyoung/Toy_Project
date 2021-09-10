@@ -10,7 +10,7 @@ const HeaderWrapper = styled.div`
     top: 0;
     right: 0;
     background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
-    z-index: 1000;
+    z-index: 500;
 `;
 
 const HeaderContainer = styled.div`

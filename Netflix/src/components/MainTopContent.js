@@ -160,7 +160,9 @@ const MainTopContent = () => {
         setModalOpend(!isModalOpend);
     };
 
-
+    useEffect(()=>{
+        isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
+    },[isModalOpend]);
 
     setTimeout(()=>{
         setChange(true);
@@ -203,10 +205,10 @@ const MainTopContent = () => {
             <MainTopRight>
                 <MuteButton onClick={onClickMute}><SoundOutlined style={{fontSize:"1.5rem"}}/></MuteButton>
                 <ExtraContent>
-                    <img style={{width:"100%"}}src={"/images/rating.png"}/>
+                    <img style={{width:"100%"}} src={"/images/rating.png"}/>
                 </ExtraContent>
             </MainTopRight>
-            <ContentModal isOpen={isModalOpend} contentId={66732}/>
+            <ContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={66732}/>
         </MainTopWrapper>
     );  
 };
