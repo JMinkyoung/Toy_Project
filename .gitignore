@@ -9,3 +9,4 @@ Netflix/node_modules
 Netflix/.next/cache
 Netflix/.next
 Netflix/.env
+*.mp4

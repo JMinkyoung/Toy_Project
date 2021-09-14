@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 import {CaretRightOutlined ,InfoCircleOutlined ,SoundOutlined} from '@ant-design/icons';
@@ -148,7 +148,7 @@ const MainTopContent = () => {
     const [isModalOpend, setModalOpend] = useState(false);
 
 
-    const onClickMute = () => {
+    const onClickMute = ()=>{
         setMuted(!muted);
     };
 
@@ -156,9 +156,9 @@ const MainTopContent = () => {
         setEnded(true);
     };
 
-    const modalOpen = () => {
+    const modalOpen = useCallback(()=>{
         setModalOpend(!isModalOpend);
-    };
+    },[]);
 
     useEffect(()=>{
         isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
@@ -179,7 +179,6 @@ const MainTopContent = () => {
                     height="100%"
                     muted={muted}
                     onEnded={(()=> videoEnded())}
-                    ended={ended}
                 />
                 <BackgroundImage ended={ended} src="/images/strangeBack.jpg"/>
             </TrailerWrapper>
