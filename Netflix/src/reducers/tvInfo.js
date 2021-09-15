@@ -4,13 +4,14 @@ export const GET_TV_INFO = 'GET_TV_INFO';
 export const GET_TV_VIDEO = 'GET_TV_VIDEO';
 export const GET_TV_CREDITS = 'GET_TV_CREDITS';
 export const GET_TV_KEYWORDS = 'GET_TV_KEYWORDS';
+export const GET_TV_SIMILAR = 'GET_TV_SIMILAR';
 
 export const getTVInfo = (data) => ({
     type:GET_TV_INFO,
     data,
 });
   
-  export function getTvInfoAction(contentId) {
+export function getTvInfoAction(contentId) {
     return (dispatch) => {
       return axios.get(`https://api.themoviedb.org/3/tv/${contentId}?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`)
         .then(response => {
@@ -27,7 +28,7 @@ export const getTVVideo = (data) => ({
     data,
 });
   
-  export function getTvVideoAction(contentId) {
+export function getTvVideoAction(contentId) {
     return (dispatch) => {
       return axios.get(`https://api.themoviedb.org/3/tv/${contentId}/videos?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`)
         .then(response => {
@@ -39,12 +40,12 @@ export const getTVVideo = (data) => ({
     }
   };
 
-  export const getTVCredits = (data) => ({
+export const getTVCredits = (data) => ({
     type:GET_TV_CREDITS,
     data,
 });
   
-  export function getTvCreditsAction(contentId) {
+export function getTvCreditsAction(contentId) {
     return (dispatch) => {
       return axios.get(`https://api.themoviedb.org/3/tv/${contentId}/credits?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`)
         .then(response => {
@@ -56,16 +57,32 @@ export const getTVVideo = (data) => ({
     }
   };
 
-  export const getTVKeywords = (data) => ({
+export const getTVKeywords = (data) => ({
     type:GET_TV_KEYWORDS,
     data,
 });
   
-  export function getTvKeywordsAction(contentId) {
+export function getTvKeywordsAction(contentId) {
     return (dispatch) => {
       return axios.get(`https://api.themoviedb.org/3/tv/${contentId}/keywords?api_key=0f54240da860f0ee0a59657346e7a8cc`)
         .then(response => {
           dispatch(getTVKeywords(response.data))
+        })
+        .catch(error => {
+            throw(error);
+        })
+    }
+  };
+export const getTVSimilar = (data) => ({
+    type:GET_TV_SIMILAR,
+    data,
+});
+  
+  export function getTvSimilarAction(contentId) {
+    return (dispatch) => {
+      return axios.get(`https://api.themoviedb.org/3/tv/${contentId}/similar?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`)
+        .then(response => {
+          dispatch(getTVSimilar(response.data))
         })
         .catch(error => {
             throw(error);
@@ -94,6 +111,11 @@ const reducer = (state = [] , action) => {
             return{
                 ...state,
                 keywords: action.data,
+            };
+          case GET_TV_SIMILAR:
+            return{
+                ...state,
+                similars: action.data,
             };
         default:
             return state;

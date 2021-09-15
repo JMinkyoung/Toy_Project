@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReactPlayer from 'react-player';
 import {CaretRightOutlined ,InfoCircleOutlined ,SoundOutlined} from '@ant-design/icons';
 
-import ContentModal from './ContentModal';
+import TVContentModal from './TVContentModal';
 
 const MainTopWrapper = styled.div`
     width: 100%;
@@ -156,9 +156,9 @@ const MainTopContent = () => {
         setEnded(true);
     };
 
-    const modalOpen = useCallback(()=>{
+    const modalOpen = () => {
         setModalOpend(!isModalOpend);
-    },[]);
+    };
 
     useEffect(()=>{
         isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
@@ -207,7 +207,7 @@ const MainTopContent = () => {
                     <img style={{width:"100%"}} src={"/images/rating.png"}/>
                 </ExtraContent>
             </MainTopRight>
-            <ContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={66732}/>
+            <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={66732}/>
         </MainTopWrapper>
     );  
 };

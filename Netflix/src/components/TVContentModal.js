@@ -2,9 +2,10 @@ import React,{useState,useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getTvCreditsAction, getTvInfoAction, getTvKeywordsAction, getTvVideoAction } from '../reducers/tvInfo';
+import { getTvCreditsAction, getTvInfoAction, getTvKeywordsAction, getTvSimilarAction, getTvVideoAction } from '../reducers/tvInfo';
 import ReactPlayer from 'react-player';
 import { CloseCircleOutlined, SoundOutlined, CaretRightOutlined } from '@ant-design/icons';
+import SimilarTV from './SimilarTV';
 
 
 const ModalWrapper = styled.div`
@@ -30,6 +31,7 @@ const ModalContent = styled.div`
     background-color: #181818;
     overflow: scroll;
     height: 100%;
+    
 
     ::-webkit-scrollbar {
     display: none; 
@@ -64,20 +66,24 @@ const BackgroundImage = styled.img`
     display: ${props=> props.ended === true ? "block" : "none"};
 `;
 
-const ModalInfoWrapper = styled.div`
+const ModalContentContainer = styled.div`
+    display: block;
+    padding: 0 3em;
+`;
 
+const ModalInfoWrapper = styled.div`
+    position: relative;
     background-color: #181818;
     color: #fff;
     font-size: 16px;
     line-height: 1.4;
-    width: 938.5px;
-    height: 500px;
+    width: 100%;
+    height: 250px;
     margin-top: 10px;
 `;
 
 const ModalInfoDetail = styled.div`
     display: block;
-    padding: 0 3em;
     width: 100%;
     height: auto;
 `;
@@ -172,9 +178,33 @@ const TagWrapper = styled.div`
     margin: .5em;
 `;
 
+const ModalSimilarWrapper = styled.div`
+    position: relative;
+    background-color: #181818;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.4;
+    width: 100%;
+    margin-top: 10px;
+    display: grid;
+    grid-gap: 1em;
+    justify-items: stretch;
+    align-items: stretch;
+    grid-template-columns: repeat(3,1fr);
+
+`;
+
+const ModalHeader = styled.h3`  
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+    margin-top: 48px;
+    margin-bottom: 20px;
+`;
 
 
-const ContentModal = ({isOpen, contentId, setModalOpend}) => {
+
+const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
     const dispatch = useDispatch();
     const [muted, setMuted] = useState(true);
     const [ended, setEnded] = useState(false);
@@ -196,14 +226,15 @@ const ContentModal = ({isOpen, contentId, setModalOpend}) => {
         dispatch(getTvVideoAction(contentId));
         dispatch(getTvCreditsAction(contentId));
         dispatch(getTvKeywordsAction(contentId));
+        dispatch(getTvSimilarAction(contentId));
     },[]);
 
     const infos = useSelector((state)=>state.tvInfo.infos);
     const videos = useSelector((state)=>state.tvInfo.videos);
     const credits = useSelector((state)=>state.tvInfo.credits);
     const keywords = useSelector((state)=>state.tvInfo.keywords);
-
-    console.log(keywords);
+    const TVsimilars = useSelector((state)=>state.tvInfo.similars)
+    // TVsimilars.filter((v)=> v.backdrop_path !== null && v.overview !== "");
     return (
         <>
         {isOpen ? 
@@ -232,28 +263,37 @@ const ContentModal = ({isOpen, contentId, setModalOpend}) => {
                                 <div>재생</div>
                             </PlayButton>
                         </ModalTopWrapper>
-                <ModalInfoWrapper>
-                    <ModalInfoDetail>
-                        <ModalInfoLeft>
-                            <div style={{marginBottom:"10px"}}>평점 : {infos.vote_average}</div>
-                            <div style={{marginBottom:"10px"}}>{infos.overview}</div>
-                        </ModalInfoLeft>
-                        <ModalInfoRight>
-                            <TagWrapper>
-                                <span style={{color:"#777"}}>출연: </span>
-                                <span>{credits.cast[0].name}, </span><span>{credits.cast[1].name}, </span><span>{credits.cast[2].name}</span>
-                            </TagWrapper>
-                            <TagWrapper>
-                                <span style={{color:"#777"}}>장르: </span>
-                                <span>{infos.genres[0].name}, </span><span>{infos.genres[1].name}, </span><span>{infos.genres[2].name}</span>
-                            </TagWrapper>
-                            <TagWrapper>
-                                <span style={{color:"#777"}}>프로그램 특징: </span>
-                                <span>{keywords.results[0].name}, </span><span>{keywords.results[1].name}, </span><span>{keywords.results[2].name}</span>
-                            </TagWrapper>
-                        </ModalInfoRight>
-                    </ModalInfoDetail>
-                </ModalInfoWrapper>
+                    <ModalContentContainer>
+                        <ModalInfoWrapper>
+                            <ModalInfoDetail>
+                                <ModalInfoLeft>
+                                    <div style={{marginBottom:"10px"}}>평점 : {infos.vote_average}</div>
+                                    <div style={{marginBottom:"10px"}}>{infos.overview}</div>
+                                </ModalInfoLeft>
+                                <ModalInfoRight>
+                                    <TagWrapper>
+                                        <span style={{color:"#777"}}>출연: </span>
+                                        <span>{credits.cast[0].name}, </span><span>{credits.cast[1].name}, </span><span>{credits.cast[2].name}</span>
+                                    </TagWrapper>
+                                    <TagWrapper>
+                                        <span style={{color:"#777"}}>장르: </span>
+                                        <span>{infos.genres[0].name}, </span><span>{infos.genres[1].name}, </span><span>{infos.genres[2].name}</span>
+                                    </TagWrapper>
+                                    <TagWrapper>
+                                        <span style={{color:"#777"}}>프로그램 특징: </span>
+                                        <span>{keywords.results[0].name}, </span><span>{keywords.results[1].name}, </span><span>{keywords.results[2].name}</span>
+                                    </TagWrapper>
+                                </ModalInfoRight>
+                            </ModalInfoDetail>
+                        </ModalInfoWrapper>
+                        
+                        <ModalHeader>비슷한 콘텐츠</ModalHeader>
+                        <ModalSimilarWrapper>
+                            {TVsimilars.results.map((v)=>{
+                                if(v.backdrop_path !== null && v.overview !== "") return <SimilarTV key={v.id} data={v}/>
+                            })}
+                        </ModalSimilarWrapper>
+                    </ModalContentContainer>
                 </ModalContent>
             </ModalWrapper>
         </BackWrapper>
@@ -264,14 +304,4 @@ const ContentModal = ({isOpen, contentId, setModalOpend}) => {
 };
 
 
-export const getServerSideProps = async ctx => {
-
-	// get the cookies
-	const cookieString = ctx.req ? ctx.req.headers.cookie : '';
-
-	// set the cookies
-	ctx.res.setHeader(cookieString,'same-site-cookie=foo; SameSite=Lax');
-    ctx.res.setHeader(cookieString, 'cross-site-cookie=bar; SameSite=None; Secure');
-}
-
-export default ContentModal;
+export default TVContentModal;
