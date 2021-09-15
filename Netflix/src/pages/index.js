@@ -718,3 +718,16 @@ const index = () => {
 };
 
 export default index;
+
+export const getServerSideProps = async ctx => {
+
+    // get the cookies
+    const cookieString = ctx.req ? ctx.req.headers.cookie : '';
+    
+    ctx.res.setHeader('set-cookie', ['same-site-cookie=foo; SameSite=Strict', 'cross-site-cookie=bar; SameSite=None; Secure'])
+
+  
+      return {
+        props: {},
+    };
+  }
