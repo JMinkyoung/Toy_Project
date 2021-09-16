@@ -253,7 +253,6 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                                 height="100%"
                                 muted={muted}
                                 onEnded={(()=> videoEnded())}
-                                // onError={console.log(ended)}
                             />
                         <BackgroundImage ended={ended} src={`https://image.tmdb.org/t/p/original${infos.backdrop_path}`}/>
                         </ModalVideoWrapper>
