@@ -7,7 +7,6 @@ import ReactPlayer from 'react-player';
 import { CloseCircleOutlined, SoundOutlined, CaretRightOutlined } from '@ant-design/icons';
 import SimilarTV from './SimilarTV';
 
-
 const ModalWrapper = styled.div`
 
     margin: 0 auto;    
@@ -18,7 +17,9 @@ const ModalWrapper = styled.div`
     margin-bottom: 2em;
     transform: none;
     min-width: 850px;
+
     z-index: 2;
+
 `;
 
 const ModalContent = styled.div`
@@ -27,12 +28,13 @@ const ModalContent = styled.div`
     width: 100%;
     justify-content: center;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: ${props => props.scroll === "change" ? "0px" : "0px"};
+
     background-color: #181818;
     overflow: scroll;
     height: 100%;
-    
 
+    border-radius: 6px;
     ::-webkit-scrollbar {
     display: none; 
     }
@@ -44,6 +46,7 @@ const BackWrapper = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
+    width: 100%;
     background-color: rgb(0, 0, 0, 0.5);
     z-index: 500;
 
@@ -202,6 +205,12 @@ const ModalHeader = styled.h3`
     margin-bottom: 20px;
 `;
 
+const ModalAboutWrapper = styled.div`
+    background-color: #181818;
+    padding-bottom: 2em;
+    color:#fff;
+`;
+
 
 
 const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
@@ -234,13 +243,13 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
     const credits = useSelector((state)=>state.tvInfo.credits);
     const keywords = useSelector((state)=>state.tvInfo.keywords);
     const TVsimilars = useSelector((state)=>state.tvInfo.similars)
-    // TVsimilars.filter((v)=> v.backdrop_path !== null && v.overview !== "");
+
     return (
         <>
         {isOpen ? 
         
         (<BackWrapper onClick={closeModal}>
-            <ModalWrapper onClick={e=>e.stopPropagation()}>
+            <ModalWrapper scroll={scroll > 1 ? "change" : "original"}onClick={e=>e.stopPropagation()}>
                 <ModalContent>
                     <ModalTopWrapper>
                     <ModalCloseButton onClick={closeModal}/>
@@ -292,6 +301,25 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                                 if(v.backdrop_path !== null && v.overview !== "") return <SimilarTV key={v.id} data={v}/>
                             })}
                         </ModalSimilarWrapper>
+                        <ModalAboutWrapper>
+                            <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"0"}}> 상세 정보</span></ModalHeader>
+                                <TagWrapper>
+                                    <span style={{color:"#777"}}>크리에이터: </span>
+                                    {credits.crew.map((v)=><span>{v.name} </span>)}
+                                </TagWrapper>
+                                <TagWrapper>
+                                    <span style={{color:"#777"}}>출연: </span>
+                                    {credits.cast.map((v)=><span>{v.name} </span>)}
+                                </TagWrapper>
+                                <TagWrapper>
+                                    <span style={{color:"#777"}}>장르: </span>
+                                    {infos.genres.map((v)=><span>{v.name} </span>)}
+                                </TagWrapper>
+                                <TagWrapper>
+                                    <span style={{color:"#777"}}>특징: </span>
+                                    {keywords.results.map((v)=><span>{v.name} </span>)}
+                                </TagWrapper>
+                        </ModalAboutWrapper>
                     </ModalContentContainer>
                 </ModalContent>
             </ModalWrapper>

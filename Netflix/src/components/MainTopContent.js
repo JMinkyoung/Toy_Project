@@ -168,6 +168,7 @@ const MainTopContent = () => {
         setChange(true);
     },3000);
 
+
     return(
         <MainTopWrapper>
             <TrailerWrapper>

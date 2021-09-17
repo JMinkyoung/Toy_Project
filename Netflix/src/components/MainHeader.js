@@ -90,7 +90,6 @@ const MainHeader = () => {
         window.addEventListener('scroll', updateScroll);
     });
 
-    
     return(
         <HeaderWrapper>
             <HeaderContainer scroll={scroll > 1 ? "change" : "original"}>

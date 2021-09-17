@@ -23,7 +23,6 @@ const browse = () => {
         {/* 헤더에 현재 선택된거 전달해줘야함 */}
         <MainHeader/>
         <MainTopContent/>
-        
         </>
     );
 };
