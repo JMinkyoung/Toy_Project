@@ -142,9 +142,9 @@ const BackgroundImage = styled.img`
 `;
 
 const MainTopContent = () => {
-    const [muted, setMuted] = useState(false);
+    const [muted, setMuted] = useState(true);
     const [change, setChange] = useState(false);
-    const [ended, setEnded] = useState(false);
+    const [ended, setEnded] = useState(true);
     const [isModalOpend, setModalOpend] = useState(false);
 
 
