@@ -142,11 +142,10 @@ const BackgroundImage = styled.img`
 `;
 
 const MainTopContent = () => {
-    const [muted, setMuted] = useState(true);
+    const [muted, setMuted] = useState(false);
     const [change, setChange] = useState(false);
-    const [ended, setEnded] = useState(true);
+    const [ended, setEnded] = useState(false);
     const [isModalOpend, setModalOpend] = useState(false);
-
 
     const onClickMute = ()=>{
         setMuted(!muted);
@@ -157,7 +156,7 @@ const MainTopContent = () => {
     };
 
     const modalOpen = () => {
-        setModalOpend(!isModalOpend);
+        setModalOpend(true);
     };
 
     useEffect(()=>{
@@ -167,6 +166,14 @@ const MainTopContent = () => {
     setTimeout(()=>{
         setChange(true);
     },3000);
+
+    useEffect(()=>{
+        return () => {
+            setChange(false);
+            setMuted(true);
+            setEnded(true);
+        }
+    },[]);
 
 
     return(

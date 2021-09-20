@@ -2,6 +2,7 @@ import React,{useEffect} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPopularTVaction } from '../reducers/popularTV';
+import { GET_POPULAR_MOVIE_REQUEST } from '../reducers/popularMovie';
 
 const ContentSliderWrapper = styled.div`
     position: relative;
@@ -33,10 +34,12 @@ const ContentSlider = ({title, type}) => {
 
     const dispatch = useDispatch();
     useEffect(()=>{
-        dispatch(getPopularTVaction());
+        dispatch({
+            type:GET_POPULAR_MOVIE_REQUEST,
+        });
     },[]);
 
-    const data = useSelector((state)=>state.popularTv.populartv);
+    const data = useSelector((state)=>state.popularMovie.movies);
     
     return(
         <ContentSliderWrapper>
@@ -44,7 +47,7 @@ const ContentSlider = ({title, type}) => {
                 <SliderTitle>{title}</SliderTitle>
             </SliderTitleWrapper>
             <SliderImageWrapper>
-                {data ? data.results.map((v)=><img style={{width:"250px", height:"140px"}} src={`https://image.tmdb.org/t/p/original${v.backdrop_path}`}/>) : null}
+                {data ? data.results.map((v)=><img id={v.id} style={{width:"250px", height:"140px"}} src={`https://image.tmdb.org/t/p/original${v.backdrop_path}`}/>) : null}
             </SliderImageWrapper>
         </ContentSliderWrapper>
     );

@@ -23,7 +23,7 @@ const browse = () => {
         <MainHeader/>
         <MainTopContent/>
         <SliderWrapper>
-            <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularTV"}/>
+            <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularMovie"}/>
             {/* <ContentSlider title={"신규 콘텐츠"} type={"latest_TV"}/> */}
         </SliderWrapper>
         </>

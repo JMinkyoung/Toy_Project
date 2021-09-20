@@ -2,7 +2,7 @@ import React,{useState,useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getTvCreditsAction, getTvInfoAction, getTvKeywordsAction, getTvSimilarAction, getTvVideoAction } from '../reducers/tvInfo';
+import { GET_TV_INFO_REQUEST, GET_TV_VIDEO_REQUEST, GET_TV_CREDITS_REQUEST, GET_TV_KEYWORDS_REQUEST, GET_TV_SIMILAR_REQUEST } from '../reducers/tvInfo';
 import ReactPlayer from 'react-player';
 import { CloseCircleOutlined, SoundOutlined, CaretRightOutlined } from '@ant-design/icons';
 import SimilarTV from './SimilarTV';
@@ -214,13 +214,15 @@ const ModalAboutWrapper = styled.div`
 
 
 const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
+
+    
     const dispatch = useDispatch();
     const [muted, setMuted] = useState(true);
     const [ended, setEnded] = useState(false);
 
-    const closeModal = useCallback(()=>{
+    const closeModal = ()=>{
         setModalOpend(false);
-    },[]);
+    };
 
     const onClickMute = ()=>{
         setMuted(!muted);
@@ -230,19 +232,37 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
         setEnded(true);
     };
 
+
+    
     useEffect(()=>{
-        dispatch(getTvInfoAction(contentId));
-        dispatch(getTvVideoAction(contentId));
-        dispatch(getTvCreditsAction(contentId));
-        dispatch(getTvKeywordsAction(contentId));
-        dispatch(getTvSimilarAction(contentId));
+        
+            dispatch({
+                type:GET_TV_INFO_REQUEST,
+                data:contentId,
+            });
+            dispatch({
+                type:GET_TV_VIDEO_REQUEST,
+                data:contentId,
+            });
+            dispatch({
+                type:GET_TV_CREDITS_REQUEST,
+                data:contentId,
+            });
+            dispatch({
+                type:GET_TV_KEYWORDS_REQUEST,
+                data:contentId,
+            });
+            dispatch({
+                type:GET_TV_SIMILAR_REQUEST,
+                data:contentId,
+            });
     },[]);
 
     const infos = useSelector((state)=>state.tvInfo.infos);
     const videos = useSelector((state)=>state.tvInfo.videos);
     const credits = useSelector((state)=>state.tvInfo.credits);
     const keywords = useSelector((state)=>state.tvInfo.keywords);
-    const TVsimilars = useSelector((state)=>state.tvInfo.similars)
+    const TVsimilars = useSelector((state)=>state.tvInfo.similars);
 
     return (
         <>
@@ -255,7 +275,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                     <ModalCloseButton onClick={closeModal}/>
                         <ModalVideoWrapper>
                             <ReactPlayer 
-                                url={contentId === 66732 ? `https://www.youtube.com/watch?v=${videos.results[1].key}` : `https://www.youtube.com/watch?v=${videos.results[0].key}`}
+                                url={contentId === 66732 ? `https://www.youtube.com/watch?v=${videos.results[0].key}` : `https://www.youtube.com/watch?v=${videos.results[0].key}`}
                                 playing={true}
                                 controls={false}
                                 width="100%"
