@@ -12,6 +12,9 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
         float: left;
     }
+    body{
+        background-color: #141414;
+    }
 
 `;
 

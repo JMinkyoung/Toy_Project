@@ -1,15 +1,14 @@
 import React,{useEffect}from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { getPopularMovies } from '../reducers/popularMovie';
 import MainHeader from '../components/MainHeader';
 import MainTopContent from '../components/MainTopContent';
 import ContentSlider from '../components/ContentSlider';
 import Head from 'next/head';
 
 const SliderWrapper = styled.div`
-    position: absolute;
-    top: 85%;
+    position: relative;
+    width: 100%;
+    margin-top: 810px;
 `;
 
 const browse = () => {
@@ -23,8 +22,9 @@ const browse = () => {
         <MainHeader/>
         <MainTopContent/>
         <SliderWrapper>
-            <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularMovie"}/>
-            {/* <ContentSlider title={"신규 콘텐츠"} type={"latest_TV"}/> */}
+            <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularTV"}/>
+            <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularTV"}/>
+
         </SliderWrapper>
         </>
     );

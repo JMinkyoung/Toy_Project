@@ -4,6 +4,7 @@ export const initialState = {
   keywords: [],
   similars: [], 
   credits:[],
+  populartv:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -24,6 +25,10 @@ export const initialState = {
   getSimilarLoading: false,
   getSimilarDone: false,
   getSimilarError: null,
+
+  getPopularLoading: false,
+  getPopularDone: false,
+  getPopularError: null,
 }
 
 export const GET_TV_INFO_REQUEST = 'GET_TV_INFO_REQUEST';
@@ -45,6 +50,10 @@ export const GET_TV_KEYWORDS_FAILURE = 'GET_TV_KEYWORDS_FAILURE';
 export const GET_TV_SIMILAR_REQUEST = 'GET_TV_SIMILAR_REQUEST';
 export const GET_TV_SIMILAR_SUCCESS = 'GET_TV_SIMILAR_SUCCESS';
 export const GET_TV_SIMILAR_FAILURE = 'GET_TV_SIMILAR_FAILURE';
+
+export const GET_TV_POPULAR_REQUEST = 'GET_TV_POPULAR_REQUEST';
+export const GET_TV_POPULAR_SUCCESS = 'GET_TV_POPULAR_SUCCESS';
+export const GET_TV_POPULAR_FAILURE = 'GET_TV_POPULAR_FAILURE';
 
 
 const reducer = (state = initialState , action) => {
@@ -148,6 +157,26 @@ const reducer = (state = initialState , action) => {
               ...state,
               getSimilarLoading:false,
               getSimilarError:action.error,
+            };
+          case GET_TV_POPULAR_REQUEST:
+            return{
+                ...state,
+                getPopularLoading:true,
+                getPopularDone:false,
+                getPopularError:null,
+            };
+          case GET_TV_POPULAR_SUCCESS:
+            return{
+                ...state,
+                populartv: action.data,
+                getPopularLoading:false,
+                getPopularDone:true,
+            };
+          case GET_TV_POPULAR_FAILURE:
+            return{
+              ...state,
+              getPopularLoading:false,
+              getPopularError:action.error,
             };
         default:
             return state;

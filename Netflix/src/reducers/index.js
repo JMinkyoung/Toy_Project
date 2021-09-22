@@ -1,9 +1,8 @@
 import { HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from 'redux';
 import qna from './qna';
-import popularMovie from './popularMovie';
-import popularTv from './popularTV';
-import tvInfo from './tvInfo';
+import movie from './movie';
+import tv from './tv';
 
 // (이전 상태, 액션) => 다음상태
 const rootReducer = (state, action) => {
@@ -13,9 +12,8 @@ const rootReducer = (state, action) => {
         default: {
             const combinedReducer = combineReducers({
                 qna,
-                popularMovie,
-                // popularTv,
-                tvInfo,
+                movie,
+                tv,
             });
             return combinedReducer(state,action);
         }

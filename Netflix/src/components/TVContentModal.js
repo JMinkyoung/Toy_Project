@@ -2,7 +2,7 @@ import React,{useState,useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { GET_TV_INFO_REQUEST, GET_TV_VIDEO_REQUEST, GET_TV_CREDITS_REQUEST, GET_TV_KEYWORDS_REQUEST, GET_TV_SIMILAR_REQUEST } from '../reducers/tvInfo';
+import { GET_TV_INFO_REQUEST, GET_TV_VIDEO_REQUEST, GET_TV_CREDITS_REQUEST, GET_TV_KEYWORDS_REQUEST, GET_TV_SIMILAR_REQUEST } from '../reducers/tv';
 import ReactPlayer from 'react-player';
 import { CloseCircleOutlined, SoundOutlined, CaretRightOutlined } from '@ant-design/icons';
 import SimilarTV from './SimilarTV';
@@ -232,8 +232,6 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
         setEnded(true);
     };
 
-
-    
     useEffect(()=>{
         
             dispatch({
@@ -258,11 +256,11 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
             });
     },[]);
 
-    const infos = useSelector((state)=>state.tvInfo.infos);
-    const videos = useSelector((state)=>state.tvInfo.videos);
-    const credits = useSelector((state)=>state.tvInfo.credits);
-    const keywords = useSelector((state)=>state.tvInfo.keywords);
-    const TVsimilars = useSelector((state)=>state.tvInfo.similars);
+    const infos = useSelector((state)=>state.tv.infos);
+    const videos = useSelector((state)=>state.tv.videos);
+    const credits = useSelector((state)=>state.tv.credits);
+    const keywords = useSelector((state)=>state.tv.keywords);
+    const TVsimilars = useSelector((state)=>state.tv.similars);
 
     return (
         <>

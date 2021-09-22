@@ -5,8 +5,9 @@ import {
     GET_TV_VIDEO_REQUEST, GET_TV_VIDEO_SUCCESS, GET_TV_VIDEO_FAILURE,
     GET_TV_CREDITS_REQUEST, GET_TV_CREDITS_SUCCESS, GET_TV_CREDITS_FAILURE,
     GET_TV_KEYWORDS_REQUEST, GET_TV_KEYWORDS_SUCCESS, GET_TV_KEYWORDS_FAILURE,
-    GET_TV_SIMILAR_REQUEST, GET_TV_SIMILAR_SUCCESS, GET_TV_SIMILAR_FAILURE
-} from '../reducers/tvInfo';
+    GET_TV_SIMILAR_REQUEST, GET_TV_SIMILAR_SUCCESS, GET_TV_SIMILAR_FAILURE,
+    GET_TV_POPULAR_REQUEST, GET_TV_POPULAR_SUCCESS, GET_TV_POPULAR_FAILURE
+} from '../reducers/tv';
 
 function tvvideoAPI(data) {
     return axios.get(`https://api.themoviedb.org/3/tv/${data}/videos?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`);
@@ -26,6 +27,10 @@ function tvkeywordAPI(data) {
 
 function tvsimilarAPI(data) {
     return axios.get(`https://api.themoviedb.org/3/tv/${data}/similar?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
+}
+
+function populartvAPI() {
+    return axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
 }
 
 function* getTVVideo(action) {
@@ -108,6 +113,22 @@ function* getTVSimilar(action) {
     }
 }
 
+function* getPopularTV(action) {
+    try {
+        const result = yield call(populartvAPI,action.data);
+        yield put({
+            type: GET_TV_POPULAR_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_TV_POPULAR_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
 function* watchGetTvVideo() {
     yield takeLatest(GET_TV_VIDEO_REQUEST,getTVVideo);
 }
@@ -128,6 +149,10 @@ function* watchGetTvSimilar() {
     yield takeLatest(GET_TV_SIMILAR_REQUEST,getTVSimilar);
 }
 
+function* watchGetPopularTv() {
+    yield takeLatest(GET_TV_POPULAR_REQUEST,getPopularTV);
+}
+
 export default function* tvSaga() {
     yield all([
         fork(watchGetTvInfo),
@@ -135,5 +160,6 @@ export default function* tvSaga() {
         fork(watchGetTvCredit),
         fork(watchGetTvKeyword),
         fork(watchGetTvSimilar),
+        fork(watchGetPopularTv),
     ]);
 }

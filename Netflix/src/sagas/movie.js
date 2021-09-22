@@ -1,6 +1,6 @@
 import { all, fork ,put, takeLatest, call} from "redux-saga/effects";
 import axios from 'axios';
-import { GET_POPULAR_MOVIE_FAILURE, GET_POPULAR_MOVIE_REQUEST, GET_POPULAR_MOVIE_SUCCESS } from "../reducers/popularMovie";
+import { GET_POPULAR_MOVIE_FAILURE, GET_POPULAR_MOVIE_REQUEST, GET_POPULAR_MOVIE_SUCCESS } from "../reducers/movie";
 
 
 function popularmovieAPI() {
