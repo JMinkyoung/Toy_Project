@@ -33,6 +33,14 @@ function populartvAPI() {
     return axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
 }
 
+function populartvAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
+function populartvAPI3() {
+    return axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=3`);
+}
+
 function* getTVVideo(action) {
     try {
         const result = yield call(tvvideoAPI,action.data);
@@ -113,12 +121,14 @@ function* getTVSimilar(action) {
     }
 }
 
-function* getPopularTV(action) {
+function* getPopularTV() {
     try {
-        const result = yield call(populartvAPI,action.data);
+        const data1 = yield call(populartvAPI);
+        const data2 = yield call(populartvAPI2);
+        const data3 = yield call(populartvAPI3);
         yield put({
             type: GET_TV_POPULAR_SUCCESS,
-            data: result.data,
+            data: [...data1.data.results, ...data2.data.results, ...data3.data.results],
         });
     } catch (error) {
         console.error(error);
