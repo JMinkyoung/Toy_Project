@@ -4,11 +4,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GET_TV_POPULAR_REQUEST } from '../reducers/tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
+
+const PaginationWrapper = styled.div`
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    display: flex;
+    visibility: hidden;
+`;
+
+const PaginationItem = styled.div`
+    width: 10px;
+    height: 2px;
+    background-color: ${props => props.id === props.selected ? "white" : "grey"};
+    margin-left: 1px;
+`;
+
 const ContentSliderWrapper = styled.div`
     position: relative;
     height: 230px;
     margin: 3vw 0;
     overflow: hidden;
+    :hover {
+        ${PaginationWrapper}{
+            visibility: visible;
+        }
+    }
 `;
 
 const SliderTitleWrapper = styled.div`
@@ -16,6 +37,8 @@ const SliderTitleWrapper = styled.div`
     width: 100%;
     height: auto;
     margin: 0 4% .5em 2%;
+    display: flex;
+    align-items: center;
 `;
 
 const SliderTitle = styled.a`
@@ -53,7 +76,7 @@ const SliderLeftButton = styled.div`
     align-items: center;
     position: absolute;
     height: 70%;
-    top: 18%;
+    top: 20%;
     left: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -77,7 +100,7 @@ const SliderRightButton = styled.div`
     align-items: center;
     position: absolute;
     height: 70%;
-    top: 18%;
+    top: 20%;
     right: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -93,7 +116,7 @@ const ContentSlider = ({title, type}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
     const [test, setTest] = useState(-16);
-    const [idx, setIdx] = useState(0);
+    const [idx, setIdx] = useState(1);
 
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -106,15 +129,15 @@ const ContentSlider = ({title, type}) => {
     const TotalLength = container && container.current && container.current.offsetWidth;
     
     const onClickLeft = () => {
-        if(((idx-1)+7)%7 === 6){
-            setIdx(((idx-1)+7)%7);
+        if(((idx-1)+6)%6 === 0){
+            setIdx(((idx-1)+6));
             setTimeout(function(){
                 setTest(-556);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }else{
             container.current.style.transition = `transform 1s`; 
-            setIdx(((idx-1)+7)%7);
+            setIdx(((idx-1))%6);
             setTest(test+90);
         }
     }
@@ -128,8 +151,7 @@ const ContentSlider = ({title, type}) => {
             setIdx((idx+1));
             container.current.style.transition = `transform 1s`; 
         }else{  // 마지막 슬라이드 일때
-            setIdx((idx+1)%7);
-
+            setIdx((idx+1)%6);
             setTimeout(function(){
                 setTest(-16);
                 container.current.style.transition = `${0}s ease-out`; 
@@ -146,6 +168,14 @@ const ContentSlider = ({title, type}) => {
         <ContentSliderWrapper>
             <SliderTitleWrapper>
                 <SliderTitle>{title}</SliderTitle>
+                <PaginationWrapper>
+                    <PaginationItem id={1} selected={idx}/>
+                    <PaginationItem id={2} selected={idx}/>
+                    <PaginationItem id={3} selected={idx}/>
+                    <PaginationItem id={4} selected={idx}/>
+                    <PaginationItem id={5} selected={idx}/>
+                    <PaginationItem id={6} selected={idx}/>
+                </PaginationWrapper>
             </SliderTitleWrapper>
             <SliderContentWrapper width={TotalLength} test={test}ref={container}>
                 {getPopularDone &&
