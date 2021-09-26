@@ -20,6 +20,11 @@ const PaginationItem = styled.div`
     margin-left: 1px;
 `;
 
+const SliderTitleMore = styled.div`
+
+    display: none;
+`;
+
 const ContentSliderWrapper = styled.div`
     position: relative;
     height: 230px;
@@ -29,6 +34,10 @@ const ContentSliderWrapper = styled.div`
         ${PaginationWrapper}{
             visibility: visible;
         }
+
+        ${SliderTitleMore}{
+            display: block;
+        }
     }
 `;
 
@@ -36,7 +45,7 @@ const SliderTitleWrapper = styled.div`
     position: relative;
     width: 100%;
     height: auto;
-    margin: 0 4% .5em 2%;
+    margin: 0 4% .5em 3%;
     display: flex;
     align-items: center;
 `;
@@ -46,6 +55,8 @@ const SliderTitle = styled.a`
     font-size: 1.8em;
     font-weight: bolder;
 `;
+
+
 
 const SliderContentWrapper = styled.div`
     position: relative;
@@ -60,6 +71,7 @@ const SliderContentWrapper = styled.div`
 
 const SliderElement = styled.div`
     padding-right: 3px;
+    visibility: ${props => props.id === 0 && !props.started ? "hidden" : "visible"};
     :hover{
     }
 `;
@@ -75,7 +87,7 @@ const SliderLeftButton = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    height: 70%;
+    height: 72%;
     top: 20%;
     left: 0;
     cursor: pointer;
@@ -83,7 +95,7 @@ const SliderLeftButton = styled.div`
     :hover{
         background: rgba(20,20,20,.5);       
         ${LeftButton}{
-            visibility: visible;
+            visibility: ${props => !props.started ? "hidden" : "visible"};
         }
     }
 `;
@@ -99,7 +111,7 @@ const SliderRightButton = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    height: 70%;
+    height: 72%;
     top: 20%;
     right: 0;
     cursor: pointer;
@@ -115,7 +127,7 @@ const SliderRightButton = styled.div`
 const ContentSlider = ({title, type}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
-    const [test, setTest] = useState(-16);
+    const [test, setTest] = useState(-15);
     const [idx, setIdx] = useState(1);
 
     const dispatch = useDispatch();
@@ -129,16 +141,16 @@ const ContentSlider = ({title, type}) => {
     const TotalLength = container && container.current && container.current.offsetWidth;
     
     const onClickLeft = () => {
-        if(((idx-1)+6)%6 === 0){
+        if(((idx-1)+6)%6 === 0){    // 첫번째 슬라이드 일때
             setIdx(((idx-1)+6));
             setTimeout(function(){
-                setTest(-556);
+                setTest(-496);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }else{
             container.current.style.transition = `transform 1s`; 
             setIdx(((idx-1))%6);
-            setTest(test+90);
+            setTest(test+96);
         }
     }
 
@@ -147,27 +159,30 @@ const ContentSlider = ({title, type}) => {
             setStarted(true);
         }
         if(idx+1 <= 6){ // 일반적인 이동
-            setTest(test-90);
+            setTest(test-96);
             setIdx((idx+1));
             container.current.style.transition = `transform 1s`; 
         }else{  // 마지막 슬라이드 일때
             setIdx((idx+1)%6);
             setTimeout(function(){
-                setTest(-16);
+                setTest(-15);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }
     }
 
     const {getPopularDone, populartv } = useSelector((state)=>state.tv);
-    let finalData = populartv.filter((v)=>v.backdrop_path).slice(0, 39);
+    let finalData = populartv.filter((v)=>v.backdrop_path).slice(0, 36);
     finalData.push(populartv[0]);
-    finalData.unshift(populartv[39]);
+    finalData.unshift(populartv[35]);
 
     return(
         <ContentSliderWrapper>
             <SliderTitleWrapper>
                 <SliderTitle>{title}</SliderTitle>
+                <SliderTitleMore>
+                    <div style={{position:"absolute", bottom:"10%"}}><RightOutlined style={{color:"white",fontSize:"20px",fontWeight:"border"}}/></div>
+                </SliderTitleMore>
                 <PaginationWrapper>
                     <PaginationItem id={1} selected={idx}/>
                     <PaginationItem id={2} selected={idx}/>
@@ -180,13 +195,13 @@ const ContentSlider = ({title, type}) => {
             <SliderContentWrapper width={TotalLength} test={test}ref={container}>
                 {getPopularDone &&
                 finalData.map((v, index)=>
-                    <SliderElement id={index}>
-                        <img id={v.id} style={{width:"300px", height:"160px", borderRadius:"4px"}} src={`https://image.tmdb.org/t/p/original${v.backdrop_path}`}/>
+                    <SliderElement id={index} started={started}>
+                        <img id={v.id} style={{width:"296px", height:"166px", borderRadius:"4px"}} src={`https://image.tmdb.org/t/p/original${v.backdrop_path}`}/>
                     </SliderElement>
                     ) 
                 }
             </SliderContentWrapper>
-            <SliderLeftButton onClick={onClickLeft}>
+            <SliderLeftButton  started={started} onClick={onClickLeft}>
                 <LeftButton/>
             </SliderLeftButton>
             <SliderRightButton onClick={onClickRight}>
