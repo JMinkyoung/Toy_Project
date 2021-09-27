@@ -5,6 +5,7 @@ export const initialState = {
   similars: [], 
   credits:[],
   populartv:[],
+  trendingtv:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -29,6 +30,10 @@ export const initialState = {
   getPopularLoading: false,
   getPopularDone: false,
   getPopularError: null,
+
+  getTrendingLoading: false,
+  getTrendingDone: false,
+  getTrendingError: null,
 }
 
 export const GET_TV_INFO_REQUEST = 'GET_TV_INFO_REQUEST';
@@ -54,6 +59,10 @@ export const GET_TV_SIMILAR_FAILURE = 'GET_TV_SIMILAR_FAILURE';
 export const GET_TV_POPULAR_REQUEST = 'GET_TV_POPULAR_REQUEST';
 export const GET_TV_POPULAR_SUCCESS = 'GET_TV_POPULAR_SUCCESS';
 export const GET_TV_POPULAR_FAILURE = 'GET_TV_POPULAR_FAILURE';
+
+export const GET_TV_TRENDING_REQUEST = 'GET_TV_TRENDING_REQUEST';
+export const GET_TV_TRENDING_SUCCESS = 'GET_TV_TRENDING_SUCCESS';
+export const GET_TV_TRENDING_FAILURE = 'GET_TV_TRENDING_FAILURE';
 
 
 const reducer = (state = initialState , action) => {
@@ -177,6 +186,26 @@ const reducer = (state = initialState , action) => {
               ...state,
               getPopularLoading:false,
               getPopularError:action.error,
+            };
+          case GET_TV_TRENDING_REQUEST:
+            return{
+                ...state,
+                getTrendingLoading:true,
+                getTrendingDone:false,
+                getTrendingError:null,
+            };
+          case GET_TV_TRENDING_SUCCESS:
+            return{
+                ...state,
+                trendingtv: action.data,
+                getTrendingLoading:false,
+                getTrendingDone:true,
+            };
+          case GET_TV_TRENDING_FAILURE:
+            return{
+              ...state,
+              getTrendingLoading:false,
+              getTrendingError:action.error,
             };
         default:
             return state;

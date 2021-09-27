@@ -6,7 +6,8 @@ import {
     GET_TV_CREDITS_REQUEST, GET_TV_CREDITS_SUCCESS, GET_TV_CREDITS_FAILURE,
     GET_TV_KEYWORDS_REQUEST, GET_TV_KEYWORDS_SUCCESS, GET_TV_KEYWORDS_FAILURE,
     GET_TV_SIMILAR_REQUEST, GET_TV_SIMILAR_SUCCESS, GET_TV_SIMILAR_FAILURE,
-    GET_TV_POPULAR_REQUEST, GET_TV_POPULAR_SUCCESS, GET_TV_POPULAR_FAILURE
+    GET_TV_POPULAR_REQUEST, GET_TV_POPULAR_SUCCESS, GET_TV_POPULAR_FAILURE,
+    GET_TV_TRENDING_REQUEST, GET_TV_TRENDING_SUCCESS, GET_TV_TRENDING_FAILURE
 } from '../reducers/tv';
 
 function tvvideoAPI(data) {
@@ -41,6 +42,15 @@ function populartvAPI3() {
     return axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=3`);
 }
 
+function tvtrendingAPI() {
+    return axios.get(`https://api.themoviedb.org/3/trending/tv/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`);
+}
+
+function tvtrendingAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/trending/tv/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
+// 전체 컨텐츠 트렌딩 https://api.themoviedb.org/3/trending/all/week?api_key=0f54240da860f0ee0a59657346e7a8cc
 function* getTVVideo(action) {
     try {
         const result = yield call(tvvideoAPI,action.data);
@@ -139,6 +149,23 @@ function* getPopularTV() {
     }
 }
 
+function* getTrendingTV() {
+    try {
+        const data1 = yield call(tvtrendingAPI);
+        const data2 = yield call(tvtrendingAPI2);
+        yield put({
+            type: GET_TV_TRENDING_SUCCESS,
+            data: [...data1.data.results,...data2.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_TV_TRENDING_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
 function* watchGetTvVideo() {
     yield takeLatest(GET_TV_VIDEO_REQUEST,getTVVideo);
 }
@@ -163,6 +190,10 @@ function* watchGetPopularTv() {
     yield takeLatest(GET_TV_POPULAR_REQUEST,getPopularTV);
 }
 
+function* watchGetTrendingTv() {
+    yield takeLatest(GET_TV_TRENDING_REQUEST,getTrendingTV);
+}
+
 export default function* tvSaga() {
     yield all([
         fork(watchGetTvInfo),
@@ -171,5 +202,6 @@ export default function* tvSaga() {
         fork(watchGetTvKeyword),
         fork(watchGetTvSimilar),
         fork(watchGetPopularTv),
+        fork(watchGetTrendingTv),
     ]);
 }

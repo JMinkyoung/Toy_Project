@@ -7,7 +7,7 @@ import Head from 'next/head';
 
 const SliderWrapper = styled.div`
     position: relative;
-    margin-top: 810px;
+    margin-top: 780px;
 `;
 
 const browse = () => {
@@ -23,7 +23,6 @@ const browse = () => {
         <SliderWrapper>
             <ContentSlider title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
             <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularMovie"}/>
-
         </SliderWrapper>
         </>
     );

@@ -1,9 +1,9 @@
 import React,{ useState, useEffect , useRef} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_TV_POPULAR_REQUEST } from '../reducers/tv';
+import { GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST } from '../reducers/tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-
+import SliderElement from './SliderElement';
 
 const PaginationWrapper = styled.div`
     position: absolute;
@@ -21,14 +21,12 @@ const PaginationItem = styled.div`
 `;
 
 const SliderTitleMore = styled.div`
-
     display: none;
 `;
 
 const ContentSliderWrapper = styled.div`
     position: relative;
-    height: 230px;
-    margin: 3vw 0;
+    height: 350px;
     overflow: hidden;
     :hover {
         ${PaginationWrapper}{
@@ -45,7 +43,7 @@ const SliderTitleWrapper = styled.div`
     position: relative;
     width: 100%;
     height: auto;
-    margin: 0 4% .5em 3%;
+    margin: 3% 4% .5em 3%;
     display: flex;
     align-items: center;
 `;
@@ -60,6 +58,7 @@ const SliderTitle = styled.a`
 
 const SliderContentWrapper = styled.div`
     position: relative;
+    height: auto;
     display:flex;
     text-align:center;
     margin-left: 2%;
@@ -67,13 +66,6 @@ const SliderContentWrapper = styled.div`
     transform : translate3d(${props => props.test}%, 0px, 0px);
     transition: transform 1s;
 
-`;
-
-const SliderElement = styled.div`
-    padding-right: 3px;
-    visibility: ${props => props.id === 0 && !props.started ? "hidden" : "visible"};
-    :hover{
-    }
 `;
 
 const LeftButton = styled(LeftOutlined)`
@@ -87,8 +79,8 @@ const SliderLeftButton = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    height: 72%;
-    top: 20%;
+    height: 48%;
+    top: 29%;
     left: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -111,8 +103,8 @@ const SliderRightButton = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    height: 72%;
-    top: 20%;
+    height: 48%;
+    top: 29%;
     right: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -127,30 +119,27 @@ const SliderRightButton = styled.div`
 const ContentSlider = ({title, type}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
-    const [test, setTest] = useState(-15);
+    const [position, setPosition] = useState(-15);
     const [idx, setIdx] = useState(1);
 
     const dispatch = useDispatch();
     useEffect(()=>{
         dispatch({
-            type:GET_TV_POPULAR_REQUEST,
+            type:GET_TV_TRENDING_REQUEST,
         });
     },[]);
 
-
-    const TotalLength = container && container.current && container.current.offsetWidth;
-    
     const onClickLeft = () => {
         if(((idx-1)+6)%6 === 0){    // 첫번째 슬라이드 일때
             setIdx(((idx-1)+6));
             setTimeout(function(){
-                setTest(-496);
+                setPosition(-496);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }else{
             container.current.style.transition = `transform 1s`; 
             setIdx(((idx-1))%6);
-            setTest(test+96);
+            setPosition(position+96);
         }
     }
 
@@ -159,22 +148,25 @@ const ContentSlider = ({title, type}) => {
             setStarted(true);
         }
         if(idx+1 <= 6){ // 일반적인 이동
-            setTest(test-96);
+            setPosition(position-96);
             setIdx((idx+1));
             container.current.style.transition = `transform 1s`; 
         }else{  // 마지막 슬라이드 일때
             setIdx((idx+1)%6);
             setTimeout(function(){
-                setTest(-15);
+                setPosition(-15);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }
     }
+    const {getTrendingDone, trendingtv } = useSelector((state)=>state.tv);
 
-    const {getPopularDone, populartv } = useSelector((state)=>state.tv);
-    let finalData = populartv.filter((v)=>v.backdrop_path).slice(0, 36);
-    finalData.push(populartv[0]);
-    finalData.unshift(populartv[35]);
+    
+    const TotalLength = container && container.current && container.current.offsetWidth;
+
+    let finalData = trendingtv.filter((v)=>v.backdrop_path).slice(0, 36);
+    finalData.unshift(finalData[35]);
+    finalData.push(finalData[1]);
 
     return(
         <ContentSliderWrapper>
@@ -192,16 +184,14 @@ const ContentSlider = ({title, type}) => {
                     <PaginationItem id={6} selected={idx}/>
                 </PaginationWrapper>
             </SliderTitleWrapper>
-            <SliderContentWrapper width={TotalLength} test={test}ref={container}>
-                {getPopularDone &&
+            <SliderContentWrapper width={TotalLength} test={position}ref={container}>
+                {getTrendingDone &&
                 finalData.map((v, index)=>
-                    <SliderElement id={index} started={started}>
-                        <img id={v.id} style={{width:"296px", height:"166px", borderRadius:"4px"}} src={`https://image.tmdb.org/t/p/original${v.backdrop_path}`}/>
-                    </SliderElement>
+                    <SliderElement id={index} started={started} data={v}/>
                     ) 
                 }
             </SliderContentWrapper>
-            <SliderLeftButton  started={started} onClick={onClickLeft}>
+            <SliderLeftButton started={started} onClick={onClickLeft}>
                 <LeftButton/>
             </SliderLeftButton>
             <SliderRightButton onClick={onClickRight}>
