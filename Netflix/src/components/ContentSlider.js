@@ -26,7 +26,7 @@ const SliderTitleMore = styled.div`
 
 const ContentSliderWrapper = styled.div`
     position: relative;
-    height: 350px;
+    height: 330px;
     overflow: hidden;
     :hover {
         ${PaginationWrapper}{
@@ -43,7 +43,7 @@ const SliderTitleWrapper = styled.div`
     position: relative;
     width: 100%;
     height: auto;
-    margin: 3% 4% .5em 3%;
+    margin: 2% 4% .5em 3%;
     display: flex;
     align-items: center;
 `;
@@ -79,8 +79,8 @@ const SliderLeftButton = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    height: 48%;
-    top: 29%;
+    height: 51%;
+    top: 25%;
     left: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -103,8 +103,8 @@ const SliderRightButton = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    height: 48%;
-    top: 29%;
+    height: 51%;
+    top: 25%;
     right: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -116,7 +116,7 @@ const SliderRightButton = styled.div`
     }
 `;
 
-const ContentSlider = ({title, type}) => {
+const ContentSlider = ({setModalOpend ,setContentId, title, type}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
     const [position, setPosition] = useState(-15);
@@ -128,6 +128,7 @@ const ContentSlider = ({title, type}) => {
             type:GET_TV_TRENDING_REQUEST,
         });
     },[]);
+
 
     const onClickLeft = () => {
         if(((idx-1)+6)%6 === 0){    // 첫번째 슬라이드 일때
@@ -169,6 +170,7 @@ const ContentSlider = ({title, type}) => {
     finalData.push(finalData[1]);
 
     return(
+        <>
         <ContentSliderWrapper>
             <SliderTitleWrapper>
                 <SliderTitle>{title}</SliderTitle>
@@ -187,7 +189,7 @@ const ContentSlider = ({title, type}) => {
             <SliderContentWrapper width={TotalLength} test={position}ref={container}>
                 {getTrendingDone &&
                 finalData.map((v, index)=>
-                    <SliderElement id={index} started={started} data={v}/>
+                    <SliderElement setContentId={setContentId} setModalOpend={setModalOpend} id={index} started={started} data={v}/>
                     ) 
                 }
             </SliderContentWrapper>
@@ -198,6 +200,8 @@ const ContentSlider = ({title, type}) => {
                 <RightButton/>
             </SliderRightButton>
         </ContentSliderWrapper>
+        
+        </>
     );
 };
 

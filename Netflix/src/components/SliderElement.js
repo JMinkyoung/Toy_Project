@@ -1,14 +1,38 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { DownCircleOutlined } from '@ant-design/icons';
 
 const SliderElementWrapper = styled.div`
     padding-right: 3px;
     visibility: ${props => props.id === 0 && !props.started ? "hidden" : "visible"};
-    transform: ${props => props.hovered ? "scale(1.5,2)": null };
+    transform: ${props => props.hovered ? "scale(1.2,1.7)": null };
+    transition: all .5s ease .2s;
+    border-radius: 4px;
+`;
+
+
+const HoverContentWrapper = styled.div`
+    width: ${props => props.hovered ? "330px" :"296px"};
+    height: ${props => props.hovered ? "120px" :"166px"};
     transition: all .5s ease .2s;
 `;
 
-const SliderElement = ({id, started, data}) => {
+const SliderElementImg = styled.img`
+    transition: all .5s ease .2s;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+`;
+
+const HoverInfoWrapper = styled.div`
+    transition: all .5s ease .2s;
+    display: ${props => props.hovered ? "block" : "none"};
+`;
+
+const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
+
     const [delayHandler, setDelayHandler] = useState(null);
     const [hovered, setHovered] = useState(false);
 
@@ -23,10 +47,26 @@ const SliderElement = ({id, started, data}) => {
         setHovered(false);
     }
 
+    
+    const modalOpen = () => {
+        setModalOpend(true);
+        setContentId(data.id);
+    };
+
+
     return (
+        <>
         <SliderElementWrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id={id} started={started} hovered={hovered}>         
-            <img id={id} style={{width:"296px", height:"166px", borderRadius:"4px"}} src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
+            <HoverContentWrapper hovered={hovered}>
+                <SliderElementImg hovered={hovered} id={id} src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
+            </HoverContentWrapper>
+
+            <HoverInfoWrapper style={{color:"white"}} hovered={hovered}>
+                <img src="/images/age_18.png"/>
+                <DownCircleOutlined onClick={modalOpen}/>
+            </HoverInfoWrapper>
         </SliderElementWrapper>
+        </>
     );
 };
 

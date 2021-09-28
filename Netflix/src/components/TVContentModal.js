@@ -8,7 +8,6 @@ import { CloseCircleOutlined, SoundOutlined, CaretRightOutlined } from '@ant-des
 import SimilarTV from './SimilarTV';
 
 const ModalWrapper = styled.div`
-
     margin: 0 auto;    
     transform-origin: 50% 12.5%;
     width: 938.5px;
@@ -233,7 +232,6 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
     };
 
     useEffect(()=>{
-        
             dispatch({
                 type:GET_TV_INFO_REQUEST,
                 data:contentId,
@@ -254,13 +252,13 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                 type:GET_TV_SIMILAR_REQUEST,
                 data:contentId,
             });
-    },[]);
+    },[contentId]);
 
-    const infos = useSelector((state)=>state.tv.infos);
-    const videos = useSelector((state)=>state.tv.videos);
-    const credits = useSelector((state)=>state.tv.credits);
-    const keywords = useSelector((state)=>state.tv.keywords);
-    const TVsimilars = useSelector((state)=>state.tv.similars);
+    const {infos, getInfoDone} = useSelector((state)=>state.tv);
+    const {videos, getVideoDone} = useSelector((state)=>state.tv);
+    const {credits, getCreditDone} = useSelector((state)=>state.tv);
+    const {keywords, getKeywordDone} = useSelector((state)=>state.tv);
+    const {similars, getSimilarDone} = useSelector((state)=>state.tv);
 
     return (
         <>
@@ -272,7 +270,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                     <ModalTopWrapper>
                     <ModalCloseButton onClick={closeModal}/>
                         <ModalVideoWrapper>
-                            <ReactPlayer 
+                            {videos.results.length !== 0 ? <ReactPlayer 
                                 url={contentId === 66732 ? `https://www.youtube.com/watch?v=${videos.results[0].key}` : `https://www.youtube.com/watch?v=${videos.results[0].key}`}
                                 playing={true}
                                 controls={false}
@@ -280,7 +278,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                                 height="100%"
                                 muted={muted}
                                 onEnded={(()=> videoEnded())}
-                            />
+                            />: null}
                         <BackgroundImage ended={ended} src={`https://image.tmdb.org/t/p/original${infos.backdrop_path}`}/>
                         </ModalVideoWrapper>
                             <MuteButton onClick={onClickMute}><SoundOutlined style={{fontSize:"1.3rem"}}/></MuteButton>                    
@@ -303,11 +301,11 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                                     </TagWrapper>
                                     <TagWrapper>
                                         <span style={{color:"#777"}}>장르: </span>
-                                        <span>{infos.genres[0].name}, </span><span>{infos.genres[1].name}, </span><span>{infos.genres[2].name}</span>
+                                        <span>{infos.genres[0].name}, </span><span>{infos.genres[1].name}, </span>
                                     </TagWrapper>
                                     <TagWrapper>
                                         <span style={{color:"#777"}}>프로그램 특징: </span>
-                                        <span>{keywords.results[0].name}, </span><span>{keywords.results[1].name}, </span><span>{keywords.results[2].name}</span>
+                                        <span>{keywords.results[0].name}, </span><span>{keywords.results[1].name}</span>
                                     </TagWrapper>
                                 </ModalInfoRight>
                             </ModalInfoDetail>
@@ -315,9 +313,9 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                         
                         <ModalHeader>비슷한 콘텐츠</ModalHeader>
                         <ModalSimilarWrapper>
-                            {TVsimilars.results.map((v)=>{
+                            { getSimilarDone ? similars.results.map((v)=>{
                                 if(v.backdrop_path !== null && v.overview !== "") return <SimilarTV key={v.id} data={v}/>
-                            })}
+                            }):null}
                         </ModalSimilarWrapper>
                         <ModalAboutWrapper>
                             <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"0"}}> 상세 정보</span></ModalHeader>

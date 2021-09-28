@@ -1,8 +1,10 @@
-import React,{useEffect}from 'react';
+import React,{useEffect, useState}from 'react';
 import styled from 'styled-components';
 import MainHeader from '../components/MainHeader';
 import MainTopContent from '../components/MainTopContent';
 import ContentSlider from '../components/ContentSlider';
+import TVContentModal from '../components/TVContentModal';
+
 import Head from 'next/head';
 
 const SliderWrapper = styled.div`
@@ -11,7 +13,14 @@ const SliderWrapper = styled.div`
 `;
 
 const browse = () => {
+    const [isModalOpend, setModalOpend] = useState(false);
+    const [contendId, setContentId] = useState(66732);
 
+    useEffect(()=>{
+        isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
+    },[isModalOpend]);
+
+    console.log(`browse에서 contendId: ${contendId}`);
     return (
         <>
         <Head>
@@ -21,9 +30,11 @@ const browse = () => {
         <MainHeader/>
         <MainTopContent/>
         <SliderWrapper>
-            <ContentSlider title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
-            <ContentSlider title={"지금 뜨는 콘텐츠"} type={"PopularMovie"}/>
+            <ContentSlider setModalOpend={setModalOpend} setContentId={setContentId} title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
+            {/* <ContentSlider setContentId={setContentId} title={"지금 뜨는 콘텐츠"} type={"PopularMovie"}/> */}
         </SliderWrapper>
+
+        <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId}/>
         </>
     );
 };
