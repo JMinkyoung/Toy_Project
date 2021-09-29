@@ -5,17 +5,19 @@ import { useSelector } from 'react-redux';
 import { DownCircleOutlined } from '@ant-design/icons';
 
 const SliderElementWrapper = styled.div`
-    padding-right: 3px;
+    margin-right: 3px;
     visibility: ${props => props.id === 0 && !props.started ? "hidden" : "visible"};
     transform: ${props => props.hovered ? "scale(1.2,1.7)": null };
     transition: all .5s ease .2s;
+    background-color: rgb(20, 20, 20);
     border-radius: 4px;
 `;
 
 
 const HoverContentWrapper = styled.div`
     width: ${props => props.hovered ? "330px" :"296px"};
-    height: ${props => props.hovered ? "120px" :"166px"};
+    height: ${props => props.hovered ? "130px" :"166px"};
+    background-color: rgb(20, 20, 20);
     transition: all .5s ease .2s;
 `;
 
@@ -28,7 +30,16 @@ const SliderElementImg = styled.img`
 
 const HoverInfoWrapper = styled.div`
     transition: all .5s ease .2s;
-    display: ${props => props.hovered ? "block" : "none"};
+    display: ${props => props.hovered ? "flex" : "none"};
+    background-color: rgb(20, 20, 20);
+    font-size: 0.9vw;
+    border-radius: 4px;
+
+`;
+
+const HoverInfoButton = styled(DownCircleOutlined)`
+    position: absolute;
+    right: 5%;
 `;
 
 const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
@@ -59,12 +70,11 @@ const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
         <SliderElementWrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id={id} started={started} hovered={hovered}>         
             <HoverContentWrapper hovered={hovered}>
                 <SliderElementImg hovered={hovered} id={id} src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
+                <HoverInfoWrapper style={{color:"white"}} hovered={hovered}>
+                    <div>{data.name}</div>
+                    <HoverInfoButton onClick={modalOpen}/>
+                </HoverInfoWrapper>
             </HoverContentWrapper>
-
-            <HoverInfoWrapper style={{color:"white"}} hovered={hovered}>
-                <img src="/images/age_18.png"/>
-                <DownCircleOutlined onClick={modalOpen}/>
-            </HoverInfoWrapper>
         </SliderElementWrapper>
         </>
     );

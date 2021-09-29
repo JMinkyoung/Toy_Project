@@ -141,7 +141,7 @@ const BackgroundImage = styled.img`
     display: ${props=> props.ended === true ? "block" : "none"};
 `;
 
-const MainTopContent = () => {
+const MainTopContent = ({setContentId}) => {
     const [muted, setMuted] = useState(false);
     const [change, setChange] = useState(false);
     const [ended, setEnded] = useState(false);
@@ -157,6 +157,7 @@ const MainTopContent = () => {
 
     const modalOpen = () => {
         setModalOpend(true);
+        setContentId(66732);
     };
 
     useEffect(()=>{

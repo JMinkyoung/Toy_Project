@@ -81,7 +81,8 @@ const ModalInfoWrapper = styled.div`
     line-height: 1.4;
     width: 100%;
     height: 250px;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 100px;
 `;
 
 const ModalInfoDetail = styled.div`
@@ -198,7 +199,7 @@ const ModalSimilarWrapper = styled.div`
 
 const ModalHeader = styled.h3`  
     color: white;
-    font-weight: 700;
+    /* font-weight: 700; */
     font-size: 24px;
     margin-top: 48px;
     margin-bottom: 20px;
@@ -214,7 +215,6 @@ const ModalAboutWrapper = styled.div`
 
 const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
 
-    
     const dispatch = useDispatch();
     const [muted, setMuted] = useState(true);
     const [ended, setEnded] = useState(false);
@@ -278,11 +278,11 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                                 height="100%"
                                 muted={muted}
                                 onEnded={(()=> videoEnded())}
-                            />: null}
+                            />: <img style={{width:"100%"}} src={`https://image.tmdb.org/t/p/original${infos.backdrop_path}`}/>}
                         <BackgroundImage ended={ended} src={`https://image.tmdb.org/t/p/original${infos.backdrop_path}`}/>
                         </ModalVideoWrapper>
                             <MuteButton onClick={onClickMute}><SoundOutlined style={{fontSize:"1.3rem"}}/></MuteButton>                    
-                            <PlayButton >
+                            <PlayButton onClick={() => window.open(`${infos.homepage}`, '_blank')}>
                                 <CaretRightOutlined style={{fontSize:"2.5rem"}} /> 
                                 <div>재생</div>
                             </PlayButton>
@@ -291,21 +291,28 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                         <ModalInfoWrapper>
                             <ModalInfoDetail>
                                 <ModalInfoLeft>
-                                    <div style={{marginBottom:"10px"}}>평점 : {infos.vote_average}</div>
-                                    <div style={{marginBottom:"10px"}}>{infos.overview}</div>
+                                    
+                                    <div style={{marginBottom:"10px"}}><h1>{infos.name}</h1> 평점 : {infos.vote_average}</div>
+                                    <div style={{marginBottom:"10px"}}>{infos.overview.substr(0,190)}</div>
                                 </ModalInfoLeft>
                                 <ModalInfoRight>
                                     <TagWrapper>
                                         <span style={{color:"#777"}}>출연: </span>
-                                        <span>{credits.cast[0].name}, </span><span>{credits.cast[1].name}, </span><span>{credits.cast[2].name}</span>
+                                        {credits.cast.map((v)=>{
+                                            return <span>{v.name}, </span>
+                                        })}
                                     </TagWrapper>
                                     <TagWrapper>
                                         <span style={{color:"#777"}}>장르: </span>
-                                        <span>{infos.genres[0].name}, </span><span>{infos.genres[1].name}, </span>
+                                        {infos.genres.map((v)=>{
+                                            return <span>{v.name}, </span>
+                                        })}
                                     </TagWrapper>
                                     <TagWrapper>
                                         <span style={{color:"#777"}}>프로그램 특징: </span>
-                                        <span>{keywords.results[0].name}, </span><span>{keywords.results[1].name}</span>
+                                        {keywords.results.map((v)=>{
+                                            return <span>{v.name}, </span>
+                                        })}
                                     </TagWrapper>
                                 </ModalInfoRight>
                             </ModalInfoDetail>
@@ -318,22 +325,22 @@ const TVContentModal = ({isOpen, contentId, setModalOpend}) => {
                             }):null}
                         </ModalSimilarWrapper>
                         <ModalAboutWrapper>
-                            <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"0"}}> 상세 정보</span></ModalHeader>
+                            <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"bold", fontSize:"20px"}}> 상세 정보</span></ModalHeader>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>크리에이터: </span>
-                                    {credits.crew.map((v)=><span>{v.name} </span>)}
+                                    {credits.crew.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>출연: </span>
-                                    {credits.cast.map((v)=><span>{v.name} </span>)}
+                                    {credits.cast.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>장르: </span>
-                                    {infos.genres.map((v)=><span>{v.name} </span>)}
+                                    {infos.genres.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>특징: </span>
-                                    {keywords.results.map((v)=><span>{v.name} </span>)}
+                                    {keywords.results.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
                         </ModalAboutWrapper>
                     </ModalContentContainer>

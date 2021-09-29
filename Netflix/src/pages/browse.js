@@ -20,7 +20,6 @@ const browse = () => {
         isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
     },[isModalOpend]);
 
-    console.log(`browse에서 contendId: ${contendId}`);
     return (
         <>
         <Head>
@@ -28,10 +27,10 @@ const browse = () => {
         </Head>
         {/* 헤더에 현재 선택된거 전달해줘야함 */}
         <MainHeader/>
-        <MainTopContent/>
+        <MainTopContent setContentId={setContentId}/>
         <SliderWrapper>
             <ContentSlider setModalOpend={setModalOpend} setContentId={setContentId} title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
-            {/* <ContentSlider setContentId={setContentId} title={"지금 뜨는 콘텐츠"} type={"PopularMovie"}/> */}
+            <ContentSlider setModalOpend={setModalOpend} setContentId={setContentId} title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
         </SliderWrapper>
 
         <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId}/>
