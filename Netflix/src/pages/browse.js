@@ -29,8 +29,7 @@ const browse = () => {
         <MainHeader/>
         <MainTopContent setContentId={setContentId}/>
         <SliderWrapper>
-            <ContentSlider setModalOpend={setModalOpend} setContentId={setContentId} title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
-            <ContentSlider setModalOpend={setModalOpend} setContentId={setContentId} title={"넷플릭스 인기 콘텐츠"} type={"PopularTV"}/>
+            <ContentSlider setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 콘텐츠"} type={"TrendigTV"}/>
         </SliderWrapper>
 
         <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId}/>

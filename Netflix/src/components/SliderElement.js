@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { DownCircleOutlined } from '@ant-design/icons';
+import { DownCircleOutlined, PlayCircleFilled } from '@ant-design/icons';
 
 const SliderElementWrapper = styled.div`
     margin-right: 3px;
@@ -11,6 +9,7 @@ const SliderElementWrapper = styled.div`
     transition: all .5s ease .2s;
     background-color: rgb(20, 20, 20);
     border-radius: 4px;
+    cursor: pointer;
 `;
 
 
@@ -29,17 +28,34 @@ const SliderElementImg = styled.img`
 `;
 
 const HoverInfoWrapper = styled.div`
+    width: 100%;
     transition: all .5s ease .2s;
-    display: ${props => props.hovered ? "flex" : "none"};
+    display: flex;
+    height: ${props => props.hovered ? "auto" : "0"};
+    opacity: ${props => props.hovered ? "1" : "0"};
+    transform: ${props => props.hovered ? "scale(0.9,0.7)" : null};
     background-color: rgb(20, 20, 20);
-    font-size: 0.9vw;
+    font-size: 14px;
     border-radius: 4px;
 
 `;
 
+const HoverButtonWrapper = styled.div`
+    margin-top: 5px;
+    font-size: 30px;
+`;
+
+const HoverPlayButton = styled(PlayCircleFilled)`
+    position: absolute;
+    left: 2%;
+`;
+
 const HoverInfoButton = styled(DownCircleOutlined)`
     position: absolute;
-    right: 5%;
+    right: 2%;
+    :hover {
+        color: grey;
+    }
 `;
 
 const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
@@ -50,7 +66,7 @@ const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
     const handleMouseEnter = e => {
         setDelayHandler(setTimeout(()=>{
             setHovered(true);
-        },800));
+        },500));
     };
 
     const handleMouseLeave = () => {
@@ -67,12 +83,14 @@ const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
 
     return (
         <>
-        <SliderElementWrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id={id} started={started} hovered={hovered}>         
+        <SliderElementWrapper onClick={modalOpen}  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id={id} started={started} hovered={hovered}>         
             <HoverContentWrapper hovered={hovered}>
                 <SliderElementImg hovered={hovered} id={id} src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
                 <HoverInfoWrapper style={{color:"white"}} hovered={hovered}>
-                    <div>{data.name}</div>
-                    <HoverInfoButton onClick={modalOpen}/>
+                    <HoverButtonWrapper>
+                        <HoverPlayButton onClick={()=>console.log(data)} />
+                        <HoverInfoButton onClick={modalOpen}/>
+                    </HoverButtonWrapper>
                 </HoverInfoWrapper>
             </HoverContentWrapper>
         </SliderElementWrapper>
