@@ -116,7 +116,7 @@ const SliderRightButton = styled.div`
     }
 `;
 
-const ContentSlider = ({setModalOpend ,setContentId, title, type}) => {
+const TvContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
     const [position, setPosition] = useState(-15);
@@ -160,9 +160,8 @@ const ContentSlider = ({setModalOpend ,setContentId, title, type}) => {
             },500);
         }
     }
-    const {getTrendingDone, trendingtv } = useSelector((state)=>state.tv);
+    const {getTrendingDone, trendingtv} = useSelector((state)=>state.tv);
 
-    
     const TotalLength = container && container.current && container.current.offsetWidth;
 
     let finalData = trendingtv.filter((v)=>v.backdrop_path).slice(0, 36);
@@ -189,7 +188,7 @@ const ContentSlider = ({setModalOpend ,setContentId, title, type}) => {
             <SliderContentWrapper width={TotalLength} test={position}ref={container}>
                 {getTrendingDone &&
                 finalData.map((v, index)=>
-                    <SliderElement setContentId={setContentId} setModalOpend={setModalOpend} id={index} started={started} data={v}/>
+                    <SliderElement setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
                     ) 
                 }
             </SliderContentWrapper>
@@ -205,4 +204,4 @@ const ContentSlider = ({setModalOpend ,setContentId, title, type}) => {
     );
 };
 
-export default ContentSlider;
+export default TvContentSlider;

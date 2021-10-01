@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { GET_TV_INFO_REQUEST, GET_TV_VIDEO_REQUEST, GET_TV_CREDITS_REQUEST, GET_TV_KEYWORDS_REQUEST, GET_TV_SIMILAR_REQUEST } from '../reducers/tv';
+import { GET_MOVIE_INFO_REQUEST, GET_MOVIE_VIDEO_REQUEST, GET_MOVIE_CREDITS_REQUEST, GET_MOVIE_KEYWORDS_REQUEST, GET_MOVIE_SIMILAR_REQUEST } from '../reducers/movie';
 
 import ReactPlayer from 'react-player';
 import { CloseCircleOutlined, SoundOutlined, CaretRightOutlined } from '@ant-design/icons';
@@ -214,7 +214,7 @@ const ModalAboutWrapper = styled.div`
 
 
 
-const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
+const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
 
     const dispatch = useDispatch();
     const [muted, setMuted] = useState(true);
@@ -235,36 +235,36 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
 
     useEffect(()=>{
             dispatch({
-                type:GET_TV_INFO_REQUEST,
+                type:GET_MOVIE_INFO_REQUEST,
                 data:contentId,
             });
             dispatch({
-                type:GET_TV_VIDEO_REQUEST,
+                type:GET_MOVIE_VIDEO_REQUEST,
                 data:contentId,
             });
             dispatch({
-                type:GET_TV_CREDITS_REQUEST,
+                type:GET_MOVIE_CREDITS_REQUEST,
                 data:contentId,
             });
             dispatch({
-                type:GET_TV_KEYWORDS_REQUEST,
+                type:GET_MOVIE_KEYWORDS_REQUEST,
                 data:contentId,
             });
             dispatch({
-                type:GET_TV_SIMILAR_REQUEST,
+                type:GET_MOVIE_SIMILAR_REQUEST,
                 data:contentId,
-            });
-        
+            });  
     },[contentId]);
 
-    const {infos, getInfoDone} = useSelector((state)=>state.tv);
-    const {videos, getVideoDone} =  useSelector((state)=>state.tv);
-    const {credits, getCreditDone} =  useSelector((state)=>state.tv);
-    const {keywords, getKeywordDone} =  useSelector((state)=>state.tv);
-    const {similars, getSimilarDone} =  useSelector((state)=>state.tv);
+    const {infos, getInfoDone} = useSelector((state)=>state.movie);
+    const {videos, getVideoDone} =  useSelector((state)=>state.movie);
+    const {credits, getCreditDone} =  useSelector((state)=>state.movie);
+    const {keywords, getKeywordDone} =  useSelector((state)=>state.movie);
+    const {similars, getSimilarDone} =  useSelector((state)=>state.movie);
+
     return (
         <>
-        {isOpen && mediaType === "tv" ? 
+        {isOpen && mediaType === "movie" ? 
         
         (<BackWrapper onClick={closeModal}>
             <ModalWrapper scroll={scroll > 1 ? "change" : "original"}onClick={e=>e.stopPropagation()}>
@@ -272,7 +272,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                     <ModalTopWrapper>
                     <ModalCloseButton onClick={closeModal}/>
                         <ModalVideoWrapper>
-                            {videos.results.length !== 0 ? <ReactPlayer 
+                            {getVideoDone ? <ReactPlayer 
                                 url={contentId === 66732 ? `https://www.youtube.com/watch?v=${videos.results[0].key}` : `https://www.youtube.com/watch?v=${videos.results[0].key}`}
                                 playing={true}
                                 controls={false}
@@ -293,30 +293,35 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                         <ModalInfoWrapper>
                             <ModalInfoDetail>
                                 <ModalInfoLeft>
-                                    {getInfoDone ? (<>
-                                        <div style={{marginBottom:"10px"}}><h1>{infos.name}</h1> 평점 : {infos.vote_average}</div>
-                                        <div style={{marginBottom:"10px"}}>{infos.overview.substr(0,190)}</div>
-                                    </>) : null}
+                                    { getInfoDone ?
+                                    (<>
+                                    <div style={{marginBottom:"10px"}}><h1>{infos.title}</h1> 평점 : {infos.vote_average}</div>
+                                    <div style={{marginBottom:"10px"}}>{infos.overview.substr(0,190)}</div>
+                                    </>) : null
+                                    }
                                 </ModalInfoLeft>
                                 <ModalInfoRight>
-                                    <TagWrapper>
-                                        <span style={{color:"#777"}}>출연: </span>
-                                        {credits.cast.map((v)=>{
-                                            return <span>{v.name}, </span>
-                                        })}
-                                    </TagWrapper>
-                                    <TagWrapper>
-                                        <span style={{color:"#777"}}>장르: </span>
-                                        {infos.genres.map((v)=>{
-                                            return <span>{v.name}, </span>
-                                        })}
-                                    </TagWrapper>
-                                    <TagWrapper>
-                                        <span style={{color:"#777"}}>프로그램 특징: </span>
-                                        {keywords.results.map((v)=>{
-                                            return <span>{v.name}, </span>
-                                        })}
-                                    </TagWrapper>
+                                    { getCreditDone && getInfoDone && getKeywordDone ? 
+                                    (<>
+                                        <TagWrapper>
+                                            <span style={{color:"#777"}}>출연: </span>
+                                                {credits.cast.map((v)=>{
+                                                    return <span>{v.name}, </span>
+                                                })}
+                                        </TagWrapper>
+                                        <TagWrapper>
+                                            <span style={{color:"#777"}}>장르: </span>
+                                                {infos.genres.map((v)=>{
+                                                    return <span>{v.name}, </span>
+                                                })}
+                                        </TagWrapper>
+                                        <TagWrapper>
+                                            <span style={{color:"#777"}}>프로그램 특징: </span>
+                                                {keywords.keywords.map((v)=>{
+                                                    return <span>{v.name}, </span>
+                                                })}
+                                        </TagWrapper>
+                                        </>): null}
                                 </ModalInfoRight>
                             </ModalInfoDetail>
                         </ModalInfoWrapper>
@@ -329,7 +334,9 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                         </ModalSimilarWrapper>
                         <ModalAboutWrapper>
                             <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"bold", fontSize:"20px"}}> 상세 정보</span></ModalHeader>
-                                <TagWrapper>
+                                {getCreditDone && getCreditDone && getKeywordDone ?
+                                (<>
+                                    <TagWrapper>
                                     <span style={{color:"#777"}}>크리에이터: </span>
                                     {credits.crew.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
@@ -343,8 +350,9 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>특징: </span>
-                                    {keywords.results.map((v)=><span>{v.name}, </span>)}
+                                    {keywords.keywords.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
+                                </>) : null}
                         </ModalAboutWrapper>
                     </ModalContentContainer>
                 </ModalContent>
@@ -357,4 +365,4 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
 };
 
 
-export default TVContentModal;
+export default MovieContentModal;

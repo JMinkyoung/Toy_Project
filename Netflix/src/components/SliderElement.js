@@ -58,7 +58,7 @@ const HoverInfoButton = styled(DownCircleOutlined)`
     }
 `;
 
-const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
+const SliderElement = ({setContentId, setModalOpend, setMediaType, id, started, data}) => {
 
     const [delayHandler, setDelayHandler] = useState(null);
     const [hovered, setHovered] = useState(false);
@@ -78,6 +78,7 @@ const SliderElement = ({setContentId, setModalOpend, id, started, data}) => {
     const modalOpen = () => {
         setModalOpend(true);
         setContentId(data.id);
+        setMediaType(data.media_type);
     };
 
 

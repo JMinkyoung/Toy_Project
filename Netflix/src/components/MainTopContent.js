@@ -141,11 +141,11 @@ const BackgroundImage = styled.img`
     display: ${props=> props.ended === true ? "block" : "none"};
 `;
 
-const MainTopContent = ({setContentId}) => {
+const MainTopContent = ({setMediaType, setModalOpend, setContentId}) => {
     const [muted, setMuted] = useState(false);
     const [change, setChange] = useState(false);
     const [ended, setEnded] = useState(false);
-    const [isModalOpend, setModalOpend] = useState(false);
+    // const [isModalOpend, setModalOpend] = useState(false);
 
     const onClickMute = ()=>{
         setMuted(!muted);
@@ -158,11 +158,12 @@ const MainTopContent = ({setContentId}) => {
     const modalOpen = () => {
         setModalOpend(true);
         setContentId(66732);
+        setMediaType("tv");
     };
 
-    useEffect(()=>{
-        isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
-    },[isModalOpend]);
+    // useEffect(()=>{
+    //     isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
+    // },[isModalOpend]);
 
     setTimeout(()=>{
         setChange(true);
@@ -216,7 +217,6 @@ const MainTopContent = ({setContentId}) => {
                     <img style={{width:"100%"}} src={"/images/rating.png"}/>
                 </ExtraContent>
             </MainTopRight>
-            <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={66732}/>
         </MainTopWrapper>
     );  
 };

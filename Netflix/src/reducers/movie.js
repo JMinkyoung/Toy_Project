@@ -6,6 +6,7 @@ export const initialState = {
   similars: [],
 
   popularmovie: [],
+  trendingmovie:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -30,6 +31,10 @@ export const initialState = {
   getPopularLoading: false,
   getPopularDone: false,
   getPopularError: null,
+
+  getTrendingLoading: false,
+  getTrendingDone: false,
+  getTrendingError: null,
 }
 
 export const GET_MOVIE_INFO_REQUEST = 'GET_MOVIE_INFO_REQUEST';
@@ -56,8 +61,12 @@ export const GET_POPULAR_MOVIE_REQUEST = 'GET_POPULAR_MOVIE_REQUEST';
 export const GET_POPULAR_MOVIE_SUCCESS = 'GET_POPULAR_MOVIE_SUCCESS';
 export const GET_POPULAR_MOVIE_FAILURE = 'GET_POPULAR_MOVIE_FAILURE';
 
+export const GET_TRENDING_MOVIE_REQUEST = 'GET_TRENDING_MOVIE_REQUEST';
+export const GET_TRENDING_MOVIE_SUCCESS = 'GET_TRENDING_MOVIE_SUCCESS';
+export const GET_TRENDING_MOVIE_FAILURE = 'GET_TRENDING_MOVIE_FAILURE';
 
-const reducer = (state = [] , action) => {
+
+const reducer = (state = initialState , action) => {
     switch(action.type){
       case GET_MOVIE_INFO_REQUEST:
         return{
@@ -178,6 +187,26 @@ const reducer = (state = [] , action) => {
           ...state,
           getPopularLoading:false,
           getPopularError:action.error,
+        };
+      case GET_TRENDING_MOVIE_REQUEST:
+        return{
+            ...state,
+            getTrendingLoading:true,
+            getTrendingDone:false,
+            getTrendingError:null,
+        };
+      case GET_TRENDING_MOVIE_SUCCESS:
+        return{
+            ...state,
+            trendingmovie: action.data,
+            getTrendingLoading:false,
+            getTrendingDone:true,
+        };
+      case GET_TRENDING_MOVIE_FAILURE:
+        return{
+          ...state,
+          getTrendingLoading:false,
+          getTrendingError:action.error,
         };
         default:
           return state;

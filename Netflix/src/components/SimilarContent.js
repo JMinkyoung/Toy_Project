@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { PlusCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 
@@ -21,7 +21,7 @@ const PlayButton = styled(PlayCircleOutlined)`
     }
 `;
 
-const SimilarTV = ({data}) => {
+const SimilarContent = ({data}) => {
 
     return (
         <SimilarCardWrapper>
@@ -32,7 +32,12 @@ const SimilarTV = ({data}) => {
             <div style={{padding:"0 1em 1em"}}>
                 <div style={{display:"flex", alignItems:"center", margin:"15px 0 15px 0"}}>
                     <img src={data.adult ? "/images/age_18.png" : "/images/age_15.png"}/>
-                    <div style={{fontSize:"16px",fontWeight:"bold", marginLeft:"10px", marginRight:"130px"}}>{data.first_air_date.substr(0,4)}</div>
+                    <div style={{fontSize:"16px",fontWeight:"bold", marginLeft:"10px", marginRight:"130px"}}>
+                        {data.first_air_date ? 
+                            data.first_air_date.substr(0,4) :
+                            data.release_date.substr(0,4)
+                        }
+                    </div>
                     <PlusCircleOutlined style={{fontSize:"35px"}} />
                 </div>
                 <div style={{fontSize:"14px"}}>
@@ -43,4 +48,4 @@ const SimilarTV = ({data}) => {
     );
 };
 
-export default SimilarTV;
+export default SimilarContent;

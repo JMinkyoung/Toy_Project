@@ -6,9 +6,9 @@ import {
     GET_MOVIE_KEYWORDS_REQUEST, GET_MOVIE_KEYWORDS_SUCCESS, GET_MOVIE_KEYWORDS_FAILURE,
     GET_MOVIE_CREDITS_REQUEST, GET_MOVIE_CREDITS_SUCCESS, GET_MOVIE_CREDITS_FAILURE,
     GET_MOVIE_SIMILAR_REQUEST, GET_MOVIE_SIMILAR_SUCCESS, GET_MOVIE_SIMILAR_FAILURE,
-
-
-    GET_POPULAR_MOVIE_FAILURE, GET_POPULAR_MOVIE_REQUEST, GET_POPULAR_MOVIE_SUCCESS } from "../reducers/movie";
+    GET_POPULAR_MOVIE_FAILURE, GET_POPULAR_MOVIE_REQUEST, GET_POPULAR_MOVIE_SUCCESS,
+    GET_TRENDING_MOVIE_FAILURE, GET_TRENDING_MOVIE_REQUEST, GET_TRENDING_MOVIE_SUCCESS
+ } from "../reducers/movie";
 
 
 
@@ -34,6 +34,18 @@ function moviesimilarAPI(data) {
     
 function popularmovieAPI() {
     return axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1&region=KR`);
+}
+
+function trendingmovieAPI() {
+    return axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`);
+}
+
+function trendingmovieAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
+function trendingmovieAPI3() {
+    return axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=3`);
 }
 
 function* getMOVIEInfo(action) {
@@ -116,9 +128,9 @@ function* getMOVIESimilar(action) {
     }
 }
 
-function* getPopularMoive(action) {
+function* getPopularMoive() {
     try {
-        const result = yield call(popularmovieAPI,action.data);
+        const result = yield call(popularmovieAPI);
         yield put({
             type: GET_POPULAR_MOVIE_SUCCESS,
             data: result.data,
@@ -127,6 +139,25 @@ function* getPopularMoive(action) {
         console.error(error);
         yield put({
             type: GET_POPULAR_MOVIE_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
+function* getTrendingMoive() {
+    try {
+        const data1 = yield call(trendingmovieAPI);
+        const data2 = yield call(trendingmovieAPI2);
+        const data3 = yield call(trendingmovieAPI3);
+
+        yield put({
+            type: GET_TRENDING_MOVIE_SUCCESS,
+            data: [...data1.data.results,...data2.data.results,...data3.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_TRENDING_MOVIE_FAILURE,
             error: error.response.data
         });
     }
@@ -156,6 +187,10 @@ function* watchPopularMovie() {
     yield takeLatest(GET_POPULAR_MOVIE_REQUEST,getPopularMoive);
 }
 
+function* watchTrendingMovie() {
+    yield takeLatest(GET_TRENDING_MOVIE_REQUEST,getTrendingMoive);
+}
+
 export default function* movieSaga() {
     yield all([
         fork(watchGetMovieInfo),
@@ -164,5 +199,6 @@ export default function* movieSaga() {
         fork(watchGetMovieCredit),
         fork(watchGetMovieSimilar),
         fork(watchPopularMovie),
+        fork(watchTrendingMovie),
     ]);
 }
