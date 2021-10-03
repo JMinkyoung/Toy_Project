@@ -262,6 +262,8 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
     const {credits, getCreditDone} =  useSelector((state)=>state.tv);
     const {keywords, getKeywordDone} =  useSelector((state)=>state.tv);
     const {similars, getSimilarDone} =  useSelector((state)=>state.tv);
+
+    console.log(keywords);
     return (
         <>
         {isOpen && mediaType === "tv" ? 
@@ -272,7 +274,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                     <ModalTopWrapper>
                     <ModalCloseButton onClick={closeModal}/>
                         <ModalVideoWrapper>
-                            {videos.results.length !== 0 ? <ReactPlayer 
+                            {getVideoDone && videos.results.length !== 0 ? <ReactPlayer 
                                 url={contentId === 66732 ? `https://www.youtube.com/watch?v=${videos.results[0].key}` : `https://www.youtube.com/watch?v=${videos.results[0].key}`}
                                 playing={true}
                                 controls={false}
@@ -299,24 +301,31 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                     </>) : null}
                                 </ModalInfoLeft>
                                 <ModalInfoRight>
-                                    <TagWrapper>
-                                        <span style={{color:"#777"}}>출연: </span>
-                                        {credits.cast.map((v)=>{
-                                            return <span>{v.name}, </span>
-                                        })}
-                                    </TagWrapper>
-                                    <TagWrapper>
-                                        <span style={{color:"#777"}}>장르: </span>
-                                        {infos.genres.map((v)=>{
-                                            return <span>{v.name}, </span>
-                                        })}
-                                    </TagWrapper>
-                                    <TagWrapper>
-                                        <span style={{color:"#777"}}>프로그램 특징: </span>
-                                        {keywords.results.map((v)=>{
-                                            return <span>{v.name}, </span>
-                                        })}
-                                    </TagWrapper>
+                                { getCreditDone && getInfoDone && getKeywordDone ? 
+                                    (<>
+                                        <TagWrapper>
+                                            <span style={{color:"#777"}}>출연: </span>
+                                                {credits.cast.length > 5 ? 
+                                                <span>{credits.cast[0].name}, {credits.cast[1].name}, {credits.cast[2].name}, {credits.cast[3].name}, {credits.cast[4].name}</span>
+                                                :
+                                                credits.cast.map((v)=>{
+                                                    return <span>{v.name}, </span>
+                                                }) 
+                                                }
+                                        </TagWrapper>
+                                        <TagWrapper>
+                                            <span style={{color:"#777"}}>장르: </span>
+                                                {infos.genres.map((v)=>{
+                                                    return <span>{v.name}, </span>
+                                                })}
+                                        </TagWrapper>
+                                        <TagWrapper>
+                                            <span style={{color:"#777"}}>프로그램 특징: </span>
+                                                {keywords.results.map((v)=>{
+                                                    return <span>{v.name}, </span>
+                                                })}
+                                        </TagWrapper>
+                                        </>): null}
                                 </ModalInfoRight>
                             </ModalInfoDetail>
                         </ModalInfoWrapper>
@@ -329,7 +338,9 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                         </ModalSimilarWrapper>
                         <ModalAboutWrapper>
                             <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"bold", fontSize:"20px"}}> 상세 정보</span></ModalHeader>
-                                <TagWrapper>
+                            {getCreditDone && getInfoDone && getKeywordDone ?
+                                (<>
+                                    <TagWrapper>
                                     <span style={{color:"#777"}}>크리에이터: </span>
                                     {credits.crew.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
@@ -345,6 +356,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                     <span style={{color:"#777"}}>특징: </span>
                                     {keywords.results.map((v)=><span>{v.name}, </span>)}
                                 </TagWrapper>
+                                </>) : null}
                         </ModalAboutWrapper>
                     </ModalContentContainer>
                 </ModalContent>

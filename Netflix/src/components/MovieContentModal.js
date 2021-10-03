@@ -272,7 +272,7 @@ const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                     <ModalTopWrapper>
                     <ModalCloseButton onClick={closeModal}/>
                         <ModalVideoWrapper>
-                            {getVideoDone ? <ReactPlayer 
+                            {getVideoDone && videos.results.length !==0 ? <ReactPlayer 
                                 url={contentId === 66732 ? `https://www.youtube.com/watch?v=${videos.results[0].key}` : `https://www.youtube.com/watch?v=${videos.results[0].key}`}
                                 playing={true}
                                 controls={false}
@@ -305,9 +305,13 @@ const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                     (<>
                                         <TagWrapper>
                                             <span style={{color:"#777"}}>출연: </span>
-                                                {credits.cast.map((v)=>{
+                                                {credits.cast.length > 5 ? 
+                                                <span>{credits.cast[0].name}, {credits.cast[1].name}, {credits.cast[2].name}, {credits.cast[3].name}, {credits.cast[4].name}</span>
+                                                :
+                                                credits.cast.map((v)=>{
                                                     return <span>{v.name}, </span>
-                                                })}
+                                                }) 
+                                                }
                                         </TagWrapper>
                                         <TagWrapper>
                                             <span style={{color:"#777"}}>장르: </span>
@@ -334,7 +338,7 @@ const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                         </ModalSimilarWrapper>
                         <ModalAboutWrapper>
                             <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"bold", fontSize:"20px"}}> 상세 정보</span></ModalHeader>
-                                {getCreditDone && getCreditDone && getKeywordDone ?
+                                {getCreditDone && getInfoDone && getKeywordDone ?
                                 (<>
                                     <TagWrapper>
                                     <span style={{color:"#777"}}>크리에이터: </span>
