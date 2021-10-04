@@ -2,10 +2,14 @@ import React,{useEffect, useState}from 'react';
 import styled from 'styled-components';
 import MainHeader from '../components/MainHeader';
 import MainTopContent from '../components/MainTopContent';
+
 import TvContentSlider from '../components/TvContentSlider';
-import MovieContentSlider from '../components/MovieContentSlider';
 import TVContentModal from '../components/TVContentModal';
+
+import MovieContentSlider from '../components/MovieContentSlider';
 import MovieContentModal from '../components/MovieContentModal';
+
+import RankContentSlider from '../components/RankContentSlider';
 
 import Head from 'next/head';
 
@@ -32,7 +36,9 @@ const browse = () => {
         <MainHeader/>
         <MainTopContent setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId}/>
         <SliderWrapper>
-            <TvContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 콘텐츠"}/>
+            <TvContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>
+            <MovieContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 영화"}/>
+            <RankContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"오늘 한국의 TOP 10 콘텐츠"} />
             <MovieContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 영화"}/>
         </SliderWrapper>
 

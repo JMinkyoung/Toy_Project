@@ -32,6 +32,68 @@ const initialState = {
             question: "아이들이 넷플릭스를 봐도 좋을까요?",
             answer: "멤버십에 넷플릭스 키즈 환경이 포함되어 있어 자녀가 자기만의 공간에서 가족용 TV 프로그램과 영화를 즐기는 동안 부모가 이를 관리할 수 있습니다.\n\n키즈 프로필과 더불어 PIN 번호를 이용한 자녀 보호 기능도 있어, 자녀가 시청할 수 있는 콘텐츠의 관람등급을 제한하고 자녀의 시청을 원치 않는 특정 작품을 차단할 수도 있습니다."
         }
+    ],
+    ranks :[
+        {
+            rank: 1,
+            id: 93405,
+            title:"오징어 게임",
+            type: "tv"
+        },
+        {
+            rank: 2,
+            id: 128883,
+            title:"갯마을 차차차",
+            type: "tv"
+        },
+        {
+            rank: 3,
+            id: 114171,
+            title:"백스피릿",
+            type: "tv"
+        },
+        {
+            rank: 4,
+            id: 635302,
+            title:"귀멸의 칼날 극장판 무한열차편",
+            type: "movie"
+        },
+        {
+            rank: 5,
+            id: 567748,
+            title:"더 길티",
+            type: "movie"
+        },
+        {
+            rank: 6,
+            id: 110534,
+            title:"D.P.",
+            type: "tv"
+        },
+        {
+            rank: 7,
+            id: 96102,
+            title:"슬기로운 의사생활",
+            type: "tv"
+        },
+        {
+            rank: 8,
+            id: 129600,
+            title:"한마 바키",
+            type: "tv"
+        },
+        {
+            rank: 9,
+            id: 90447,
+            title:"호텔 델루나",
+            type: "tv"
+        },
+        {
+            rank: 10,
+            id: 740925,
+            title:"아무도 살아서 나갈 수 없다",
+            type: "movie"
+        }
     ]
 };
 

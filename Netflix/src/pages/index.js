@@ -597,7 +597,7 @@ const QnaList = styled.ul`
 
 
 const index = () => {
-    const qnas = useSelector((state) => state.qna.qnas);
+    const qnas = useSelector((state) => state.saved.qnas);
     const router = useRouter();
 
     return(

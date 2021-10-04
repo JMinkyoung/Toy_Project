@@ -89,7 +89,7 @@ const SliderElement = ({setContentId, setModalOpend, setMediaType, id, started, 
                 <SliderElementImg hovered={hovered} id={id} src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
                 <HoverInfoWrapper style={{color:"white"}} hovered={hovered}>
                     <HoverButtonWrapper>
-                        <HoverPlayButton onClick={()=>console.log(data)} />
+                        <HoverPlayButton />
                         <HoverInfoButton onClick={modalOpen}/>
                     </HoverButtonWrapper>
                 </HoverInfoWrapper>

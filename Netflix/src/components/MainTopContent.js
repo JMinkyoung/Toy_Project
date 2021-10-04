@@ -167,7 +167,7 @@ const MainTopContent = ({setMediaType, setModalOpend, setContentId}) => {
 
     setTimeout(()=>{
         setChange(true);
-    },3000);
+    },5000);
 
     useEffect(()=>{
         return () => {

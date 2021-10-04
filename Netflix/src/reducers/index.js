@@ -1,6 +1,6 @@
 import { HYDRATE } from "next-redux-wrapper";
 import { combineReducers } from 'redux';
-import qna from './qna';
+import saved from './saved';
 import movie from './movie';
 import tv from './tv';
 
@@ -11,7 +11,7 @@ const rootReducer = (state, action) => {
             return action.payload;
         default: {
             const combinedReducer = combineReducers({
-                qna,
+                saved,
                 movie,
                 tv,
             });

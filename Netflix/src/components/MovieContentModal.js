@@ -296,7 +296,7 @@ const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                     { getInfoDone ?
                                     (<>
                                     <div style={{marginBottom:"10px"}}><h1>{infos.title}</h1> 평점 : {infos.vote_average}</div>
-                                    <div style={{marginBottom:"10px"}}>{infos.overview.substr(0,190)}</div>
+                                    <div style={{marginBottom:"10px"}}>{infos.overview.length > 190 ? infos.overview.substr(0,190)+" ···" : infos.overview}</div>
                                     </>) : null
                                     }
                                 </ModalInfoLeft>
@@ -308,21 +308,33 @@ const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                                 {credits.cast.length > 5 ? 
                                                 <span>{credits.cast[0].name}, {credits.cast[1].name}, {credits.cast[2].name}, {credits.cast[3].name}, {credits.cast[4].name}</span>
                                                 :
-                                                credits.cast.map((v)=>{
-                                                    return <span>{v.name}, </span>
+                                                credits.cast.map((v, i, arr)=>{
+                                                    if(arr.length -1 === i){
+                                                        return <span>{v.name}</span>
+                                                    }else{
+                                                        return <span>{v.name}, </span>
+                                                    }
                                                 }) 
                                                 }
                                         </TagWrapper>
                                         <TagWrapper>
                                             <span style={{color:"#777"}}>장르: </span>
-                                                {infos.genres.map((v)=>{
-                                                    return <span>{v.name}, </span>
+                                                {infos.genres.map((v, i , arr)=>{
+                                                    if(arr.length -1 === i){
+                                                        return <span>{v.name}</span>
+                                                    }else{
+                                                        return <span>{v.name}, </span>
+                                                    }
                                                 })}
                                         </TagWrapper>
                                         <TagWrapper>
                                             <span style={{color:"#777"}}>프로그램 특징: </span>
-                                                {keywords.keywords.map((v)=>{
-                                                    return <span>{v.name}, </span>
+                                                {keywords.keywords.map((v, i, arr)=>{
+                                                    if(arr.length -1 === i){
+                                                        return <span>{(v.name).toUpperCase()}</span>
+                                                    }else{
+                                                        return <span>{(v.name).toUpperCase()}, </span>
+                                                    }
                                                 })}
                                         </TagWrapper>
                                         </>): null}
@@ -342,19 +354,43 @@ const MovieContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                 (<>
                                     <TagWrapper>
                                     <span style={{color:"#777"}}>크리에이터: </span>
-                                    {credits.crew.map((v)=><span>{v.name}, </span>)}
+                                    {credits.crew.map((v, i, arr)=>{
+                                        if(arr.length-1 === i){
+                                            return <span>{v.name}</span>
+                                        }else{
+                                            return <span>{v.name}, </span>
+                                        }
+                                    })}
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>출연: </span>
-                                    {credits.cast.map((v)=><span>{v.name}, </span>)}
+                                    {credits.cast.map((v, i, arr)=>{
+                                        if(arr.length-1 === i){
+                                            return <span>{v.name}</span>
+                                        }else{
+                                            return <span>{v.name}, </span>
+                                        }
+                                    })}
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>장르: </span>
-                                    {infos.genres.map((v)=><span>{v.name}, </span>)}
+                                    {infos.genres.map((v, i, arr)=>{
+                                        if(arr.length-1 === i){
+                                            return <span>{v.name}</span>
+                                        }else{
+                                            return <span>{v.name}, </span>
+                                        }
+                                    })}
                                 </TagWrapper>
                                 <TagWrapper>
                                     <span style={{color:"#777"}}>특징: </span>
-                                    {keywords.keywords.map((v)=><span>{v.name}, </span>)}
+                                    {keywords.keywords.map((v, i, arr)=>{
+                                        if(arr.length-1 === i){
+                                            return <span>{(v.name).toUpperCase()}</span>
+                                        }else{
+                                            return <span>{(v.name).toUpperCase()}, </span>
+                                        }
+                                    })}
                                 </TagWrapper>
                                 </>) : null}
                         </ModalAboutWrapper>
