@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
+import { DownCircleOutlined, PlayCircleFilled } from '@ant-design/icons';
 
 const RankElementWrapper = styled.div`
     display: flex;
@@ -13,10 +14,57 @@ const RankElementWrapper = styled.div`
 `;
 
 const RankImage = styled.img`
+    display: ${props => props.hovered ? "none" :"block"};
+    transition: all .5s ease .2s;
 
 `;
 
 const RankPoster = styled.img`
+    display: ${props => props.hovered ? "none" :"block"};
+    transition: all .5s ease .2s;
+    border-radius: 0px 4px 4px 0px;
+
+`;
+
+const RankHoverImage = styled.img`
+    width: 100%;
+    /* display: block; */
+    border-radius: 4px 4px 0px 0px;
+    vertical-align: bottom;
+`;
+
+const RankInfoWrapper = styled.div`
+    border-radius: 0px 0px 4px 4px;
+    width:100%;
+    height:50px;
+    background-color: rgb(20, 20, 20);
+    /* background-color: red; */
+`;
+
+const RankHoverWrapper = styled.div`
+    width: 400px;
+    display: flex;
+    color: white;
+    font-size: 25px;
+    display: ${props => props.hovered ? "block" :"none"};
+    transition: all .5s ease .2s;
+    background-color: rgb(20, 20, 20);
+
+`;
+
+const HoverPlayButton = styled(PlayCircleFilled)`
+    position: absolute;
+    left: 5%;
+    bottom: 6%;
+`;
+
+const HoverInfoButton = styled(DownCircleOutlined)`
+    position: absolute;
+    right: 5%;
+    bottom: 6%;
+    :hover {
+        color: grey;
+    }
 `;
 
 const RankElement = ({setContentId, setModalOpend, setMediaType, data}) => {
@@ -27,7 +75,7 @@ const RankElement = ({setContentId, setModalOpend, setMediaType, data}) => {
     const handleMouseEnter = e => {
         setDelayHandler(setTimeout(()=>{
             setHovered(true);
-        },500));
+        },800));
     };
 
     const handleMouseLeave = () => {
@@ -44,8 +92,15 @@ const RankElement = ({setContentId, setModalOpend, setMediaType, data}) => {
 
     return (
         <RankElementWrapper onClick={modalOpen}  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} hovered={hovered}>
-            <RankImage src={`/images/rank/${data.rank}_1.png`}/>
-            <RankPoster src={`/images/rank/${data.rank}.png`}/>
+            <RankImage hovered={hovered} src={`/images/rank/${data.rank}_1.png`}/>
+            <RankPoster hovered={hovered} src={`/images/rank/${data.rank}.png`}/>
+            <RankHoverWrapper hovered={hovered}>
+                <RankHoverImage src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
+                <RankInfoWrapper >
+                    <HoverPlayButton />
+                    <HoverInfoButton/>
+                </RankInfoWrapper>
+            </RankHoverWrapper>
         </RankElementWrapper>
     );
 };

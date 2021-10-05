@@ -38,61 +38,74 @@ const initialState = {
             rank: 1,
             id: 93405,
             title:"오징어 게임",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/oaGvjB0DvdhXhOAuADfHb261ZHa.jpg"
         },
         {
             rank: 2,
             id: 128883,
             title:"갯마을 차차차",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/2avhn5tACIdOp9F5EhNytbChJib.jpg"
         },
         {
             rank: 3,
             id: 114171,
             title:"백스피릿",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/p2TQ9QN34a4q66Cy4xqcLPcDcKX.jpg"
         },
         {
             rank: 4,
             id: 635302,
             title:"귀멸의 칼날 극장판 무한열차편",
-            type: "movie"
+            type: "movie",
+            backdrop_path:"/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg"
+
         },
         {
             rank: 5,
             id: 567748,
             title:"더 길티",
-            type: "movie"
+            type: "movie",
+            backdrop_path:"/5wPWgTvdoVKW6ICeEAg86IBJOBW.jpg"
+
         },
         {
             rank: 6,
             id: 110534,
             title:"D.P.",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/yFNGc3OR81NGdJL3yZCBrjDIluf.jpg"
         },
         {
             rank: 7,
             id: 96102,
             title:"슬기로운 의사생활",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/9iypSe1gvjExzZJL0JNR80x5OTS.jpg"
+
         },
         {
             rank: 8,
             id: 129600,
             title:"한마 바키",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/3tfgZt36SQ1FdbEV0YCLdzpkRn3.jpg"
         },
         {
             rank: 9,
             id: 90447,
             title:"호텔 델루나",
-            type: "tv"
+            type: "tv",
+            backdrop_path:"/3GC4cfyGuUkSx4EMZms2KccUGDg.jpg"
         },
         {
             rank: 10,
             id: 740925,
             title:"아무도 살아서 나갈 수 없다",
-            type: "movie"
+            type: "movie",
+            backdrop_path:"/yO2LFaO62SoM1ZuOq26hWLF1TQ4.jpg"
         }
     ]
 };

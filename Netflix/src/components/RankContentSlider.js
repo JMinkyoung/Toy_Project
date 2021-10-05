@@ -79,7 +79,7 @@ const SliderLeftButton = styled.div`
     align-items: center;
     position: absolute;
     height: 70%;
-    top: 25%;
+    top: 24%;
     left: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -103,7 +103,7 @@ const SliderRightButton = styled.div`
     align-items: center;
     position: absolute;
     height: 70%;
-    top: 25%;
+    top: 24%;
     right: 0;
     cursor: pointer;
     border-radius: 4px;
@@ -126,7 +126,7 @@ const RankContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) =
         if(idx-1 === 0){    // 첫번째 슬라이드 일때
             setIdx(2);
             setTimeout(function(){
-                setPosition(-82);
+                setPosition(-66);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }else{
@@ -147,7 +147,7 @@ const RankContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) =
         }else{  // 마지막 슬라이드 일때
             setIdx(1);
             setTimeout(function(){
-                setPosition(-18);
+                setPosition(-2);
                 container.current.style.transition = `${0}s ease-out`; 
             },500);
         }
