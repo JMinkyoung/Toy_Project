@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef,useCallback} from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -212,6 +212,13 @@ const ModalAboutWrapper = styled.div`
     color:#fff;
 `;
 
+const MoreInfo = styled.i`
+    cursor: pointer;
+    :hover{
+        text-decoration: underline;
+    }
+`;
+
 
 
 const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
@@ -219,6 +226,8 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
     const dispatch = useDispatch();
     const [muted, setMuted] = useState(true);
     const [ended, setEnded] = useState(false);
+    
+    const scrollRef = useRef();
 
     const closeModal = ()=>{
         setModalOpend(false);
@@ -256,6 +265,13 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
             });
         
     },[contentId]);
+
+    const scrollToInfo = useCallback(
+        () => {
+            scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+        },
+        [],
+    );
 
     const {infos, getInfoDone} = useSelector((state)=>state.tv);
     const {videos, getVideoDone} =  useSelector((state)=>state.tv);
@@ -305,11 +321,14 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                         <TagWrapper>
                                             <span style={{color:"#777"}}>출연: </span>
                                                 {credits.cast.length > 5 ? 
-                                                <span>{credits.cast[0].name}, {credits.cast[1].name}, {credits.cast[2].name}, {credits.cast[3].name}, {credits.cast[4].name}</span>
+                                                    <>
+                                                        <span>{credits.cast[0].name}, {credits.cast[1].name}, {credits.cast[2].name}, {credits.cast[3].name}, {credits.cast[4].name}, </span>
+                                                        <MoreInfo onClick={scrollToInfo}>더보기</MoreInfo>
+                                                    </>
                                                 :
                                                 credits.cast.map((v, i, arr)=>{
                                                     if(arr.length -1 === i){
-                                                        return <span>{v.name}</span>
+                                                        return (<><span>{v.name}, </span><MoreInfo onClick={scrollToInfo}>, 더보기</MoreInfo></>)
                                                     }else{
                                                         return <span>{v.name}, </span>
                                                     }
@@ -347,7 +366,7 @@ const TVContentModal = ({isOpen, contentId, setModalOpend, mediaType}) => {
                                 if(v.backdrop_path !== null && v.overview !== "") return <SimilarContent key={v.id} data={v}/>
                             }):null}
                         </ModalSimilarWrapper>
-                        <ModalAboutWrapper>
+                        <ModalAboutWrapper ref={scrollRef}>
                             <ModalHeader><strong>{infos.name}</strong><span style={{fontWeight:"bold", fontSize:"20px"}}> 상세 정보</span></ModalHeader>
                             {getCreditDone && getInfoDone && getKeywordDone ?
                                 (<>
