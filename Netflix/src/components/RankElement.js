@@ -28,7 +28,6 @@ const RankPoster = styled.img`
 
 const RankHoverImage = styled.img`
     width: 100%;
-    /* display: block; */
     border-radius: 4px 4px 0px 0px;
     vertical-align: bottom;
 `;
@@ -38,7 +37,6 @@ const RankInfoWrapper = styled.div`
     width:100%;
     height:50px;
     background-color: rgb(20, 20, 20);
-    /* background-color: red; */
 `;
 
 const RankHoverWrapper = styled.div`

@@ -17,7 +17,6 @@ const ModalWrapper = styled.div`
     margin-bottom: 2em;
     transform: none;
     min-width: 850px;
-
     z-index: 2;
 
 `;
