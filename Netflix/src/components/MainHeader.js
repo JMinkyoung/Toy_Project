@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import styled from 'styled-components';
 import {SearchOutlined, BellFilled,CaretDownOutlined} from '@ant-design/icons';
+import { useRouter } from 'next/router';
+import tvprogram from '../pages/tvprogram';
 
 const HeaderWrapper = styled.div`
     position: fixed;
@@ -78,9 +80,10 @@ const AvatarArrow = styled(CaretDownOutlined)`
     margin-left: 40px;
 `;
 
-const MainHeader = ({setCategory}) => {
+const MainHeader = () => {
 
     const [scroll, setScroll] = useState(0);
+    const router = useRouter();
 
 
     const updateScroll = () => {
@@ -97,10 +100,14 @@ const MainHeader = ({setCategory}) => {
                 <LeftNavigation>
                     <img style={{float:"left",width:"100px"}} src="/images/netflix-logo-png-2562.png"/>
                         <ul>
-                            <Navilist onClick={()=>setCategory("home")}>홈</Navilist>
-                            <Navilist onClick={()=>setCategory("tv")}>TV 프로그램</Navilist>
-                            <Navilist onClick={()=>setCategory("movie")}>영화</Navilist>
-                            <Navilist onClick={()=>setCategory("popular")}>NEW! 요즘 대세 콘텐츠</Navilist>
+                            <Navilist onClick={()=>{
+                                router.push('/browse');
+                            }}>홈</Navilist>
+                            <Navilist onClick={()=>{
+                                router.push('/tvprogram');
+                            }}>TV 프로그램</Navilist>
+                            <Navilist>영화</Navilist>
+                            <Navilist>NEW! 요즘 대세 콘텐츠</Navilist>
                             <Navilist>내가 찜한 콘텐츠</Navilist>
                         </ul>
                 </LeftNavigation>

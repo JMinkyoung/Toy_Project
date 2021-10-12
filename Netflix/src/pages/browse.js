@@ -22,11 +22,6 @@ const browse = () => {
     const [isModalOpend, setModalOpend] = useState(false);
     const [mediaType, setMediaType] = useState("tv");
     const [contendId, setContentId] = useState(66732);
-    const [category, setCategory] = useState("home");
-
-    useEffect(()=>{
-        console.log(category);
-    },[category])
 
     useEffect(()=>{
         isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
@@ -38,7 +33,7 @@ const browse = () => {
             <title>홈 - 넷플릭스</title>
         </Head>
         {/* 헤더에 현재 선택된거 전달해줘야함 */}
-        <MainHeader setCategory={setCategory}/>
+        <MainHeader/>
         <MainTopContent setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId}/>
         <SliderWrapper>
             <TvContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>
