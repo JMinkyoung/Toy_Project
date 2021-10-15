@@ -1,7 +1,7 @@
 import React,{ useState, useEffect , useRef} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST } from '../reducers/tv';
+import { GET_TV_TOPRATED_REQUEST, GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST } from '../reducers/tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import SliderElement from './SliderElement';
 
@@ -116,17 +116,28 @@ const SliderRightButton = styled.div`
     }
 `;
 
-const TvContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) => {
+const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
     const [position, setPosition] = useState(-15);
     const [idx, setIdx] = useState(1);
 
     const dispatch = useDispatch();
+
     useEffect(()=>{
-        dispatch({
-            type:GET_TV_TRENDING_REQUEST,
-        });
+        if(type === "trend"){
+            dispatch({
+                type:GET_TV_TRENDING_REQUEST,
+            });
+        }else if(type === "toprated"){
+            dispatch({
+                type:GET_TV_TOPRATED_REQUEST,
+            });
+        }else if(type === "popular"){
+            dispatch({
+                type:GET_TV_POPULAR_REQUEST,
+            });
+        }
     },[]);
 
 
@@ -161,10 +172,24 @@ const TvContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) => 
         }
     }
     const {getTrendingDone, trendingtv} = useSelector((state)=>state.tv);
+    const {getPopularDone, populartv} = useSelector((state)=>state.tv);
+    const {getTopRatedDone, topratedtv} = useSelector((state)=>state.tv);
 
     const TotalLength = container && container.current && container.current.offsetWidth;
 
-    let finalData = trendingtv.filter((v)=>v.backdrop_path).slice(0, 36);
+    let loadingdone = false;
+
+    let finalData = [];
+    if(type === "trend"){
+        finalData = trendingtv.filter((v)=>v.backdrop_path).slice(0, 36);
+        loadingdone = getTrendingDone;
+    }else if(type === "toprated"){
+        finalData = topratedtv.filter((v)=>v.backdrop_path).slice(0, 36);
+        loadingdone = getTopRatedDone;
+    }else if(type === "popular"){
+        finalData = populartv.filter((v)=>v.backdrop_path).slice(0, 36);
+        loadingdone = getPopularDone;
+    }
     finalData.unshift(finalData[35]);
     finalData.push(finalData[1]);
 
@@ -186,7 +211,7 @@ const TvContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) => 
                 </PaginationWrapper>
             </SliderTitleWrapper>
             <SliderContentWrapper width={TotalLength} test={position}ref={container}>
-                {getTrendingDone &&
+                {loadingdone &&
                 finalData.map((v, index)=>
                     <SliderElement setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
                     ) 

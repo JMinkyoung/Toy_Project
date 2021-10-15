@@ -107,7 +107,9 @@ const MainHeader = () => {
                                 router.push('/tvprogram');
                             }}>TV 프로그램</Navilist>
                             <Navilist>영화</Navilist>
-                            <Navilist>NEW! 요즘 대세 콘텐츠</Navilist>
+                            <Navilist onClick={()=>{
+                                router.push('/latest');
+                            }}>NEW! 요즘 대세 콘텐츠</Navilist>
                             <Navilist>내가 찜한 콘텐츠</Navilist>
                         </ul>
                 </LeftNavigation>

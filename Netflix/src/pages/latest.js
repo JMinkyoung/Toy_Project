@@ -3,16 +3,16 @@ import styled from 'styled-components';
 import MainHeader from '../components/MainHeader';
 import Head from 'next/head';
 
-import TvContentSlider from '../components/TvContentSlider';
+import RankContentSlider from '../components/RankContentSlider';
 import TVContentModal from '../components/TVContentModal';
+import MovieContentModal from '../components/MovieContentModal';
 
 const SliderWrapper = styled.div`
     position: relative;
     margin-top: 100px;
 `;
 
-const tvprogram = () => {
-
+const latest = () => {
     const [isModalOpend, setModalOpend] = useState(false);
     const [mediaType, setMediaType] = useState("tv");
     const [contendId, setContentId] = useState(66732);
@@ -24,23 +24,17 @@ const tvprogram = () => {
     return (
         <>
             <Head>
-                <title>TV 프로그램 - 넷플릭스</title>
+                <title>넷플릭스</title>
             </Head>
             <MainHeader/>
             <SliderWrapper>
-                <TvContentSlider type="trend"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>
-                <TvContentSlider type="toprated"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"최고 인기 TV 컨텐츠"}/>
-                <TvContentSlider type="popular"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 TV 컨텐츠"}/>
-
+                <RankContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"오늘 한국의 TOP 10 콘텐츠"} />
             </SliderWrapper>
 
-
             {mediaType === "tv" ? <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
-
+        {mediaType === "movie" ? <MovieContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
         </>
-        
-
     );
 };
 
-export default tvprogram;
+export default latest;

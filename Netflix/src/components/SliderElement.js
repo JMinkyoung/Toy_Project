@@ -76,9 +76,15 @@ const SliderElement = ({setContentId, setModalOpend, setMediaType, id, started, 
 
     
     const modalOpen = () => {
+        // 영화일 경우에 또 추가해줘야함!!!!
+        if(data.media_type === undefined){
+            setMediaType("tv");
+        }else{
+            setMediaType(data.media_type);
+        }
         setModalOpend(true);
         setContentId(data.id);
-        setMediaType(data.media_type);
+        
     };
 
 

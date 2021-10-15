@@ -7,7 +7,8 @@ import {
     GET_TV_KEYWORDS_REQUEST, GET_TV_KEYWORDS_SUCCESS, GET_TV_KEYWORDS_FAILURE,
     GET_TV_SIMILAR_REQUEST, GET_TV_SIMILAR_SUCCESS, GET_TV_SIMILAR_FAILURE,
     GET_TV_POPULAR_REQUEST, GET_TV_POPULAR_SUCCESS, GET_TV_POPULAR_FAILURE,
-    GET_TV_TRENDING_REQUEST, GET_TV_TRENDING_SUCCESS, GET_TV_TRENDING_FAILURE
+    GET_TV_TRENDING_REQUEST, GET_TV_TRENDING_SUCCESS, GET_TV_TRENDING_FAILURE,
+    GET_TV_TOPRATED_REQUEST, GET_TV_TOPRATED_SUCCESS, GET_TV_TOPRATED_FAILURE
 } from '../reducers/tv';
 
 function tvvideoAPI(data) {
@@ -48,6 +49,14 @@ function tvtrendingAPI() {
 
 function tvtrendingAPI2() {
     return axios.get(`https://api.themoviedb.org/3/trending/tv/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
+function tvtopratedAPI() {
+    return axios.get(`https://api.themoviedb.org/3/tv/top_rated?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
+}
+
+function tvtopratedAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/tv/top_rated?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
 }
 
 // 전체 컨텐츠 트렌딩 https://api.themoviedb.org/3/trending/all/week?api_key=0f54240da860f0ee0a59657346e7a8cc
@@ -166,6 +175,23 @@ function* getTrendingTV() {
     }
 }
 
+function* getTopRatedTV() {
+    try {
+        const data1 = yield call(tvtopratedAPI);
+        const data2 = yield call(tvtopratedAPI2);
+        yield put({
+            type: GET_TV_TOPRATED_SUCCESS,
+            data: [...data1.data.results,...data2.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_TV_TOPRATED_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
 function* watchGetTvVideo() {
     yield takeLatest(GET_TV_VIDEO_REQUEST,getTVVideo);
 }
@@ -194,6 +220,10 @@ function* watchGetTrendingTv() {
     yield takeLatest(GET_TV_TRENDING_REQUEST,getTrendingTV);
 }
 
+function* watchGetTopRatedTv() {
+    yield takeLatest(GET_TV_TOPRATED_REQUEST,getTopRatedTV);
+}
+
 export default function* tvSaga() {
     yield all([
         fork(watchGetTvInfo),
@@ -203,5 +233,6 @@ export default function* tvSaga() {
         fork(watchGetTvSimilar),
         fork(watchGetPopularTv),
         fork(watchGetTrendingTv),
+        fork(watchGetTopRatedTv),
     ]);
 }

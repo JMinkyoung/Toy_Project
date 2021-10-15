@@ -6,6 +6,7 @@ export const initialState = {
   credits:[],
   populartv:[],
   trendingtv:[],
+  topratedtv:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -34,6 +35,11 @@ export const initialState = {
   getTrendingLoading: false,
   getTrendingDone: false,
   getTrendingError: null,
+
+  getTopRatedLoading: false,
+  getTopRatedDone: false,
+  getTopRatedError: null,
+
 }
 
 export const GET_TV_INFO_REQUEST = 'GET_TV_INFO_REQUEST';
@@ -63,6 +69,10 @@ export const GET_TV_POPULAR_FAILURE = 'GET_TV_POPULAR_FAILURE';
 export const GET_TV_TRENDING_REQUEST = 'GET_TV_TRENDING_REQUEST';
 export const GET_TV_TRENDING_SUCCESS = 'GET_TV_TRENDING_SUCCESS';
 export const GET_TV_TRENDING_FAILURE = 'GET_TV_TRENDING_FAILURE';
+
+export const GET_TV_TOPRATED_REQUEST = 'GET_TV_TOPRATED_REQUEST';
+export const GET_TV_TOPRATED_SUCCESS = 'GET_TV_TOPRATED_SUCCESS';
+export const GET_TV_TOPRATED_FAILURE = 'GET_TV_TOPRATED_FAILURE';
 
 
 const reducer = (state = initialState , action) => {
@@ -201,11 +211,31 @@ const reducer = (state = initialState , action) => {
                 getTrendingLoading:false,
                 getTrendingDone:true,
             };
-          case GET_TV_TRENDING_FAILURE:
+          case GET_TV_TOPRATED_FAILURE:
             return{
               ...state,
-              getTrendingLoading:false,
-              getTrendingError:action.error,
+              getTopRatedLoading:false,
+              getTopRatedError:action.error,
+            };
+          case GET_TV_TOPRATED_REQUEST:
+            return{
+                ...state,
+                getTopRatedLoading:true,
+                getTopRatedDone:false,
+                getTopRatedError:null,
+            };
+          case GET_TV_TOPRATED_SUCCESS:
+            return{
+                ...state,
+                topratedtv: action.data,
+                getTopRatedLoading:false,
+                getTopRatedDone:true,
+            };
+          case GET_TV_TOPRATED_FAILURE:
+            return{
+              ...state,
+              getTopRatedLoading:false,
+              getTopRatedError:action.error,
             };
         default:
             return state;
