@@ -1,7 +1,7 @@
 import React,{ useState, useEffect , useRef} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_TV_TOPRATED_REQUEST, GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST } from '../reducers/tv';
+import { GET_TV_TOPRATED_REQUEST, GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST, GET_TV_ONTHEAIR_REQUEST } from '../reducers/tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import SliderElement from './SliderElement';
 
@@ -125,18 +125,27 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        if(type === "trend"){
-            dispatch({
-                type:GET_TV_TRENDING_REQUEST,
-            });
-        }else if(type === "toprated"){
-            dispatch({
-                type:GET_TV_TOPRATED_REQUEST,
-            });
-        }else if(type === "popular"){
-            dispatch({
-                type:GET_TV_POPULAR_REQUEST,
-            });
+        switch(type){
+            case "trend":
+                dispatch({
+                    type:GET_TV_TRENDING_REQUEST,
+                });
+                break;
+            case "toprated":
+                dispatch({
+                    type:GET_TV_TOPRATED_REQUEST,
+                });
+                break;
+            case "popular":
+                dispatch({
+                    type:GET_TV_POPULAR_REQUEST,
+                });
+                break;
+            case "onair":
+                dispatch({
+                    type:GET_TV_ONTHEAIR_REQUEST,
+                });
+                break;
         }
     },[]);
 
@@ -174,22 +183,35 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
     const {getTrendingDone, trendingtv} = useSelector((state)=>state.tv);
     const {getPopularDone, populartv} = useSelector((state)=>state.tv);
     const {getTopRatedDone, topratedtv} = useSelector((state)=>state.tv);
+    const {getOnTheAirDone, ontheairtv} = useSelector((state)=>state.tv);
+
 
     const TotalLength = container && container.current && container.current.offsetWidth;
 
     let loadingdone = false;
-
     let finalData = [];
-    if(type === "trend"){
-        finalData = trendingtv.filter((v)=>v.backdrop_path).slice(0, 36);
-        loadingdone = getTrendingDone;
-    }else if(type === "toprated"){
-        finalData = topratedtv.filter((v)=>v.backdrop_path).slice(0, 36);
-        loadingdone = getTopRatedDone;
-    }else if(type === "popular"){
-        finalData = populartv.filter((v)=>v.backdrop_path).slice(0, 36);
-        loadingdone = getPopularDone;
+
+    switch(type) {
+        case "trend":
+            finalData = trendingtv.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getTrendingDone;
+            break;
+        case "toprated":
+            finalData = topratedtv.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getTopRatedDone;
+            break;
+        case "popular":
+            finalData = populartv.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getPopularDone;
+            break;
+        case "onair":
+            finalData = ontheairtv.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getOnTheAirDone;
+            break;
     }
+
+    console.log(type,finalData);
+
     finalData.unshift(finalData[35]);
     finalData.push(finalData[1]);
 
@@ -213,7 +235,7 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
             <SliderContentWrapper width={TotalLength} test={position}ref={container}>
                 {loadingdone &&
                 finalData.map((v, index)=>
-                    <SliderElement setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
+                    <SliderElement type={"tv"} setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
                     ) 
                 }
             </SliderContentWrapper>

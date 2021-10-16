@@ -31,7 +31,7 @@ const tvprogram = () => {
                 <TvContentSlider type="trend"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>
                 <TvContentSlider type="toprated"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"최고 인기 TV 컨텐츠"}/>
                 <TvContentSlider type="popular"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 TV 컨텐츠"}/>
-
+                <TvContentSlider type="onair"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"현재 방영중인 TV 컨텐츠"}/>
             </SliderWrapper>
 
 

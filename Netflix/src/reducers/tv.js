@@ -7,6 +7,7 @@ export const initialState = {
   populartv:[],
   trendingtv:[],
   topratedtv:[],
+  ontheairtv:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -39,6 +40,10 @@ export const initialState = {
   getTopRatedLoading: false,
   getTopRatedDone: false,
   getTopRatedError: null,
+
+  getOnTheAirLoading: false,
+  getOnTheAirDone: false,
+  getOnTheAirError: null,
 
 }
 
@@ -73,6 +78,10 @@ export const GET_TV_TRENDING_FAILURE = 'GET_TV_TRENDING_FAILURE';
 export const GET_TV_TOPRATED_REQUEST = 'GET_TV_TOPRATED_REQUEST';
 export const GET_TV_TOPRATED_SUCCESS = 'GET_TV_TOPRATED_SUCCESS';
 export const GET_TV_TOPRATED_FAILURE = 'GET_TV_TOPRATED_FAILURE';
+
+export const GET_TV_ONTHEAIR_REQUEST = 'GET_TV_ONTHEAIR_REQUEST';
+export const GET_TV_ONTHEAIR_SUCCESS = 'GET_TV_ONTHEAIR_SUCCESS';
+export const GET_TV_ONTHEAIR_FAILURE = 'GET_TV_ONTHEAIR_FAILURE';
 
 
 const reducer = (state = initialState , action) => {
@@ -236,6 +245,26 @@ const reducer = (state = initialState , action) => {
               ...state,
               getTopRatedLoading:false,
               getTopRatedError:action.error,
+            };
+          case GET_TV_ONTHEAIR_REQUEST:
+            return{
+                ...state,
+                getOnTheAirLoading:true,
+                getOnTheAirDone:false,
+                getOnTheAirError:null,
+            };
+          case GET_TV_ONTHEAIR_SUCCESS:
+            return{
+                ...state,
+                ontheairtv: action.data,
+                getOnTheAirLoading:false,
+                getOnTheAirDone:true,
+            };
+          case GET_TV_ONTHEAIR_FAILURE:
+            return{
+              ...state,
+              getOnTheAirLoading:false,
+              getOnTheAirError:action.error,
             };
         default:
             return state;

@@ -58,7 +58,7 @@ const HoverInfoButton = styled(DownCircleOutlined)`
     }
 `;
 
-const SliderElement = ({setContentId, setModalOpend, setMediaType, id, started, data}) => {
+const SliderElement = ({type, setContentId, setModalOpend, setMediaType, id, started, data}) => {
 
     const [delayHandler, setDelayHandler] = useState(null);
     const [hovered, setHovered] = useState(false);
@@ -76,9 +76,8 @@ const SliderElement = ({setContentId, setModalOpend, setMediaType, id, started, 
 
     
     const modalOpen = () => {
-        // 영화일 경우에 또 추가해줘야함!!!!
         if(data.media_type === undefined){
-            setMediaType("tv");
+            setMediaType(type);
         }else{
             setMediaType(data.media_type);
         }
