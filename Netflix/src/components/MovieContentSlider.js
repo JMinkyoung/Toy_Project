@@ -1,7 +1,7 @@
 import React,{ useState, useEffect , useRef} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_TRENDING_MOVIE_REQUEST } from '../reducers/movie';
+import { GET_TRENDING_MOVIE_REQUEST, GET_POPULAR_MOVIE_REQUEST, GET_NOWPLAYING_MOVIE_REQUEST, GET_UPCOMING_MOVIE_REQUEST } from '../reducers/movie';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import SliderElement from './SliderElement';
 
@@ -116,7 +116,7 @@ const SliderRightButton = styled.div`
     }
 `;
 
-const MovieContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) => {
+const MovieContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title}) => {
     const container = useRef();
     const [started, setStarted] = useState(false);
     const [position, setPosition] = useState(-15);
@@ -124,9 +124,28 @@ const MovieContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) 
 
     const dispatch = useDispatch();
     useEffect(()=>{
-        dispatch({
-            type:GET_TRENDING_MOVIE_REQUEST,
-        });
+        switch(type){
+            case "trend":
+                dispatch({
+                    type:GET_TRENDING_MOVIE_REQUEST,
+                });
+                break;
+            case "popular":
+                dispatch({
+                    type:GET_POPULAR_MOVIE_REQUEST,
+                });
+                break;
+            case "nowplaying":
+                dispatch({
+                    type:GET_NOWPLAYING_MOVIE_REQUEST,
+                });
+                break;
+            case "upcoming":
+                dispatch({
+                    type:GET_UPCOMING_MOVIE_REQUEST,
+                });
+                break;
+        }
     },[]);
 
 
@@ -161,9 +180,35 @@ const MovieContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) 
         }
     }
     const {getTrendingDone, trendingmovie} = useSelector((state)=>state.movie);
+    const {getPopularDone, popularmovie} = useSelector((state)=>state.movie);
+    const {getNowPlayingDone, nowplayingmoive} = useSelector((state)=>state.movie);
+    const {getUpComingDone, upcomingmovie} = useSelector((state)=>state.movie);
+
+
     const TotalLength = container && container.current && container.current.offsetWidth;
 
-    let finalData = trendingmovie.filter((v)=>v.backdrop_path).slice(0, 36);
+    let loadingdone = false;
+    let finalData = [];
+
+    switch(type) {
+        case "trend":
+            finalData = trendingmovie.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getTrendingDone;
+            break;
+        case "popular":
+            finalData = popularmovie.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getPopularDone;
+            break;
+        case "nowplaying":
+            finalData = nowplayingmoive.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getNowPlayingDone;
+            break;
+        case "upcoming":
+            finalData = upcomingmovie.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getUpComingDone;
+            break;
+    }
+    
     finalData.unshift(finalData[35]);
     finalData.push(finalData[1]);
     
@@ -185,9 +230,9 @@ const MovieContentSlider = ({setModalOpend ,setContentId, setMediaType, title}) 
                 </PaginationWrapper>
             </SliderTitleWrapper>
             <SliderContentWrapper width={TotalLength} test={position}ref={container}>
-                {getTrendingDone &&
+                {loadingdone &&
                 finalData.map((v, index)=>
-                    <SliderElement setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
+                    <SliderElement type={"movie"} setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
                     ) 
                 }
             </SliderContentWrapper>

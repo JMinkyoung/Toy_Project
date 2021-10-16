@@ -7,6 +7,8 @@ export const initialState = {
 
   popularmovie: [],
   trendingmovie:[],
+  nowplayingmoive:[],
+  upcomingmovie:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -35,6 +37,14 @@ export const initialState = {
   getTrendingLoading: false,
   getTrendingDone: false,
   getTrendingError: null,
+
+  getNowPlayingLoading: false,
+  getNowPlayingDone: false,
+  getNowPlayingError: null,
+
+  getUpComingLoading: false,
+  getUpComingDone: false,
+  getUpComingError: null,
 }
 
 export const GET_MOVIE_INFO_REQUEST = 'GET_MOVIE_INFO_REQUEST';
@@ -64,6 +74,14 @@ export const GET_POPULAR_MOVIE_FAILURE = 'GET_POPULAR_MOVIE_FAILURE';
 export const GET_TRENDING_MOVIE_REQUEST = 'GET_TRENDING_MOVIE_REQUEST';
 export const GET_TRENDING_MOVIE_SUCCESS = 'GET_TRENDING_MOVIE_SUCCESS';
 export const GET_TRENDING_MOVIE_FAILURE = 'GET_TRENDING_MOVIE_FAILURE';
+
+export const GET_NOWPLAYING_MOVIE_REQUEST = 'GET_NOWPLAYING_MOVIE_REQUEST';
+export const GET_NOWPLAYING_MOVIE_SUCCESS = 'GET_NOWPLAYING_MOVIE_SUCCESS';
+export const GET_NOWPLAYING_MOVIE_FAILURE = 'GET_NOWPLAYING_MOVIE_FAILURE';
+
+export const GET_UPCOMING_MOVIE_REQUEST = 'GET_UPCOMING_MOVIE_REQUEST';
+export const GET_UPCOMING_MOVIE_SUCCESS = 'GET_UPCOMING_MOVIE_SUCCESS';
+export const GET_UPCOMING_MOVIE_FAILURE = 'GET_UPCOMING_MOVIE_FAILURE';
 
 
 const reducer = (state = initialState , action) => {
@@ -207,6 +225,46 @@ const reducer = (state = initialState , action) => {
           ...state,
           getTrendingLoading:false,
           getTrendingError:action.error,
+        };
+      case GET_NOWPLAYING_MOVIE_REQUEST:
+        return{
+            ...state,
+            getNowPlayingLoading:true,
+            getNowPlayingDone:false,
+            getNowPlayingError:null,
+        };
+      case GET_NOWPLAYING_MOVIE_SUCCESS:
+        return{
+            ...state,
+            nowplayingmoive: action.data,
+            getNowPlayingLoading:false,
+            getNowPlayingDone:true,
+        };
+      case GET_NOWPLAYING_MOVIE_FAILURE:
+        return{
+          ...state,
+          getNowPlayingLoading:false,
+          getNowPlayingError:action.error,
+        };
+      case GET_UPCOMING_MOVIE_REQUEST:
+        return{
+            ...state,
+            getUpComingLoading:true,
+            getUpComingDone:false,
+            getUpComingError:null,
+        };
+      case GET_UPCOMING_MOVIE_SUCCESS:
+        return{
+            ...state,
+            upcomingmovie: action.data,
+            getUpComingLoading:false,
+            getUpComingDone:true,
+        };
+      case GET_UPCOMING_MOVIE_FAILURE:
+        return{
+          ...state,
+          getUpComingLoading:false,
+          getUpComingError:action.error,
         };
         default:
           return state;

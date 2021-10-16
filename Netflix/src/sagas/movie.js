@@ -7,7 +7,9 @@ import {
     GET_MOVIE_CREDITS_REQUEST, GET_MOVIE_CREDITS_SUCCESS, GET_MOVIE_CREDITS_FAILURE,
     GET_MOVIE_SIMILAR_REQUEST, GET_MOVIE_SIMILAR_SUCCESS, GET_MOVIE_SIMILAR_FAILURE,
     GET_POPULAR_MOVIE_FAILURE, GET_POPULAR_MOVIE_REQUEST, GET_POPULAR_MOVIE_SUCCESS,
-    GET_TRENDING_MOVIE_FAILURE, GET_TRENDING_MOVIE_REQUEST, GET_TRENDING_MOVIE_SUCCESS
+    GET_TRENDING_MOVIE_FAILURE, GET_TRENDING_MOVIE_REQUEST, GET_TRENDING_MOVIE_SUCCESS,
+    GET_NOWPLAYING_MOVIE_FAILURE, GET_NOWPLAYING_MOVIE_REQUEST, GET_NOWPLAYING_MOVIE_SUCCESS,
+    GET_UPCOMING_MOVIE_FAILURE, GET_UPCOMING_MOVIE_REQUEST, GET_UPCOMING_MOVIE_SUCCESS
  } from "../reducers/movie";
 
 
@@ -36,6 +38,10 @@ function popularmovieAPI() {
     return axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1&region=KR`);
 }
 
+function popularmovieAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2&region=KR`);
+}
+
 function trendingmovieAPI() {
     return axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR`);
 }
@@ -47,6 +53,23 @@ function trendingmovieAPI2() {
 function trendingmovieAPI3() {
     return axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=3`);
 }
+
+function nowplayingmovieAPI() {
+    return axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
+}
+
+function nowplayingmovieAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
+function upcomingmovieAPI() {
+    return axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
+}
+
+function upcomingmovieAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
 
 function* getMOVIEInfo(action) {
     try {
@@ -130,10 +153,11 @@ function* getMOVIESimilar(action) {
 
 function* getPopularMoive() {
     try {
-        const result = yield call(popularmovieAPI);
+        const data1 = yield call(popularmovieAPI);
+        const data2 = yield call(popularmovieAPI2);
         yield put({
             type: GET_POPULAR_MOVIE_SUCCESS,
-            data: result.data,
+            data: [...data1.data.results, ...data2.data.results],
         });
     } catch (error) {
         console.error(error);
@@ -158,6 +182,42 @@ function* getTrendingMoive() {
         console.error(error);
         yield put({
             type: GET_TRENDING_MOVIE_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
+function* getNowPlayingMoive() {
+    try {
+        const data1 = yield call(nowplayingmovieAPI);
+        const data2 = yield call(nowplayingmovieAPI2);
+
+        yield put({
+            type: GET_NOWPLAYING_MOVIE_SUCCESS,
+            data: [...data1.data.results,...data2.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_NOWPLAYING_MOVIE_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
+function* getUpComingMoive() {
+    try {
+        const data1 = yield call(upcomingmovieAPI);
+        const data2 = yield call(upcomingmovieAPI2);
+
+        yield put({
+            type: GET_UPCOMING_MOVIE_SUCCESS,
+            data: [...data1.data.results,...data2.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_UPCOMING_MOVIE_FAILURE,
             error: error.response.data
         });
     }
@@ -191,6 +251,14 @@ function* watchTrendingMovie() {
     yield takeLatest(GET_TRENDING_MOVIE_REQUEST,getTrendingMoive);
 }
 
+function* watchNowPlayingMovie() {
+    yield takeLatest(GET_NOWPLAYING_MOVIE_REQUEST,getNowPlayingMoive);
+}
+
+function* watchUpComingMovie() {
+    yield takeLatest(GET_UPCOMING_MOVIE_REQUEST,getUpComingMoive);
+}
+
 export default function* movieSaga() {
     yield all([
         fork(watchGetMovieInfo),
@@ -200,5 +268,7 @@ export default function* movieSaga() {
         fork(watchGetMovieSimilar),
         fork(watchPopularMovie),
         fork(watchTrendingMovie),
+        fork(watchNowPlayingMovie),
+        fork(watchUpComingMovie),
     ]);
 }

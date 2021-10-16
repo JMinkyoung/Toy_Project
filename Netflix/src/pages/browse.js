@@ -32,12 +32,11 @@ const browse = () => {
         <Head>
             <title>홈 - 넷플릭스</title>
         </Head>
-        {/* 헤더에 현재 선택된거 전달해줘야함 */}
         <MainHeader/>
         <MainTopContent setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId}/>
         <SliderWrapper>
-            <TvContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>
-            <MovieContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 영화"}/>
+            <TvContentSlider  type="trend" setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>
+            <MovieContentSlider type="trend" setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 영화"}/>
             <RankContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"오늘 한국의 TOP 10 콘텐츠"} />
         </SliderWrapper>
 

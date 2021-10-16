@@ -106,7 +106,9 @@ const MainHeader = () => {
                             <Navilist onClick={()=>{
                                 router.push('/tvprogram');
                             }}>TV 프로그램</Navilist>
-                            <Navilist>영화</Navilist>
+                            <Navilist onClick={()=>{
+                                router.push('/movie');
+                            }}>영화</Navilist>
                             <Navilist onClick={()=>{
                                 router.push('/latest');
                             }}>NEW! 요즘 대세 콘텐츠</Navilist>
