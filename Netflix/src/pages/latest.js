@@ -9,7 +9,7 @@ import MovieContentModal from '../components/MovieContentModal';
 
 const SliderWrapper = styled.div`
     position: relative;
-    margin-top: 100px;
+    margin-top: 80px;
 `;
 
 const latest = () => {

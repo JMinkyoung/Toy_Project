@@ -8,7 +8,7 @@ import TVContentModal from '../components/TVContentModal';
 
 const SliderWrapper = styled.div`
     position: relative;
-    margin-top: 100px;
+    margin-top: 80px;
 `;
 
 const tvprogram = () => {
