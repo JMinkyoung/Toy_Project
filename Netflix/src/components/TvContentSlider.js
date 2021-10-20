@@ -1,7 +1,8 @@
 import React,{ useState, useEffect , useRef} from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_TV_TOPRATED_REQUEST, GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST, GET_TV_ONTHEAIR_REQUEST } from '../reducers/tv';
+import { GET_TV_TOPRATED_REQUEST, GET_TV_POPULAR_REQUEST, GET_TV_TRENDING_REQUEST, 
+        GET_TV_ONTHEAIR_REQUEST, GET_TRENDING_WEEK_REQUEST, GET_TRENDING_DAY_REQUEST } from '../reducers/tv';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import SliderElement from './SliderElement';
 
@@ -146,6 +147,16 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
                     type:GET_TV_ONTHEAIR_REQUEST,
                 });
                 break;
+            case "trendingweek":
+                dispatch({
+                    type:GET_TRENDING_WEEK_REQUEST,
+                });
+                break;
+            case "trendingday":
+                dispatch({
+                    type:GET_TRENDING_DAY_REQUEST,
+                });
+                break;
         }
     },[]);
 
@@ -184,6 +195,9 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
     const {getPopularDone, populartv} = useSelector((state)=>state.tv);
     const {getTopRatedDone, topratedtv} = useSelector((state)=>state.tv);
     const {getOnTheAirDone, ontheairtv} = useSelector((state)=>state.tv);
+    const {getTrendingWeekDone, trendingweek} = useSelector((state)=>state.tv);
+    const {getTrendingDayDone, trendingday} = useSelector((state)=>state.tv);
+
 
 
     const TotalLength = container && container.current && container.current.offsetWidth;
@@ -208,9 +222,15 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
             finalData = ontheairtv.filter((v)=>v.backdrop_path).slice(0, 36);
             loadingdone = getOnTheAirDone;
             break;
+        case "trendingweek":
+            finalData = trendingweek.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getTrendingWeekDone;
+            break;
+        case "trendingday":
+            finalData = trendingday.filter((v)=>v.backdrop_path).slice(0, 36);
+            loadingdone = getTrendingDayDone;
+            break;
     }
-
-    console.log(type,finalData);
 
     finalData.unshift(finalData[35]);
     finalData.push(finalData[1]);
@@ -235,7 +255,7 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
             <SliderContentWrapper width={TotalLength} test={position}ref={container}>
                 {loadingdone &&
                 finalData.map((v, index)=>
-                    <SliderElement type={"tv"} setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
+                    <SliderElement type={v.media_type ? v.media_type : "tv"} setContentId={setContentId} setModalOpend={setModalOpend} setMediaType={setMediaType} key={index} id={index} started={started} data={v}/>
                     ) 
                 }
             </SliderContentWrapper>

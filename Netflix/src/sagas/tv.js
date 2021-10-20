@@ -9,7 +9,10 @@ import {
     GET_TV_POPULAR_REQUEST, GET_TV_POPULAR_SUCCESS, GET_TV_POPULAR_FAILURE,
     GET_TV_TRENDING_REQUEST, GET_TV_TRENDING_SUCCESS, GET_TV_TRENDING_FAILURE,
     GET_TV_TOPRATED_REQUEST, GET_TV_TOPRATED_SUCCESS, GET_TV_TOPRATED_FAILURE,
-    GET_TV_ONTHEAIR_REQUEST, GET_TV_ONTHEAIR_SUCCESS, GET_TV_ONTHEAIR_FAILURE
+    GET_TV_ONTHEAIR_REQUEST, GET_TV_ONTHEAIR_SUCCESS, GET_TV_ONTHEAIR_FAILURE,
+    GET_TRENDING_WEEK_REQUEST, GET_TRENDING_WEEK_SUCCESS, GET_TRENDING_WEEK_FAILURE,
+    GET_TRENDING_DAY_REQUEST, GET_TRENDING_DAY_SUCCESS, GET_TRENDING_DAY_FAILURE
+
 } from '../reducers/tv';
 
 function tvvideoAPI(data) {
@@ -68,7 +71,22 @@ function tvontheairAPI2() {
     return axios.get(`https://api.themoviedb.org/3/tv/on_the_air?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
 }
 
-// 전체 컨텐츠 트렌딩 https://api.themoviedb.org/3/trending/all/week?api_key=0f54240da860f0ee0a59657346e7a8cc
+function trendingweekAPI() {
+    return axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
+}
+
+function trendingweekAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
+function trendingdayAPI() {
+    return axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
+}
+
+function trendingdayAPI2() {
+    return axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
+}
+
 function* getTVVideo(action) {
     try {
         const result = yield call(tvvideoAPI,action.data);
@@ -218,6 +236,41 @@ function* getOnTheAirTV() {
     }
 }
 
+function* getTrendingWeek() {
+    try {
+        const data1 = yield call(trendingweekAPI);
+        const data2 = yield call(trendingweekAPI2);
+        yield put({
+            type: GET_TRENDING_WEEK_SUCCESS,
+            data: [...data1.data.results,...data2.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_TRENDING_WEEK_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
+function* getTrendingDay() {
+    try {
+        const data1 = yield call(trendingdayAPI);
+        const data2 = yield call(trendingdayAPI2);
+        yield put({
+            type: GET_TRENDING_DAY_SUCCESS,
+            data: [...data1.data.results,...data2.data.results],
+        });
+    } catch (error) {
+        console.error(error);
+        yield put({
+            type: GET_TRENDING_DAY_FAILURE,
+            error: error.response.data
+        });
+    }
+}
+
+
 function* watchGetTvVideo() {
     yield takeLatest(GET_TV_VIDEO_REQUEST,getTVVideo);
 }
@@ -254,6 +307,14 @@ function* watchGetOnTheAirTv() {
     yield takeLatest(GET_TV_ONTHEAIR_REQUEST,getOnTheAirTV);
 }
 
+function* watchGetTrendingWeek() {
+    yield takeLatest(GET_TRENDING_WEEK_REQUEST,getTrendingWeek);
+}
+
+function* watchGetTrendingDay() {
+    yield takeLatest(GET_TRENDING_DAY_REQUEST,getTrendingDay);
+}
+
 export default function* tvSaga() {
     yield all([
         fork(watchGetTvInfo),
@@ -265,5 +326,7 @@ export default function* tvSaga() {
         fork(watchGetTrendingTv),
         fork(watchGetTopRatedTv),
         fork(watchGetOnTheAirTv),
+        fork(watchGetTrendingWeek),
+        fork(watchGetTrendingDay),
     ]);
 }

@@ -4,10 +4,13 @@ export const initialState = {
   keywords: [],
   similars: [], 
   credits:[],
+
   populartv:[],
   trendingtv:[],
   topratedtv:[],
   ontheairtv:[],
+  trendingweek:[],
+  trendingday:[],
 
   getInfoLoading: false,
   getInfoDone: false,
@@ -44,6 +47,14 @@ export const initialState = {
   getOnTheAirLoading: false,
   getOnTheAirDone: false,
   getOnTheAirError: null,
+
+  getTrendingWeekLoading: false,
+  getTrendingWeekDone: false,
+  getTrendingWeekError: null,
+
+  getTrendingDayLoading: false,
+  getTrendingDayDone: false,
+  getTrendingDayError: null,
 
 }
 
@@ -83,6 +94,13 @@ export const GET_TV_ONTHEAIR_REQUEST = 'GET_TV_ONTHEAIR_REQUEST';
 export const GET_TV_ONTHEAIR_SUCCESS = 'GET_TV_ONTHEAIR_SUCCESS';
 export const GET_TV_ONTHEAIR_FAILURE = 'GET_TV_ONTHEAIR_FAILURE';
 
+export const GET_TRENDING_WEEK_REQUEST = 'GET_TRENDING_WEEK_REQUEST';
+export const GET_TRENDING_WEEK_SUCCESS = 'GET_TRENDING_WEEK_SUCCESS';
+export const GET_TRENDING_WEEK_FAILURE = 'GET_TRENDING_WEEK_FAILURE';
+
+export const GET_TRENDING_DAY_REQUEST = 'GET_TRENDING_DAY_REQUEST';
+export const GET_TRENDING_DAY_SUCCESS = 'GET_TRENDING_DAY_SUCCESS';
+export const GET_TRENDING_DAY_FAILURE = 'GET_TRENDING_DAY_FAILURE';
 
 const reducer = (state = initialState , action) => {
     switch(action.type){
@@ -265,6 +283,46 @@ const reducer = (state = initialState , action) => {
               ...state,
               getOnTheAirLoading:false,
               getOnTheAirError:action.error,
+            };
+          case GET_TRENDING_WEEK_REQUEST:
+            return{
+                ...state,
+                getTrendingWeekLoading:true,
+                getTrendingWeekDone:false,
+                getTrendingWeekError:null,
+            };
+          case GET_TRENDING_WEEK_SUCCESS:
+            return{
+                ...state,
+                trendingweek: action.data,
+                getTrendingWeekLoading:false,
+                getTrendingWeekDone:true,
+            };
+          case GET_TRENDING_WEEK_FAILURE:
+            return{
+              ...state,
+              getTrendingWeekLoading:false,
+              getTrendingWeekError:action.error,
+            };
+          case GET_TRENDING_DAY_REQUEST:
+            return{
+                ...state,
+                getTrendingDayLoading:true,
+                getTrendingDayDone:false,
+                getTrendingDayError:null,
+            };
+          case GET_TRENDING_DAY_SUCCESS:
+            return{
+                ...state,
+                trendingday: action.data,
+                getTrendingDayLoading:false,
+                getTrendingDayDone:true,
+            };
+          case GET_TRENDING_DAY_FAILURE:
+            return{
+              ...state,
+              getTrendingDayLoading:false,
+              getTrendingDayError:action.error,
             };
         default:
             return state;

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import MainHeader from '../components/MainHeader';
 import Head from 'next/head';
 
+import TvContentSlider from '../components/TvContentSlider';
 import RankContentSlider from '../components/RankContentSlider';
+
 import TVContentModal from '../components/TVContentModal';
 import MovieContentModal from '../components/MovieContentModal';
 
@@ -29,10 +31,12 @@ const latest = () => {
             <MainHeader/>
             <SliderWrapper>
                 <RankContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"오늘 한국의 TOP 10 콘텐츠"} />
+                <TvContentSlider type="trendingweek"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"이번주 인기 콘텐츠"}/>
+                <TvContentSlider type="trendingday"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"오늘의 인기 콘텐츠"}/>
             </SliderWrapper>
 
             {mediaType === "tv" ? <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
-        {mediaType === "movie" ? <MovieContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
+            {mediaType === "movie" ? <MovieContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
         </>
     );
 };
