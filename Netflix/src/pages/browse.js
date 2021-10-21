@@ -10,7 +10,7 @@ import MovieContentSlider from '../components/MovieContentSlider';
 import MovieContentModal from '../components/MovieContentModal';
 
 import RankContentSlider from '../components/RankContentSlider';
-
+import Footer from '../components/Footer';
 import Head from 'next/head';
 
 const SliderWrapper = styled.div`
@@ -42,6 +42,8 @@ const browse = () => {
 
         {mediaType === "tv" ? <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
         {mediaType === "movie" ? <MovieContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
+        
+        <Footer />
         </>
     );
 };

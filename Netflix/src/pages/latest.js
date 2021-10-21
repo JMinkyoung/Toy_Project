@@ -9,6 +9,8 @@ import RankContentSlider from '../components/RankContentSlider';
 import TVContentModal from '../components/TVContentModal';
 import MovieContentModal from '../components/MovieContentModal';
 
+import Footer from '../components/Footer';
+
 const SliderWrapper = styled.div`
     position: relative;
     margin-top: 80px;
@@ -37,6 +39,7 @@ const latest = () => {
 
             {mediaType === "tv" ? <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
             {mediaType === "movie" ? <MovieContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
+            <Footer />
         </>
     );
 };

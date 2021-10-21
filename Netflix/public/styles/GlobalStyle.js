@@ -12,12 +12,18 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
         float: left;
     }
+    li{
+        list-style-type: none;
+    }
     body{
         background-color: #141414;
         margin: 0;
     }
     img{ 
         image-rendering: -webkit-optimize-contrast;
+    }
+    a{
+
     }
 
 `;

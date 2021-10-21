@@ -5,6 +5,7 @@ import Head from 'next/head';
 
 import TvContentSlider from '../components/TvContentSlider';
 import TVContentModal from '../components/TVContentModal';
+import Footer from '../components/Footer';
 
 const SliderWrapper = styled.div`
     position: relative;
@@ -36,7 +37,7 @@ const tvprogram = () => {
 
 
             {mediaType === "tv" ? <TVContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
-
+            <Footer/>
         </>
         
 

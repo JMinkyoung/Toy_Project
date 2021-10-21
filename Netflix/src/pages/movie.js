@@ -6,6 +6,8 @@ import Head from 'next/head';
 import MovieContentSlider from '../components/MovieContentSlider';
 import MovieContentModal from '../components/MovieContentModal';
 
+import Footer from '../components/Footer';
+
 const SliderWrapper = styled.div`
     position: relative;
     margin-top: 80px;
@@ -36,6 +38,7 @@ const movie = () => {
 
 
             {mediaType === "movie" ? <MovieContentModal isOpen={isModalOpend} setModalOpend={setModalOpend} contentId={contendId} mediaType={mediaType}/> : null}
+            <Footer/>
         </>
         
 
