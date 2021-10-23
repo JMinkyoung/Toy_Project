@@ -14,7 +14,7 @@ const MainTopWrapper = styled.div`
 const TrailerWrapper = styled.div`
     position: absolute;
     width: auto;
-    height: auto;
+    height: 1100px;
     left: 0;
     top: 0;
     right: 0;
@@ -131,6 +131,8 @@ const MuteButton = styled.button`
 `;
 
 const TrailerVideo = styled(ReactPlayer)`
+    position: absolute;
+    top:-100px;
     visibility: ${props=> props.ended === true ? "hidden" : "visible"};
 `;
 
@@ -142,10 +144,9 @@ const BackgroundImage = styled.img`
 `;
 
 const MainTopContent = ({setMediaType, setModalOpend, setContentId}) => {
-    const [muted, setMuted] = useState(false);
+    const [muted, setMuted] = useState(true);
     const [change, setChange] = useState(false);
     const [ended, setEnded] = useState(false);
-    // const [isModalOpend, setModalOpend] = useState(false);
 
     const onClickMute = ()=>{
         setMuted(!muted);
@@ -160,10 +161,6 @@ const MainTopContent = ({setMediaType, setModalOpend, setContentId}) => {
         setContentId(66732);
         setMediaType("tv");
     };
-
-    // useEffect(()=>{
-    //     isModalOpend ? document.body.style.overflow = "hidden" : document.body.style.overflow = "unset";
-    // },[isModalOpend]);
 
     setTimeout(()=>{
         setChange(true);
@@ -182,12 +179,18 @@ const MainTopContent = ({setMediaType, setModalOpend, setContentId}) => {
         <MainTopWrapper>
             <TrailerWrapper>
                 <TrailerVideo 
-                    url={"/test.mp4"}
+                    url={"https://www.youtube.com/watch?v=rt1D_W2fxqw"}
+                    // url={"/test.mp4"}
                     playing={true}
                     controls={false}
                     width="100%"
                     height="100%"
                     muted={muted}
+                    // config={{
+                    //     youtube: {
+                    //         embedOptions: { width: '2100', height: '1000' }
+                    //     }
+                    // }}
                     onEnded={(()=> videoEnded())}
                 />
                 <BackgroundImage ended={ended} src="/images/strangeBack.jpg"/>

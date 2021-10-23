@@ -71,6 +71,10 @@ function tvontheairAPI2() {
     return axios.get(`https://api.themoviedb.org/3/tv/on_the_air?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=2`);
 }
 
+function tvontheairAPI3() {
+    return axios.get(`https://api.themoviedb.org/3/tv/on_the_air?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=3`);
+}
+
 function trendingweekAPI() {
     return axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=0f54240da860f0ee0a59657346e7a8cc&language=ko-KR&page=1`);
 }
@@ -223,9 +227,11 @@ function* getOnTheAirTV() {
     try {
         const data1 = yield call(tvontheairAPI);
         const data2 = yield call(tvontheairAPI2);
+        const data3 = yield call(tvontheairAPI3);
+
         yield put({
             type: GET_TV_ONTHEAIR_SUCCESS,
-            data: [...data1.data.results,...data2.data.results],
+            data: [...data1.data.results,...data2.data.results,...data3.data.results],
         });
     } catch (error) {
         console.error(error);

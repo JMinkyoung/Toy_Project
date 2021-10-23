@@ -234,7 +234,6 @@ const TvContentSlider = ({type, setModalOpend ,setContentId, setMediaType, title
 
     finalData.unshift(finalData[35]);
     finalData.push(finalData[1]);
-
     return(
         <>
         <ContentSliderWrapper>
