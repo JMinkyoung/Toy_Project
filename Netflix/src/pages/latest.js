@@ -16,7 +16,7 @@ const SliderWrapper = styled.div`
     margin-top: 80px;
 `;
 
-const latest = () => {
+const latest = ({selected, setSelected}) => {
     const [isModalOpend, setModalOpend] = useState(false);
     const [mediaType, setMediaType] = useState("tv");
     const [contendId, setContentId] = useState(66732);
@@ -30,7 +30,7 @@ const latest = () => {
             <Head>
                 <title>넷플릭스</title>
             </Head>
-            <MainHeader/>
+            <MainHeader selected={selected} setSelected={setSelected}/>
             <SliderWrapper>
                 <RankContentSlider setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"오늘 한국의 TOP 10 콘텐츠"} />
                 <TvContentSlider type="trendingweek"setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"이번주 인기 콘텐츠"}/>

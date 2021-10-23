@@ -18,7 +18,7 @@ const SliderWrapper = styled.div`
     margin-top: 780px;
 `;
 
-const browse = () => {
+const browse = ({selected, setSelected}) => {
     const [isModalOpend, setModalOpend] = useState(false);
     const [mediaType, setMediaType] = useState("tv");
     const [contendId, setContentId] = useState(66732);
@@ -32,7 +32,7 @@ const browse = () => {
         <Head>
             <title>홈 - 넷플릭스</title>
         </Head>
-        <MainHeader/>
+        <MainHeader selected={selected} setSelected={setSelected}/>
         <MainTopContent setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId}/>
         <SliderWrapper>
             <TvContentSlider  type="trend" setMediaType={setMediaType} setModalOpend={setModalOpend} setContentId={setContentId} title={"지금 뜨는 드라마"}/>

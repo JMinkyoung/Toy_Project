@@ -60,6 +60,7 @@ const Navilist = styled.div`
     color: white;
     cursor: pointer;
     font-size: 0.9rem;
+    font-weight: ${props => props.id === props.selected  ? "bolder" : null};
 
     transition: color .4s;
     transition-property: color;
@@ -80,7 +81,7 @@ const AvatarArrow = styled(CaretDownOutlined)`
     margin-left: 40px;
 `;
 
-const MainHeader = () => {
+const MainHeader = ({selected, setSelected}) => {
 
     const [scroll, setScroll] = useState(0);
     const router = useRouter();
@@ -98,21 +99,27 @@ const MainHeader = () => {
         <HeaderWrapper>
             <HeaderContainer scroll={scroll > 1 ? "change" : "original"}>
                 <LeftNavigation>
-                    <img style={{float:"left",width:"100px"}} src="/images/netflix-logo-png-2562.png"/>
-                        <ul>
-                            <Navilist onClick={()=>{
+                    <img style={{float:"left",width:"100px"}} src="/images/netflix-logo-png-2562.png" onClick={()=>{
                                 router.push('/browse');
+                                setSelected(1);
+                            }} />
+                        <ul>
+                            <Navilist id={1} selected={selected} onClick={()=>{
+                                router.push('/browse');
+                                setSelected(1);
                             }}>홈</Navilist>
-                            <Navilist onClick={()=>{
+                            <Navilist id={2} selected={selected} onClick={()=>{
+                                setSelected(2);
                                 router.push('/tvprogram');
                             }}>TV 프로그램</Navilist>
-                            <Navilist onClick={()=>{
+                            <Navilist id={3} selected={selected} onClick={()=>{
                                 router.push('/movie');
+                                setSelected(3);
                             }}>영화</Navilist>
-                            <Navilist onClick={()=>{
+                            <Navilist id={4} selected={selected} onClick={()=>{
                                 router.push('/latest');
+                                setSelected(4);
                             }}>NEW! 요즘 대세 콘텐츠</Navilist>
-                            <Navilist>내가 찜한 콘텐츠</Navilist>
                         </ul>
                 </LeftNavigation>
                 <RightNavigation>
