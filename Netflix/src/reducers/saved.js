@@ -43,10 +43,10 @@ const initialState = {
         },
         {
             rank: 2,
-            id: 128883,
-            title:"갯마을 차차차",
+            id: 110356,
+            title:"마이 네임",
             type: "tv",
-            backdrop_path:"/2avhn5tACIdOp9F5EhNytbChJib.jpg"
+            backdrop_path:"/yjsXtps0rw36UB8TomSjI4y4zvR.jpg"
         },
         {
             rank: 3,
