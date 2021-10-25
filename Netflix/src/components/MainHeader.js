@@ -99,7 +99,7 @@ const MainHeader = ({selected, setSelected}) => {
         <HeaderWrapper>
             <HeaderContainer scroll={scroll > 1 ? "change" : "original"}>
                 <LeftNavigation>
-                    <img style={{float:"left",width:"100px"}} src="/images/netflix-logo-png-2562.png" onClick={()=>{
+                    <img style={{float:"left",width:"100px", cursor:"pointer"}} src="/images/netflix-logo-png-2562.png" onClick={()=>{
                                 router.push('/browse');
                                 setSelected(1);
                             }} />

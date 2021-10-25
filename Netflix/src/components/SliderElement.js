@@ -45,8 +45,9 @@ const HoverButtonWrapper = styled.div`
     font-size: 30px;
 `;
 
-const HoverPlayButton = styled(PlayCircleFilled)`
+const HoverTitle = styled.span`
     position: absolute;
+    font-size: 20px;
     left: 2%;
 `;
 
@@ -86,6 +87,11 @@ const SliderElement = ({type, setContentId, setModalOpend, setMediaType, id, sta
         
     };
 
+    useEffect(()=>{
+        if(type === "tv"){
+            console.log(data);
+        }
+    },[])
 
     return (
         <>
@@ -94,7 +100,7 @@ const SliderElement = ({type, setContentId, setModalOpend, setMediaType, id, sta
                 <SliderElementImg hovered={hovered} id={id} src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
                 <HoverInfoWrapper style={{color:"white"}} hovered={hovered}>
                     <HoverButtonWrapper>
-                        <HoverPlayButton />
+                        <HoverTitle>{data.title ? data.title : data.name}</HoverTitle>
                         <HoverInfoButton onClick={modalOpen}/>
                     </HoverButtonWrapper>
                 </HoverInfoWrapper>

@@ -50,8 +50,9 @@ const RankHoverWrapper = styled.div`
 
 `;
 
-const HoverPlayButton = styled(PlayCircleFilled)`
+const HoverTitle = styled.span`
     position: absolute;
+    font-size: 20px;
     left: 5%;
     bottom: 6%;
 `;
@@ -95,7 +96,7 @@ const RankElement = ({setContentId, setModalOpend, setMediaType, data}) => {
             <RankHoverWrapper hovered={hovered}>
                 <RankHoverImage src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}/>
                 <RankInfoWrapper >
-                    <HoverPlayButton />
+                    <HoverTitle>{data.title}</HoverTitle>
                     <HoverInfoButton/>
                 </RankInfoWrapper>
             </RankHoverWrapper>

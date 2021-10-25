@@ -180,17 +180,11 @@ const MainTopContent = ({setMediaType, setModalOpend, setContentId}) => {
             <TrailerWrapper>
                 <TrailerVideo 
                     url={"https://www.youtube.com/watch?v=rt1D_W2fxqw"}
-                    // url={"/test.mp4"}
                     playing={true}
                     controls={false}
                     width="100%"
                     height="100%"
                     muted={muted}
-                    // config={{
-                    //     youtube: {
-                    //         embedOptions: { width: '2100', height: '1000' }
-                    //     }
-                    // }}
                     onEnded={(()=> videoEnded())}
                 />
                 <BackgroundImage ended={ended} src="/images/strangeBack.jpg"/>
