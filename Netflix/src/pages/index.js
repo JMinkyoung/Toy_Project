@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Qna from '../components/Qna';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import EmailInput from '../components/EmailInput';
 
 const OurStoryCard = styled.div`
     position: absolute;
@@ -171,7 +172,7 @@ const OurStoryHeroSubTitle = styled.h2`
 
 `;
 
-const EmailForm = styled.form`
+const EmailForm = styled.div`
     display: flex;
     flex-direction: column;
     @media only screen and (min-width: 950px) and (max-width: 1449px), only screen and (min-width: 1450px) {
@@ -205,30 +206,6 @@ const EmailWrapper = styled.div`
     }
 `;
 
-const EmailInput = styled.input`
-    width: 450px;
-    height: 48px;
-
-    font-size: 1em;
-
-    :focus {
-        outline: none;
-    }
-    @media screen and (min-width: 740px) {
-        height: 60px;
-    }
-
-    @media only screen and (min-width: 550px) and (max-width: 949px)  {
-        width: 400px;
-        height: 45px;
-    }
-
-    @media only screen and (min-width: 350px) and (max-width: 399px), only screen and (min-width: 400px) and (max-width: 549px) {
-        width: 300px;
-        height: 40px;
-    }
- 
-`;
 
 const EmailButton = styled.button`
     background-color: #e50914;
@@ -238,7 +215,9 @@ const EmailButton = styled.button`
     outline: 0;
     border-radius: 2px;
     min-width: 74px;
+    min-height: 60px;
     width: 200px;
+    height: 69px;
     cursor: pointer;
     @media only screen and (min-width: 950px) and (max-width: 1449px) {
         font-size: 1.625rem;
@@ -619,8 +598,8 @@ const index = () => {
                     <EmailForm>
                         <EmailTitle>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</EmailTitle>
                         <EmailWrapper>
-                            <EmailInput placeholder="이메일 주소"></EmailInput>
-                            <EmailButton>시작하기</EmailButton>
+                            <EmailInput/>
+                            <EmailButton onClick={()=>router.push('/browse')}>시작하기</EmailButton>
                         </EmailWrapper>
                     </EmailForm>
                 </OurStoryCardText>
@@ -707,8 +686,8 @@ const index = () => {
                     <EmailForm style={{margin:"0 auto"}}>
                         <EmailTitle style={{width:"100%", marginRight:"50px"}}>시청할 준비가 되셨나요? 멤버십을 등록하거나 재시작하려면 이메일 주소를 입력하세요.</EmailTitle>
                         <EmailWrapper>
-                            <EmailInput placeholder="이메일 주소"></EmailInput>
-                            <EmailButton>시작하기</EmailButton>
+                            <EmailInput />
+                            <EmailButton onClick={()=>router.push('/browse')}>시작하기</EmailButton>
                         </EmailWrapper>
                     </EmailForm>
                 </QnaWrapper>
