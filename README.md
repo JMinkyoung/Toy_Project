@@ -12,3 +12,11 @@ https://to-do-list-jminkyoung.vercel.app/
 ![1](https://user-images.githubusercontent.com/37430920/131306598-f99ae687-bb07-4731-a7be-a318611f9a92.gif)
 
 https://drawing-diary.vercel.app/
+
+## 3. 넷플릭스 클론 코딩
+
+![test1](https://user-images.githubusercontent.com/37430920/140041793-245f5d62-da5a-4241-80bd-69c8762ecca3.gif)
+![image](https://user-images.githubusercontent.com/37430920/140043254-da5e70a3-94a5-43d5-ada9-079f3995c763.png)
+![image](https://user-images.githubusercontent.com/37430920/140043362-42264632-7f00-4239-9940-877f7384978c.png)
+
+https://netflix-clone-five-kohl.vercel.app/
